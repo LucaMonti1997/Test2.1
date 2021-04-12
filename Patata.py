@@ -1,1 +1,1 @@
-super_patata = 'Soy una super patata'
+super_patata = 'Soy una super mega patata'
