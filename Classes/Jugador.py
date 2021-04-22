@@ -28,13 +28,9 @@ class Jugador(object):
         self.mazo = Mazo(1).mazo_1_completo
         self.mano = []
 
-        lista_aleatoria = random.sample(range(len(self.mazo) - 1), 8)
-        lista_cartas_restantes = [num for num in range(max(lista_aleatoria) + 1) if num not in lista_aleatoria]
-
-        for n in lista_aleatoria:
-            self.mano.append(self.mazo[n])
-
-        self.mazo = [self.mazo[x] for x in lista_cartas_restantes]
+        random.shuffle(self.mazo)
+        while len(self.mano) < 8:
+            self.mano.append(self.mazo.pop())
 
     def ModificarMano(self):
         pass
