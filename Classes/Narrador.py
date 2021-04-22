@@ -9,24 +9,56 @@ class Narrador(object):
         """
         self.turno_jugador1 = False
         self.turno_jugador2 = False
+        self.turno = 0
         self.turno_acabado = False
         self.jugadores = [jugador1, jugador2]
 
+    def Opuesto(self):
+        """
+        Devuelve el turno opuesto, i.e. 0 -> 1 | 1 -> 0
+        """
+        return abs(self.turno - 1)
+
     def IniciarPartida(self):
         """
-        Escoje aleatoramente quie empieza.
+        Escoje aleatoramente quien empieza.
         """
-        self.turno_jugador1 = random.choice([True, False])
-        self.turno_jugador2 = not self.turno_jugador1
-        self.turno_acabado = True  # Indica si el narrador quiere cambiar turno
+        if random.choice([True, False]):
+            self.turno = 0
+        else:
+            self.turno = 1
+        self.turno_acabado = True
 
     def CambiarTurno(self):
         """
         Cambia el turno de un jugador al otro.
         """
-        self.turno_jugador1 = not self.turno_jugador1
-        self.turno_jugador2 = not self.turno_jugador1
+        self.turno = self.Opuesto()
         self.turno_acabado = False
+
+    def GenerarRecursos(self):
+        """
+        Genera los recursos que corresponden.
+        """
+        self.jugadores[self.turno].ladrillos += self.jugadores[self.turno].constructores
+        self.jugadores[self.turno].armas += self.jugadores[self.turno].soldados
+        self.jugadores[self.turno].mana += self.jugadores[self.turno].magos
+
+    def JugarTurno(self, carta, jugar):
+        """
+        Llevará a cabo la acción escogida por el jugador activo.
+
+        Jugar o descartar una carta, basicamente.
+
+        :param carta: String. Identificador de la carta jugada
+        :param jugar: Boolean. Jugamos o no la carta? False es descartar
+        """
+
+        if jugar:
+            recurso =
+            self.jugadores[self.turno].
+        else:
+            pass
 
     def ComprobarPartida(self):
         """
@@ -34,34 +66,21 @@ class Narrador(object):
 
         0 -> Partida no acabada
 
-        1 -> Jugador1.hp == 0
+        1 -> Jugador1.hp_castillo <= 0
 
-        2 -> Jugador1.hp == 100
+        2 -> Jugador1.hp_castillo >= 100
 
-        3 -> Jugador2.hp == 0
+        3 -> Jugador2.hp_castillo <= 0
 
-        4 -> Jugador2.hp == 100
+        4 -> Jugador2.hp_castillo >= 100
         """
-        if self.jugadores[0].hp <= 0:
+        if self.jugadores[0].hp_castillo <= 0:
             return 1
-        elif self.jugadores[0].hp >= 100:
+        elif self.jugadores[0].hp_castillo >= 100:
             return 2
-        elif self.jugadores[1].hp <= 0:
+        elif self.jugadores[1].hp_castillo <= 0:
             return 3
-        elif self.jugadores[1].hp >= 100:
+        elif self.jugadores[1].hp_castillo >= 100:
             return 4
         else:
             return 0
-
-    def GenerarRecursos(self):
-        """
-        Genera los recursos que corresponden.
-        """
-        if self.turno_jugador1:
-            self.jugadores[0].ladrillos += self.jugadores[0].constructores
-            self.jugadores[0].armas += self.jugadores[0].soldados
-            self.jugadores[0].mana += self.jugadores[0].magos
-        else:
-            self.jugadores[1].ladrillos += self.jugadores[1].constructores
-            self.jugadores[1].armas += self.jugadores[1].soldados
-            self.jugadores[1].mana += self.jugadores[1].magos
