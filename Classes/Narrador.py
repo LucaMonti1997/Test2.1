@@ -1,4 +1,5 @@
 import random
+from Constantes import *
 
 
 class Narrador(object):
@@ -55,10 +56,23 @@ class Narrador(object):
         """
 
         if jugar:
-            recurso =
-            self.jugadores[self.turno].
+            recurso = diccionario_cartas[carta][0][1]
+            cantidad_recurso = diccionario_cartas[carta][0][0]
+            self.jugadores[self.turno].set(recurso, self.jugadores[self.turno].get(recurso) + cantidad_recurso)
+
+            objetivo = diccionario_cartas[carta][1][1]
+            cantidad_objetivo = diccionario_cartas[carta][1][0]
+            # Cantidad positiva. El efecto es para uno mismo.
+            if cantidad_objetivo > 0:
+                self.jugadores[self.turno].set(objetivo, self.jugadores[self.turno].get(objetivo) + cantidad_objetivo)
+            # Cantidad negativa. El efecto es para el oponente.
+            else:
+                self.jugadores[self.Opuesto()].set(objetivo,
+                                                   self.jugadores[self.Opuesto()].get(objetivo) + cantidad_objetivo)
+
         else:
             pass
+        self.CambiarTurno()
 
     def ComprobarPartida(self):
         """
