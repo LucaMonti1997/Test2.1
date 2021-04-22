@@ -1,3 +1,7 @@
+import Mazo
+import random
+
+
 # Clase de jugador a la qual se le asignaran las siguientes funciones:
 #   Generar controlar los recursos de las instancias de los jugafores
 #   controlar las cartas asignadas a los jugadores
@@ -20,6 +24,17 @@ class Jugador(object):
         self.armas = 5
         self.mana = 5
 
+        # Crear mazo a partir de la classe Mazo
+        self.mazo = Mazo(1).mazo_1_completo
+        self.mano = []
 
-    def CrearMano(self):
+        lista_aleatoria = random.sample(range(len(self.mazo) - 1), 8)
+        lista_cartas_restantes = [num for num in range(max(lista_aleatoria) + 1) if num not in lista_aleatoria]
+
+        for n in lista_aleatoria:
+            self.mano.append(self.mazo[n])
+
+        self.mazo = [self.mazo[x] for x in lista_cartas_restantes]
+
+    def ModificarMano(self):
         pass
