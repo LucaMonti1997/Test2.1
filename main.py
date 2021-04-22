@@ -9,12 +9,6 @@ from Constantes import *
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption('alpha')
 
-# Contiene el diccionario completo de las cartas del juego
-diccionario_cartas = {
-    "Muralla": [[5, "ladrillos"], [10, "hp_muralla"], ["Muralla +10"]],
-    "Defensa": [[5, "ladrillos"], [10, "hp_muralla"], ["Muralla +10"]]
-}
-
 
 def renderWindow():
     screen.fill((0, 0, 125))
