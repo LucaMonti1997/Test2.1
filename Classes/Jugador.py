@@ -6,7 +6,6 @@
 class Jugador(object):
 
     def __init__(self):
-
         # Castillo y muralla
         self.hp_castillo = 20
         self.hp_muralla = 10
@@ -21,7 +20,5 @@ class Jugador(object):
         self.armas = 5
         self.mana = 5
 
-
     def CrearMano(self):
         pass
-
