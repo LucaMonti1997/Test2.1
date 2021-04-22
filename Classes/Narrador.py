@@ -45,7 +45,7 @@ class Narrador(object):
         self.jugadores[self.turno].armas += self.jugadores[self.turno].soldados
         self.jugadores[self.turno].mana += self.jugadores[self.turno].magos
 
-    def JugarTurno(self, carta, jugar):
+    def JugarTurno(self, carta, jugar=True):
         """
         Llevará a cabo la acción escogida por el jugador activo.
 
@@ -56,10 +56,13 @@ class Narrador(object):
         """
 
         if jugar:
+            # Vemos cuantos recursos y de que tipo se gastan, y luego los restamos al jugador activo
             recurso = diccionario_cartas[carta][0][1]
             cantidad_recurso = diccionario_cartas[carta][0][0]
             self.jugadores[self.turno].set(recurso, self.jugadores[self.turno].get(recurso) + cantidad_recurso)
 
+            # Vemos el atributo objetivo, y la cantidad a modificar.
+            # Según la cantidad afectamos al jugador activo o al oponente
             objetivo = diccionario_cartas[carta][1][1]
             cantidad_objetivo = diccionario_cartas[carta][1][0]
             # Cantidad positiva. El efecto es para uno mismo.
@@ -70,8 +73,8 @@ class Narrador(object):
                 self.jugadores[self.Opuesto()].set(objetivo,
                                                    self.jugadores[self.Opuesto()].get(objetivo) + cantidad_objetivo)
 
-        else:
-            pass
+        # Quitamos la carta de la mano del jugador activo
+        self.jugadores[self.turno].mano.remove(carta)
         self.CambiarTurno()
 
     def ComprobarPartida(self):
