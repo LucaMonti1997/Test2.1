@@ -1,6 +1,6 @@
 class Mazo(object):
     mazo_1_completo = ["muralla", "defensa", "muralla", "defensa", "muralla", "defensa", "muralla", "defensa",
-                       "muralla", "defensa", "muralla", "defensa"]
+                       "muralla", "defensa", "muralla", "defensa", "espada"]
 
     def __init__(self, tipo):
         if tipo == 1:
