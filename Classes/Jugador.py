@@ -20,5 +20,6 @@ class Jugador(object):
         self.armas = 5
         self.mana = 5
 
+
     def CrearMano(self):
         pass
