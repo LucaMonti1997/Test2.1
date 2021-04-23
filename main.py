@@ -3,6 +3,8 @@ import os
 import pygame_widgets
 import random
 from Constantes import *
+from Carta import *
+from Jugador import *
 
 # Inizializar pantalla
 
@@ -10,8 +12,12 @@ screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption('alpha')
 
 
+
+jugador1 = Jugador()
+
 def renderWindow():
     screen.fill((0, 0, 125))
+    jugador1.MostratCartas(screen)
     pygame.display.update()
 
 

@@ -75,6 +75,7 @@ class Narrador(object):
 
         # Quitamos la carta de la mano del jugador activo
         self.jugadores[self.turno].mano.remove(carta)
+        self.jugadores[self.turno].CogerUnaCarta()
         self.CambiarTurno()
 
     def ComprobarPartida(self):

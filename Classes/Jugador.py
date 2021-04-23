@@ -1,5 +1,12 @@
-import Mazo
 import random
+from Mazo import *
+from Constantes import *
+from Carta import *
+
+imagenes = {
+    "Imagen1": pygame.image.load("Assets/Templates/images.png").convert_alpha(),
+    "Imagen2": pygame.image.load("Assets/TestAssets/Espada1.png").convert_alpha()
+}
 
 
 # Clase de jugador a la qual se le asignaran las siguientes funciones:
@@ -10,7 +17,7 @@ import random
 class Jugador(object):
 
     def __init__(self):
-        # Castillo y muralla
+        # Castillo x muralla
         self.hp_castillo = 20
         self.hp_muralla = 10
 
@@ -25,12 +32,28 @@ class Jugador(object):
         self.mana = 5
 
         # Crear mazo a partir de la classe Mazo
-        self.mazo = Mazo(1).mazo_1_completo
+        self.mazo = Mazo(1)
         self.mano = []
+        self.cartas = []
 
-        random.shuffle(self.mazo)
-        while len(self.mano) < 8:
-            self.mano.append(self.mazo.pop())
+        # Poblar la mano por primera vez
+        random.shuffle(self.mazo.cartas_restantes)
+        x = 0
+        while len(self.mano) < NUMERO_CARTAS_MANO:
+            identificador = self.mazo.cartas_restantes.pop()
+            self.mano.append(identificador)
+            carta_n = Carta(identificador, True, (50 + 100 * x, 200), (1, 1))
+            self.cartas.append(carta_n)
+            x += 1
 
-    def ModificarMano(self):
-        pass
+    def CogerUnaCarta(self):
+        if self.mazo.cartas_restantes:
+            self.mano.append(self.mazo.cartas_restantes.pop())
+        else:
+            self.mazo.cartas_restantes = self.mazo.mazo_1_completo
+            random.shuffle(self.mazo.cartas_restantes)
+            self.mano.append(self.mazo.cartas_restantes.pop())
+
+    def MostratCartas(self, pantalla):
+        for carta in self.cartas:
+            carta.Dibujar(pantalla, imagenes["Imagen1"])

@@ -1,5 +1,7 @@
+import pygame
+
 WIDTH = 800
-HEIGHT = 800
+HEIGHT = 600
 
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
@@ -13,3 +15,6 @@ diccionario_cartas = {
     "Muralla": [[5, "ladrillos"], [10, "hp_muralla"], ["Muralla +10"]],
     "Defensa": [[5, "ladrillos"], [10, "hp_muralla"], ["Muralla +10"]]
 }
+
+
+NUMERO_CARTAS_MANO = 8
