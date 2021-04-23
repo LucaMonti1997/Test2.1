@@ -4,8 +4,6 @@ from Constantes import *
 from Carta import *
 
 
-
-
 # Clase de jugador a la qual se le asignaran las siguientes funciones:
 #   Generar controlar los recursos de las instancias de los jugafores
 #   controlar las cartas asignadas a los jugadores
@@ -52,5 +50,12 @@ class Jugador(object):
             self.mano.append(self.mazo.cartas_restantes.pop())
 
     def MostrarCartas(self, pantalla):
+
+        imagenes = {
+            "Imagen1": pygame.image.load("Assets/Templates/images.png").convert_alpha(),
+            "Imagen2": pygame.image.load("Assets/TestAssets/Espada1.png").convert_alpha()
+
+        }
+
         for carta in self.cartas:
             carta.Dibujar(pantalla, imagenes["Imagen1"])
