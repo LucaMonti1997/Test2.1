@@ -37,7 +37,7 @@ class Jugador(object):
         while len(self.mano) < NUMERO_CARTAS_MANO:
             identificador = self.mazo.cartas_restantes.pop()
             self.mano.append(identificador)
-            carta_n = Carta(identificador, True, (50 + 100 * x, 200), (1, 1))
+            carta_n = Carta(identificador, True, (50 + 100 * x, HEIGHT-200), (1, 1))
             self.cartas.append(carta_n)
             x += 1
 
@@ -51,11 +51,25 @@ class Jugador(object):
 
     def MostrarCartas(self, pantalla):
 
+        # obtenemos el fondo de todas las cartas con una imagen
+
         imagenes = {
-            "Imagen1": pygame.image.load("Assets/Templates/images.png").convert_alpha(),
-            "Imagen2": pygame.image.load("Assets/TestAssets/Espada1.png").convert_alpha()
+            "muralla": pygame.image.load("Assets/Cards/1.png").convert_alpha(),
+            "defensa": pygame.image.load("Assets/Cards/2.png").convert_alpha(),
+            "espada": pygame.image.load("Assets/Cards/3.png").convert_alpha(),
+            "Imagen2": pygame.image.load("Assets/Cards/4.png").convert_alpha(),
+            "Imagen1": pygame.image.load("Assets/Cards/5.png").convert_alpha(),
+            "Imagen2": pygame.image.load("Assets/Cards/6.png").convert_alpha(),
+            "Imagen1": pygame.image.load("Assets/Cards/7.png").convert_alpha(),
+            "Imagen2": pygame.image.load("Assets/Cards/1.png").convert_alpha(),
 
         }
 
+        # modificamos las imagenes para que quepan en pantalla
+        for key in imagenes:
+            imagenes[key] = pygame.transform.smoothscale(imagenes[key], (
+                int(imagenes[key].get_width() / 8), int(imagenes[key].get_height() / 8)))
+
+        # dibujamos las cartas con la imagen correspondiente segun el id de la carta
         for carta in self.cartas:
-            carta.Dibujar(pantalla, imagenes["Imagen1"])
+            carta.Dibujar(pantalla, imagenes[carta.id])

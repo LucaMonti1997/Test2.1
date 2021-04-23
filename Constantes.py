@@ -1,6 +1,6 @@
 import pygame
 
-WIDTH = 800
+WIDTH = 900
 HEIGHT = 600
 
 BLACK = (0, 0, 0)
