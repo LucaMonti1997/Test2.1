@@ -11,13 +11,16 @@ from Jugador import *
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption('alpha')
 
-
-
 jugador1 = Jugador()
+imagenes = {
+    "Imagen1": pygame.image.load("Assets/Templates/images.png").convert_alpha(),
+    "Imagen2": pygame.image.load("Assets/TestAssets/Espada1.png").convert_alpha()
+}
+
 
 def renderWindow():
     screen.fill((0, 0, 125))
-    jugador1.MostratCartas(screen)
+    jugador1.MostrarCartas(screen)
     pygame.display.update()
 
 
