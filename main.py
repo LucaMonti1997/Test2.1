@@ -12,16 +12,18 @@ screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption('alpha')
 jugador1 = Jugador()
 jugador1.InicialziarImagenes()
+jugador1.base.InicizializarBase()
+
 
 def renderWindow():
     screen.fill((0, 0, 125))
     jugador1.MostrarCartas(screen)
+    jugador1.base.Dibujar(screen)
     pygame.display.update()
 
 
 def main():
     clock = pygame.time.Clock()
-
 
     # main loop
     run = True
@@ -33,8 +35,6 @@ def main():
                 run = False
         renderWindow()
     pygame.quit()
-
-
 
 
 if __name__ == "__main__":
