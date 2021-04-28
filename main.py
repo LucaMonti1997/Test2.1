@@ -10,9 +10,8 @@ from Jugador import *
 
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption('alpha')
-
 jugador1 = Jugador()
-
+jugador1.InicialziarImagenes()
 
 def renderWindow():
     screen.fill((0, 0, 125))
@@ -22,6 +21,7 @@ def renderWindow():
 
 def main():
     clock = pygame.time.Clock()
+
 
     # main loop
     run = True
@@ -33,6 +33,8 @@ def main():
                 run = False
         renderWindow()
     pygame.quit()
+
+
 
 
 if __name__ == "__main__":
