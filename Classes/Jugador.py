@@ -34,8 +34,7 @@ class Jugador(object):
 
         self.imagenes2 = {}
 
-        self.base = Base([200 , 200], [200 , 200])
-
+        self.base = Base([300, 300], [0.5, 0.5])
 
         # Poblar la mano por primera vez
         random.shuffle(self.mazo.cartas_restantes)
