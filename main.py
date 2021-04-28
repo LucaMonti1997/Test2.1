@@ -6,6 +6,7 @@ from Constantes import *
 from Carta import *
 from Jugador import *
 from Mazo import *
+from Narrador import *
 
 # Inizializar pantalla
 
@@ -20,9 +21,14 @@ jugador2 = Jugador([600, 300], [0.5, 0.5], mazo2)
 jugador2.InicialziarImagenes()
 jugador2.base.InicizializarBase()
 
+narrador = Narrador(jugador1, jugador2)
+
 
 # Debugeado
 # slider = Slider(screen, 100, 100, 200, 40, min=0, max=100, step=1)
+
+def mouseHandler(pos):
+    narrador.DetectarClickCarta(pos)
 
 
 def renderWindow():
@@ -43,9 +49,13 @@ def main():
     while run:
         clock.tick(30)
         events = pygame.event.get()
+        evento = pygame.event.poll()
         for event in events:
             if event.type == pygame.QUIT:
                 run = False
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                print(pygame.mouse.get_pressed())
+                mouseHandler(pygame.mouse.get_pos())
         # slider.listen(events)
         #
         # jugador1.hp_castillo = (slider.getValue())

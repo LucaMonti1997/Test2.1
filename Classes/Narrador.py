@@ -51,20 +51,20 @@ class Narrador(object):
 
         Jugar o descartar una carta, basicamente.
 
-        :param carta: String. Identificador de la carta jugada
+        :param carta: Objeto Carta. Carta jugada
         :param jugar: Boolean. Jugamos o no la carta? False es descartar
         """
 
         if jugar:
             # Vemos cuantos recursos y de que tipo se gastan, y luego los restamos al jugador activo
-            recurso = diccionario_cartas[carta][0][1]
-            cantidad_recurso = diccionario_cartas[carta][0][0]
+            recurso = diccionario_cartas[carta.id][0][1]
+            cantidad_recurso = diccionario_cartas[carta.id][0][0]
             self.jugadores[self.turno].set(recurso, self.jugadores[self.turno].get(recurso) + cantidad_recurso)
 
             # Vemos el atributo objetivo, y la cantidad a modificar.
             # Según la cantidad afectamos al jugador activo o al oponente
-            objetivo = diccionario_cartas[carta][1][1]
-            cantidad_objetivo = diccionario_cartas[carta][1][0]
+            objetivo = diccionario_cartas[carta.id][1][1]
+            cantidad_objetivo = diccionario_cartas[carta.id][1][0]
             # Cantidad positiva. El efecto es para uno mismo.
             if cantidad_objetivo > 0:
                 self.jugadores[self.turno].set(objetivo, self.jugadores[self.turno].get(objetivo) + cantidad_objetivo)
@@ -74,7 +74,7 @@ class Narrador(object):
                                                    self.jugadores[self.Opuesto()].get(objetivo) + cantidad_objetivo)
 
         # Quitamos la carta de la mano del jugador activo
-        self.jugadores[self.turno].mano.remove(carta)
+        self.jugadores[self.turno].mano.remove(carta.id)
         self.jugadores[self.turno].CogerUnaCarta()
         self.CambiarTurno()
 
@@ -102,3 +102,12 @@ class Narrador(object):
             return 4
         else:
             return 0
+
+    # No discrimina entre click izquierdo o derecho
+    def DetectarClickCarta(self, pos):
+        for carta in self.jugadores[0].cartas:
+            if carta.coord[0] < pos[0] < carta.coord[0] + self.jugadores[self.turno].imagenes["muralla"].get_width() \
+                    and carta.coord[1] < pos[1] < carta.coord[1] + \
+                    self.jugadores[self.turno].imagenes["muralla"].get_height():
+                self.JugarTurno(carta, carta.estado)
+                return

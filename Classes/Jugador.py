@@ -32,7 +32,7 @@ class Jugador(object):
         self.mano = []
         self.cartas = []
 
-        self.imagenes2 = {}
+        self.imagenes = {}
 
         self.base = Base(coordenada_base, dimensiones_base)
 
@@ -58,7 +58,7 @@ class Jugador(object):
 
         # obtenemos el fondo de todas las cartas con una imagen
 
-        self.imagenes2 = {
+        self.imagenes = {
             "muralla": pygame.image.load("Assets/Cards/1.png").convert_alpha(),
             "defensa": pygame.image.load("Assets/Cards/2.png").convert_alpha(),
             "espada": pygame.image.load("Assets/Cards/3.png").convert_alpha(),
@@ -72,15 +72,15 @@ class Jugador(object):
 
         # modificamos las imagenes para que quepan en pantalla
 
-        for key in self.imagenes2:
-            self.imagenes2[key] = pygame.transform.smoothscale(self.imagenes2[key], (
-                int(self.imagenes2[key].get_width() / 8), int(self.imagenes2[key].get_height() / 8)))
+        for key in self.imagenes:
+            self.imagenes[key] = pygame.transform.smoothscale(self.imagenes[key], (
+                int(self.imagenes[key].get_width() / 8), int(self.imagenes[key].get_height() / 8)))
 
     def MostrarCartas(self, pantalla):
 
         # dibujamos las cartas con la imagen correspondiente segun el id de la carta
         for carta in self.cartas:
-            carta.Dibujar(pantalla, self.imagenes2[carta.id])
+            carta.Dibujar(pantalla, self.imagenes[carta.id])
 
     def MostrarBase(self, pantalla):
         if self.hp_castillo < 40:
