@@ -2,6 +2,7 @@ import random
 from Mazo import *
 from Constantes import *
 from Carta import *
+from Base import *
 
 
 # Clase de jugador a la qual se le asignaran las siguientes funciones:
@@ -32,6 +33,9 @@ class Jugador(object):
         self.cartas = []
 
         self.imagenes2 = {}
+
+        self.base = Base([200 , 200], [200 , 200])
+
 
         # Poblar la mano por primera vez
         random.shuffle(self.mazo.cartas_restantes)
