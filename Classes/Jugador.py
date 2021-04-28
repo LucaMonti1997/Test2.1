@@ -12,10 +12,10 @@ from Base import *
 
 class Jugador(object):
 
-    def __init__(self):
+    def __init__(self, coordenada_base, dimensiones_base, mazo):
         # Castillo x muralla
-        self.hp_castillo = 20
-        self.hp_muralla = 10
+        self.hp_castillo = 69
+        self.hp_muralla = 100
 
         # Generadores
         self.constructores = 2
@@ -28,13 +28,13 @@ class Jugador(object):
         self.mana = 5
 
         # Crear mazo a partir de la classe Mazo
-        self.mazo = Mazo(1)
+        self.mazo = mazo
         self.mano = []
         self.cartas = []
 
         self.imagenes2 = {}
 
-        self.base = Base([300, 300], [0.5, 0.5])
+        self.base = Base(coordenada_base, dimensiones_base)
 
         # Poblar la mano por primera vez
         random.shuffle(self.mazo.cartas_restantes)
@@ -81,3 +81,23 @@ class Jugador(object):
         # dibujamos las cartas con la imagen correspondiente segun el id de la carta
         for carta in self.cartas:
             carta.Dibujar(pantalla, self.imagenes2[carta.id])
+
+    def MostrarBase(self, pantalla):
+        if self.hp_castillo < 40:
+            self.base.offset["torre_izquierda"] = 0
+            self.base.offset["torre_derecha"] = 0
+            self.base.offset["torre_central"] = self.hp_castillo / 40
+        elif self.hp_castillo < 70:
+            self.base.offset["torre_izquierda"] = (self.hp_castillo - 40) / 30
+            self.base.offset["torre_derecha"] = 0
+            self.base.offset["torre_central"] = 1
+        else:
+            self.base.offset["torre_izquierda"] = 1
+            self.base.offset["torre_derecha"] = (self.hp_castillo - 70) / 30
+            self.base.offset["torre_central"] = 1
+
+        self.base.offset["muralla"] = self.hp_muralla / 100
+
+        # print(self.base.offset["torre_izquierda"], self.base.offset["torre_central"],self.base.offset["torre_derecha"])
+
+        self.base.Dibujar(pantalla)
