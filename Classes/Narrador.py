@@ -1,5 +1,11 @@
 import random
+
+import pygame.font
+
 from Constantes import *
+
+pygame.font.init()
+font = pygame.font.SysFont('Arial', 30)
 
 
 class Narrador(object):
@@ -59,7 +65,7 @@ class Narrador(object):
             # Vemos cuantos recursos y de que tipo se gastan, y luego los restamos al jugador activo
             recurso = diccionario_cartas[carta.id][0][1]
             cantidad_recurso = diccionario_cartas[carta.id][0][0]
-            self.jugadores[self.turno].set(recurso, self.jugadores[self.turno].get(recurso) + cantidad_recurso)
+            self.jugadores[self.turno].Set(recurso, self.jugadores[self.turno].Get(recurso) + cantidad_recurso)
 
             # Vemos el atributo objetivo, y la cantidad a modificar.
             # Según la cantidad afectamos al jugador activo o al oponente
@@ -67,13 +73,14 @@ class Narrador(object):
             cantidad_objetivo = diccionario_cartas[carta.id][1][0]
             # Cantidad positiva. El efecto es para uno mismo.
             if cantidad_objetivo > 0:
-                self.jugadores[self.turno].set(objetivo, self.jugadores[self.turno].get(objetivo) + cantidad_objetivo)
+                self.jugadores[self.turno].Set(objetivo, self.jugadores[self.turno].Get(objetivo) + cantidad_objetivo)
             # Cantidad negativa. El efecto es para el oponente.
             else:
-                self.jugadores[self.Opuesto()].set(objetivo,
-                                                   self.jugadores[self.Opuesto()].get(objetivo) + cantidad_objetivo)
+                self.jugadores[self.Opuesto()].Set(objetivo,
+                                                   self.jugadores[self.Opuesto()].Get(objetivo) + cantidad_objetivo)
 
-        # Quitamos la carta de la mano del jugador activo
+        #Quitamos la carta de la mano del jugador activo
+
         self.jugadores[self.turno].mano.remove(carta.id)
         self.jugadores[self.turno].CogerUnaCarta()
         self.CambiarTurno()
@@ -105,7 +112,7 @@ class Narrador(object):
 
     # No discrimina entre click izquierdo o derecho
     def DetectarClickCarta(self, pos):
-        for carta in self.jugadores[0].cartas:
+        for carta in self.jugadores[self.turno].cartas:
             if carta.coord[0] < pos[0] < carta.coord[0] + self.jugadores[self.turno].imagenes["muralla"].get_width() \
                     and carta.coord[1] < pos[1] < carta.coord[1] + \
                     self.jugadores[self.turno].imagenes["muralla"].get_height():

@@ -13,7 +13,8 @@ YELLOW = (255, 255, 0)
 # Contiene el diccionario completo de las cartas del juego
 diccionario_cartas = {
     "muralla": [[5, "ladrillos"], [10, "hp_muralla"], ["Muralla +10"]],
-    "defensa": [[5, "ladrillos"], [10, "hp_muralla"], ["Muralla +10"]]
+    "defensa": [[5, "ladrillos"], [10, "hp_muralla"], ["Muralla +10"]],
+    "espada": [[5, "espadas"], [-10, "hp_muralla"], ["Muralla -10"]]
 }
 
 

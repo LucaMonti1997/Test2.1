@@ -24,7 +24,7 @@ class Jugador(object):
 
         # Recursos
         self.ladrillos = 5
-        self.armas = 5
+        self.espadas = 5
         self.mana = 5
 
         # Crear mazo a partir de la classe Mazo
@@ -47,12 +47,12 @@ class Jugador(object):
             x += 1
 
     def CogerUnaCarta(self):
-        if self.mazo.cartas_restantes:
-            self.mano.append(self.mazo.cartas_restantes.pop())
-        else:
-            self.mazo.cartas_restantes = self.mazo.mazo_1_completo
-            random.shuffle(self.mazo.cartas_restantes)
-            self.mano.append(self.mazo.cartas_restantes.pop())
+        self.mazo.ComprobarMazo()
+        self.mano.append(self.mazo.cartas_restantes.pop())
+        i = 0
+        while i < NUMERO_CARTAS_MANO:
+            self.cartas[i].id = self.mano[i]
+            i += 1
 
     def InicialziarImagenes(self):
 
@@ -101,3 +101,9 @@ class Jugador(object):
         # print(self.base.offset["torre_izquierda"], self.base.offset["torre_central"],self.base.offset["torre_derecha"])
 
         self.base.Dibujar(pantalla)
+
+    def Set(self, attr, value):
+        setattr(self, attr, value)
+
+    def Get(self, attr):
+        return getattr(self, attr)
