@@ -70,13 +70,14 @@ class Narrador(object):
             cantidad_objetivo = diccionario_cartas[carta.id][1][0]
             # Cantidad positiva. El efecto es para uno mismo.
             if cantidad_objetivo > 0:
-                self.jugadores[self.turno].Set(objetivo, self.jugadores[self.turno].Get(objetivo) + cantidad_objetivo)
+                self.jugadores[self.turno].Set(objetivo,
+                                               clamp(self.jugadores[self.turno].Get(objetivo) + cantidad_objetivo))
             # Cantidad negativa. El efecto es para el oponente.
             else:
-                self.jugadores[self.Opuesto()].Set(objetivo,
-                                                   self.jugadores[self.Opuesto()].Get(objetivo) + cantidad_objetivo)
+                self.jugadores[self.Opuesto()].Set(objetivo, clamp(self.jugadores[self.Opuesto()].Get(objetivo) +
+                                                                   cantidad_objetivo))
 
-        #Quitamos la carta de la mano del jugador activo
+        # Quitamos la carta de la mano del jugador activo
 
         self.jugadores[self.turno].mano.remove(carta.id)
         self.jugadores[self.turno].CogerUnaCarta()

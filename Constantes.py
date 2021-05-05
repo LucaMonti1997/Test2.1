@@ -21,4 +21,8 @@ NUMERO_CARTAS_MANO = 8
 
 pygame.font.init()
 font = pygame.font.SysFont('Arial', 30)
-font_recursos = pygame.font.SysFont('Arial', 20,True)
+font_recursos = pygame.font.SysFont('Arial', 20, True)
+
+
+def clamp(numero, minimo=0, maximo=100):
+    return max(min(numero, maximo), minimo)

@@ -24,9 +24,9 @@ jugador2.base.InicizializarBase()
 
 narrador = Narrador(jugador1, jugador2)
 
+
 # Debugeado
 # slider = Slider(screen, 100, 100, 200, 40, min=0, max=100, step=1)
-
 
 
 def mouseHandler(pos):
@@ -45,8 +45,8 @@ def renderWindow():
     else:
         jugador2.MostrarCartas(screen)
     # slider.draw()
-    texto_turno = font.render(str(narrador.turno), False, (0, 0, 0))
-    screen.blit(texto_turno, [250, 50])
+    texto_turno = font.render("Turno jugador: " + str(narrador.turno), False, (0, 0, 0))
+    screen.blit(texto_turno, [(WIDTH / 2) - 100, 25])
     pygame.display.update()
 
 

@@ -18,7 +18,7 @@ class Jugador(object):
     def __init__(self, coordenada_base, dimensiones_base, mazo, identificador):
         # Castillo x muralla
         self.hp_castillo = 69
-        self.hp_muralla = 100
+        self.hp_muralla = 42
 
         # Generadores
         self.constructores = 2
@@ -75,6 +75,8 @@ class Jugador(object):
             "soldados": pygame.image.load("Assets/Iconos/Soldiers.png").convert_alpha(),
             "mana": pygame.image.load("Assets/Iconos/Crystals.png").convert_alpha(),
             "magos": pygame.image.load("Assets/Iconos/Magic.png").convert_alpha(),
+            "escudo": pygame.image.load("Assets/Iconos/escudo.png").convert_alpha(),
+            "corazon": pygame.image.load("Assets/Iconos/Corazon.png").convert_alpha(),
         }
 
         # modificamos las imagenes para que quepan en pantalla
@@ -157,6 +159,13 @@ class Jugador(object):
         # print(self.base.offset["torre_izquierda"], self.base.offset["torre_central"],self.base.offset["torre_derecha"])
 
         self.base.Dibujar(pantalla)
+
+        texto_hp_castillo = Constantes.font_recursos.render(str(self.hp_castillo), False, (0, 0, 0))
+        texto_hp_muralla = Constantes.font_recursos.render(str(self.hp_muralla), False, (0, 0, 0))
+        pantalla.blit(texto_hp_castillo, [self.base.coord[0] - 75, self.base.coord[1] - 200])
+        pantalla.blit(self.iconos["corazon"], [self.base.coord[0] - 65, self.base.coord[1] - 209])
+        pantalla.blit(texto_hp_muralla, [self.base.coord[0] + 25, self.base.coord[1] - 200])
+        pantalla.blit(self.iconos["escudo"], [self.base.coord[0] +50, self.base.coord[1] - 213])
 
     def Set(self, attr, value):
         setattr(self, attr, value)
