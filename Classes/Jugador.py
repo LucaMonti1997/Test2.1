@@ -15,7 +15,14 @@ from Base import *
 
 class Jugador(object):
 
-    def __init__(self, coordenada_base, dimensiones_base, mazo, identificador):
+    def __init__(self, base, mazo, identificador):
+        """
+        Almacena toda la información del jugador, y gestiona varias de sus interacciones.
+
+        :param base: Objeto Base.
+        :param mazo: Objeto Mazo.
+        :param identificador: 1 -> Jugador1; 2 -> Jugador2
+        """
         # Castillo x muralla
         self.hp_castillo = 69
         self.hp_muralla = 42
@@ -38,7 +45,7 @@ class Jugador(object):
         self.imagenes = {}
         self.iconos = {}
 
-        self.base = Base(coordenada_base, dimensiones_base)
+        self.base = base
         self.id = identificador
 
         # Poblar la mano por primera vez
@@ -52,6 +59,9 @@ class Jugador(object):
             x += 1
 
     def CogerUnaCarta(self):
+        """
+        Coge cartas mientras tenga sitio en la mano
+        """
         self.mazo.ComprobarMazo()
         self.mano.append(self.mazo.cartas_restantes.pop())
         i = 0
@@ -60,8 +70,9 @@ class Jugador(object):
             i += 1
 
     def InicialziarImagenes(self):
-
-        # obtenemos el fondo de todas las cartas con una imagen
+        """
+        Precargamos las imagenes en un diccionario y hacemos ajustes a sus dimensiones.
+        """
 
         self.imagenes = {
             "muralla": pygame.image.load("Assets/Cards/1.png").convert_alpha(),
@@ -89,12 +100,22 @@ class Jugador(object):
                 int(self.iconos[key].get_width() / 1.3), int(self.iconos[key].get_height() / 1.3)))
 
     def MostrarCartas(self, pantalla):
+        """
+        Se llama el metodo Dibujar de cada carta para mostrarla en pantalla.
+
+        :param pantalla: Objeto pygame.display. Donde se muestran las imagenes
+        """
 
         # dibujamos las cartas con la imagen correspondiente segun el id de la carta
         for carta in self.cartas:
             carta.Dibujar(pantalla, self.imagenes[carta.id])
 
     def MostrarRecursos(self, pantalla):
+        """
+        Se dibujan los recursos en pantalla.
+
+        :param pantalla: Objeto pygame.display. Donde se muestran las imagenes
+        """
         if self.id == 1:
             recuadro_ladrillos = (20, 20, 50, 50)
             recuadro_espadas = (20, 100, 50, 50)
@@ -141,6 +162,12 @@ class Jugador(object):
             pantalla.blit(self.iconos["mana"], [WIDTH - 47, 205])
 
     def MostrarBase(self, pantalla):
+        """
+        Primero se calculan los offsets de los atributos de base, luego se llama a base.Dibujar para que se muestre
+        en pantalla
+
+        :param pantalla: Objeto pygame.display. Donde se muestran las imagenes
+        """
         if self.hp_castillo < 40:
             self.base.offset["torre_izquierda"] = 0
             self.base.offset["torre_derecha"] = 0
@@ -165,7 +192,7 @@ class Jugador(object):
         pantalla.blit(texto_hp_castillo, [self.base.coord[0] - 75, self.base.coord[1] - 200])
         pantalla.blit(self.iconos["corazon"], [self.base.coord[0] - 65, self.base.coord[1] - 209])
         pantalla.blit(texto_hp_muralla, [self.base.coord[0] + 25, self.base.coord[1] - 200])
-        pantalla.blit(self.iconos["escudo"], [self.base.coord[0] +50, self.base.coord[1] - 213])
+        pantalla.blit(self.iconos["escudo"], [self.base.coord[0] + 50, self.base.coord[1] - 213])
 
     def Set(self, attr, value):
         setattr(self, attr, value)

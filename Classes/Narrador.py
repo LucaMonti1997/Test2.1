@@ -10,11 +10,11 @@ class Narrador(object):
         """
         Se encarga de "dirigir" la partida. Reparte las cartas, gestiona los turnos, generación de recursos, eventos
         aleatorios, etc.
+
+        :param jugador1: Objeto Jugador. Jugador 1, tipicamente el unico humano
+        :param jugador2: Objeto Jugador. Jugador 2, tipicamente la IA
         """
-        self.turno_jugador1 = False
-        self.turno_jugador2 = False
         self.turno = 0
-        self.turno_acabado = False
         self.jugadores = [jugador1, jugador2]
 
     def Opuesto(self):
@@ -38,7 +38,6 @@ class Narrador(object):
         Cambia el turno de un jugador al otro.
         """
         self.turno = self.Opuesto()
-        self.turno_acabado = False
 
     def GenerarRecursos(self):
         """
@@ -111,6 +110,11 @@ class Narrador(object):
 
     # No discrimina entre click izquierdo o derecho
     def DetectarClickCarta(self, pos):
+        """
+        Detecta cual carta ha sido clickeada, y actua en consecuencia
+
+        :param pos: Lista. Coordenadas donde se ha hecho click. [x, y]
+        """
         for carta in self.jugadores[self.turno].cartas:
             if carta.coord[0] < pos[0] < carta.coord[0] + self.jugadores[self.turno].imagenes["muralla"].get_width() \
                     and carta.coord[1] < pos[1] < carta.coord[1] + \

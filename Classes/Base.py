@@ -5,20 +5,16 @@ from Constantes import *
 class Base(object):
 
     def __init__(self, coordenadas, dimensiones):
+        """
+        Se encarga de graficar todos los componentes de la base.
+
+        :param coordenadas: Lista. Punto central de referencia de la base. [x, y]
+        :param dimensiones: Lista. Multiplicador de ancho y alto para ajustar la escala. Valor por defecto 1.
+        [mult_ancho, mult_alto]
+        """
         self.coord = coordenadas
         self.dimen = dimensiones
-        self.offset = {}
         self.imagenesbase = {}
-
-    def InicizializarBase(self):
-        self.imagenesbase = {
-
-            "torre_central": pygame.image.load("Assets/Castillo/Centro.png").convert_alpha(),
-            "torre_izquierda": pygame.image.load("Assets/Castillo/Torre_Izquierda.png").convert_alpha(),
-            "torre_derecha": pygame.image.load("Assets/Castillo/Torre_Derecha.png").convert_alpha(),
-            "muralla": pygame.image.load("Assets/Castillo/Muralla.png").convert_alpha()
-        }
-
         self.offset = {
             "torre_central": 0,
             "torre_izquierda": 0,
@@ -26,12 +22,23 @@ class Base(object):
             "muralla": 0
         }
 
+    def InicizializarBase(self):
+        """
+        Precargamos las imagenes en un diccionario y hacemos ajustes a sus dimensiones.
+        """
+
+        self.imagenesbase = {
+            "torre_central": pygame.image.load("Assets/Castillo/Centro.png").convert_alpha(),
+            "torre_izquierda": pygame.image.load("Assets/Castillo/Torre_Izquierda.png").convert_alpha(),
+            "torre_derecha": pygame.image.load("Assets/Castillo/Torre_Derecha.png").convert_alpha(),
+            "muralla": pygame.image.load("Assets/Castillo/Muralla.png").convert_alpha()
+        }
+
         self.imagenesbase["muralla"] = pygame.transform.smoothscale(self.imagenesbase["muralla"],
                                                                     (
-                                                                        int(self.imagenesbase[
-                                                                                "muralla"].get_width() * 2.1),
-                                                                        int(self.imagenesbase[
-                                                                                "muralla"].get_height() * 0.8)))
+                                                                    int(self.imagenesbase["muralla"].get_width() * 2.1),
+                                                                    int(self.imagenesbase[
+                                                                            "muralla"].get_height() * 0.8)))
 
         for key in self.imagenesbase:
             self.imagenesbase[key] = pygame.transform.smoothscale(self.imagenesbase[key], (
@@ -39,6 +46,11 @@ class Base(object):
                 int(self.imagenesbase[key].get_height() * self.dimen[1])))
 
     def Dibujar(self, pantalla):
+        """
+        Se dibujan en la pantalla los elementos de base, teniendo en cuenta sus offsets.
+
+        :param pantalla: Objeto pygame.display. Donde se muestran las imagenes
+        """
         # Torre central
 
         pantalla.blit(self.imagenesbase["torre_central"],
