@@ -21,7 +21,7 @@ class Jugador(object):
 
         :param base: Objeto Base.
         :param mazo: Objeto Mazo.
-        :param identificador: 1 -> Jugador1; 2 -> Jugador2
+        :param identificador: 0 -> Jugador1; 1 -> Jugador2
         """
         # Castillo x muralla
         self.hp_castillo = 69
@@ -52,9 +52,9 @@ class Jugador(object):
         random.shuffle(self.mazo.cartas_restantes)
         x = 0
         while len(self.mano) < NUMERO_CARTAS_MANO:
-            identificador = self.mazo.cartas_restantes.pop()
-            self.mano.append(identificador)
-            carta_n = Carta(identificador, True, (50 + 100 * x, HEIGHT - 200), (1, 1))
+            identificador_carta = self.mazo.cartas_restantes.pop()
+            self.mano.append(identificador_carta)
+            carta_n = Carta(identificador_carta, True, (50 + 100 * x, HEIGHT - 200), (1, 1))
             self.cartas.append(carta_n)
             x += 1
 
@@ -96,8 +96,11 @@ class Jugador(object):
             self.imagenes[key] = pygame.transform.smoothscale(self.imagenes[key], (
                 int(self.imagenes[key].get_width() / 8), int(self.imagenes[key].get_height() / 8)))
         for key in self.iconos:
-            self.iconos[key] = pygame.transform.smoothscale(self.iconos[key], (
-                int(self.iconos[key].get_width() / 1.3), int(self.iconos[key].get_height() / 1.3)))
+            ancho = self.iconos[key].get_width()
+            nuevo_ancho = int(WIDTH / 25)
+            alto = self.iconos[key].get_height()
+            nuevo_alto = int((alto * nuevo_ancho) / ancho)
+            self.iconos[key] = pygame.transform.smoothscale(self.iconos[key], (nuevo_ancho, nuevo_alto))
 
     def MostrarCartas(self, pantalla):
         """
@@ -116,14 +119,16 @@ class Jugador(object):
 
         :param pantalla: Objeto pygame.display. Donde se muestran las imagenes
         """
-        if self.id == 1:
-            recuadro_ladrillos = (20, 20, 50, 50)
-            recuadro_espadas = (20, 100, 50, 50)
-            recuadro_mana = (20, 180, 50, 50)
-        else:
-            recuadro_ladrillos = (WIDTH - 70, 20, 50, 50)
-            recuadro_espadas = (WIDTH - 70, 100, 50, 50)
-            recuadro_mana = (WIDTH - 70, 180, 50, 50)
+        # Ancho y alto base de los rectangulos
+        ancho = WIDTH / 10
+        alto = ancho
+        gap = 1.2
+        recuadro_ladrillos = ((WIDTH / 25) * abs((self.id - 1)) + (WIDTH - (WIDTH / 25) - ancho) * self.id,
+                              HEIGHT / 20, ancho, alto)
+        recuadro_espadas = ((WIDTH / 25) * abs((self.id - 1)) + (WIDTH - (WIDTH / 25) - ancho) * self.id,
+                            (HEIGHT / 20) + alto * gap, ancho, alto)
+        recuadro_mana = ((WIDTH / 25) * abs((self.id - 1)) + (WIDTH - (WIDTH / 25) - ancho) * self.id,
+                         (HEIGHT / 20) + alto * gap * 2, ancho, alto)
         pygame.draw.rect(pantalla, RED, recuadro_ladrillos)
         pygame.draw.rect(pantalla, GREEN, recuadro_espadas)
         pygame.draw.rect(pantalla, YELLOW, recuadro_mana)
@@ -134,32 +139,65 @@ class Jugador(object):
         texto_espadas = Constantes.font_recursos.render(str(self.espadas), False, (0, 0, 0))
         texto_magos = Constantes.font_recursos.render(str(self.magos), False, (0, 0, 0))
         texto_mana = Constantes.font_recursos.render(str(self.mana), False, (0, 0, 0))
-        if self.id == 1:
-            pantalla.blit(texto_constructores, [25, 20])
-            pantalla.blit(self.iconos["constructores"], [43, 20])
-            pantalla.blit(texto_ladrillos, [25, 45])
-            pantalla.blit(self.iconos["ladrillos"], [45, 48])
-            pantalla.blit(texto_soldados, [25, 100])
-            pantalla.blit(self.iconos["soldados"], [43, 101])
-            pantalla.blit(texto_espadas, [25, 125])
-            pantalla.blit(self.iconos["espadas"], [42, 125])
-            pantalla.blit(texto_magos, [25, 180])
-            pantalla.blit(self.iconos["magos"], [45, 182])
-            pantalla.blit(texto_mana, [25, 205])
-            pantalla.blit(self.iconos["mana"], [44, 205])
-        else:
-            pantalla.blit(texto_constructores, [WIDTH - 65, 20])
-            pantalla.blit(self.iconos["constructores"], [WIDTH - 47, 20])
-            pantalla.blit(texto_ladrillos, [WIDTH - 65, 45])
-            pantalla.blit(self.iconos["ladrillos"], [WIDTH - 43, 48])
-            pantalla.blit(texto_soldados, [WIDTH - 65, 100])
-            pantalla.blit(self.iconos["soldados"], [WIDTH - 47, 101])
-            pantalla.blit(texto_espadas, [WIDTH - 65, 125])
-            pantalla.blit(self.iconos["espadas"], [WIDTH - 47, 125])
-            pantalla.blit(texto_magos, [WIDTH - 65, 180])
-            pantalla.blit(self.iconos["magos"], [WIDTH - 47, 182])
-            pantalla.blit(texto_mana, [WIDTH - 65, 205])
-            pantalla.blit(self.iconos["mana"], [WIDTH - 47, 205])
+
+        # Costructores
+        pantalla.blit(texto_constructores,
+                      [((WIDTH / 25) + ancho * 3 / 15) * abs((self.id - 1)) +
+                       (WIDTH - (WIDTH / 25) - ancho + ancho * 3 / 15) * self.id, (HEIGHT / 20) + (alto * 2 / 15)])
+        pantalla.blit(self.iconos["constructores"], [
+            ((WIDTH / 25) + ancho * 13 / 15 - self.iconos["constructores"].get_width()) * abs((self.id - 1)) +
+            (WIDTH - (WIDTH / 25) - ancho + ancho * 13 / 15 - self.iconos["constructores"].get_width()) * self.id,
+            (HEIGHT / 20) + (alto * 1 / 15)])
+
+        # Ladrillos
+        pantalla.blit(texto_ladrillos,
+                      [((WIDTH / 25) + ancho * 3 / 15) * abs((self.id - 1)) +
+                       (WIDTH - (WIDTH / 25) - ancho + ancho * 3 / 15) * self.id,
+                       (HEIGHT / 20) + (alto * 2 / 15) + (alto / 2)])
+        pantalla.blit(self.iconos["ladrillos"], [
+            ((WIDTH / 25) + ancho * 13 / 15 - self.iconos["ladrillos"].get_width()) * abs((self.id - 1)) +
+            (WIDTH - (WIDTH / 25) - ancho + ancho * 13 / 15 - self.iconos["ladrillos"].get_width()) * self.id,
+            (HEIGHT / 20) + (alto * 1 / 15) + (alto / 2)])
+
+        # Soldados
+        pantalla.blit(texto_soldados,
+                      [((WIDTH / 25) + ancho * 3 / 15) * abs((self.id - 1)) +
+                       (WIDTH - (WIDTH / 25) - ancho + ancho * 3 / 15) * self.id,
+                       (HEIGHT / 20) + (alto * 2 / 15) + alto * gap])
+        pantalla.blit(self.iconos["soldados"], [
+            ((WIDTH / 25) + ancho * 13 / 15 - self.iconos["soldados"].get_width()) * abs((self.id - 1)) +
+            (WIDTH - (WIDTH / 25) - ancho + ancho * 13 / 15 - self.iconos["soldados"].get_width()) * self.id,
+            (HEIGHT / 20) + (alto * 1 / 15) + (alto * gap)])
+
+        # Espadas
+        pantalla.blit(texto_espadas,
+                      [((WIDTH / 25) + ancho * 3 / 15) * abs((self.id - 1)) +
+                       (WIDTH - (WIDTH / 25) - ancho + ancho * 3 / 15) * self.id,
+                       (HEIGHT / 20) + (alto * 2 / 15) + (alto / 2) + (alto * gap)])
+        pantalla.blit(self.iconos["espadas"], [
+            ((WIDTH / 25) + ancho * 13 / 15 - self.iconos["espadas"].get_width()) * abs((self.id - 1)) +
+            (WIDTH - (WIDTH / 25) - ancho + ancho * 13 / 15 - self.iconos["espadas"].get_width()) * self.id,
+            (HEIGHT / 20) + (alto * 1 / 15) + (alto / 2) + (alto * gap)])
+
+        # Magos
+        pantalla.blit(texto_magos,
+                      [((WIDTH / 25) + ancho * 3 / 15) * abs((self.id - 1)) +
+                       (WIDTH - (WIDTH / 25) - ancho + ancho * 3 / 15) * self.id,
+                       (HEIGHT / 20) + (alto * 2 / 15) + alto * gap * 2])
+        pantalla.blit(self.iconos["magos"], [
+            ((WIDTH / 25) + ancho * 13 / 15 - self.iconos["magos"].get_width()) * abs((self.id - 1)) +
+            (WIDTH - (WIDTH / 25) - ancho + ancho * 13 / 15 - self.iconos["magos"].get_width()) * self.id,
+            (HEIGHT / 20) + (alto * 1 / 15) + (alto * gap * 2)])
+
+        # Mana
+        pantalla.blit(texto_mana,
+                      [((WIDTH / 25) + ancho * 3 / 15) * abs((self.id - 1)) +
+                       (WIDTH - (WIDTH / 25) - ancho + ancho * 3 / 15) * self.id,
+                       (HEIGHT / 20) + (alto * 2 / 15) + (alto / 2) + (alto * gap * 2)])
+        pantalla.blit(self.iconos["mana"], [
+            ((WIDTH / 25) + ancho * 13 / 15 - self.iconos["mana"].get_width()) * abs((self.id - 1)) +
+            (WIDTH - (WIDTH / 25) - ancho + ancho * 13 / 15 - self.iconos["mana"].get_width()) * self.id,
+            (HEIGHT / 20) + (alto * 1 / 15) + (alto / 2) + (alto * gap * 2)])
 
     def MostrarBase(self, pantalla):
         """

@@ -15,17 +15,16 @@ screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption('alpha')
 mazo1 = Mazo(1)
 base1 = Base([300, 300], [0.5, 0.5])
-jugador1 = Jugador(base1, mazo1, 1)
+jugador1 = Jugador(base1, mazo1, 0)
 jugador1.InicialziarImagenes()
 jugador1.base.InicizializarBase()
 mazo2 = Mazo(1)
 base2 = Base([600, 300], [0.5, 0.5])
-jugador2 = Jugador(base2, mazo2, 2)
+jugador2 = Jugador(base2, mazo2, 1)
 jugador2.InicialziarImagenes()
 jugador2.base.InicizializarBase()
 
 narrador = Narrador(jugador1, jugador2)
-
 
 # Debugeado
 # slider = Slider(screen, 100, 100, 200, 40, min=0, max=100, step=1)
