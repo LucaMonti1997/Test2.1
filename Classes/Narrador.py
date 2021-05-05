@@ -4,9 +4,6 @@ import pygame.font
 
 from Constantes import *
 
-pygame.font.init()
-font = pygame.font.SysFont('Arial', 30)
-
 
 class Narrador(object):
     def __init__(self, jugador1, jugador2):
@@ -48,7 +45,7 @@ class Narrador(object):
         Genera los recursos que corresponden.
         """
         self.jugadores[self.turno].ladrillos += self.jugadores[self.turno].constructores
-        self.jugadores[self.turno].armas += self.jugadores[self.turno].soldados
+        self.jugadores[self.turno].espadas += self.jugadores[self.turno].soldados
         self.jugadores[self.turno].mana += self.jugadores[self.turno].magos
 
     def JugarTurno(self, carta, jugar=True):
@@ -84,6 +81,7 @@ class Narrador(object):
         self.jugadores[self.turno].mano.remove(carta.id)
         self.jugadores[self.turno].CogerUnaCarta()
         self.CambiarTurno()
+        self.GenerarRecursos()
 
     def ComprobarPartida(self):
         """

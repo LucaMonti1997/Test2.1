@@ -17,5 +17,8 @@ diccionario_cartas = {
     "espada": [[5, "espadas"], [-10, "hp_muralla"], ["Muralla -10"]]
 }
 
-
 NUMERO_CARTAS_MANO = 8
+
+pygame.font.init()
+font = pygame.font.SysFont('Arial', 30)
+font_recursos = pygame.font.SysFont('Arial', 20,True)

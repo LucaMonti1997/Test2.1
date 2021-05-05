@@ -14,11 +14,11 @@ pygame.font.init()
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption('alpha')
 mazo1 = Mazo(1)
-jugador1 = Jugador([300, 300], [0.5, 0.5], mazo1)
+jugador1 = Jugador([300, 300], [0.5, 0.5], mazo1, 1)
 jugador1.InicialziarImagenes()
 jugador1.base.InicizializarBase()
 mazo2 = Mazo(1)
-jugador2 = Jugador([600, 300], [0.5, 0.5], mazo2)
+jugador2 = Jugador([600, 300], [0.5, 0.5], mazo2, 2)
 jugador2.InicialziarImagenes()
 jugador2.base.InicizializarBase()
 
@@ -26,7 +26,7 @@ narrador = Narrador(jugador1, jugador2)
 
 # Debugeado
 # slider = Slider(screen, 100, 100, 200, 40, min=0, max=100, step=1)
-font = pygame.font.SysFont('Arial', 30)
+
 
 
 def mouseHandler(pos):
@@ -37,7 +37,9 @@ def renderWindow():
     screen.fill(BLUE)
 
     jugador1.MostrarBase(screen)
+    jugador1.MostrarRecursos(screen)
     jugador2.MostrarBase(screen)
+    jugador2.MostrarRecursos(screen)
     if narrador.turno == 0:
         jugador1.MostrarCartas(screen)
     else:
