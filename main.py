@@ -1,9 +1,11 @@
 import pygame
 import os
+from time import sleep
 from pygame_widgets import Slider, TextBox
 import random
 from Constantes import *
 from Carta import *
+from Base import *
 from Jugador import *
 from Mazo import *
 from Narrador import *
@@ -14,11 +16,13 @@ pygame.font.init()
 
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption('alpha')
+
 mazo1 = Mazo(1)
 base1 = Base([300, 300], [0.5, 0.5])
 jugador1 = Jugador(base1, mazo1, 0)
 jugador1.InicialziarImagenes()
 jugador1.base.InicizializarBase()
+
 mazo2 = Mazo(1)
 base2 = Base([600, 300], [0.5, 0.5])
 jugador2 = Jugador(base2, mazo2, 1)
@@ -26,6 +30,7 @@ jugador2.InicialziarImagenes()
 jugador2.base.InicizializarBase()
 
 narrador = Narrador(jugador1, jugador2)
+
 
 # Debugeado
 # slider = Slider(screen, 100, 100, 200, 40, min=0, max=100, step=1)
@@ -57,8 +62,27 @@ def main():
 
     # main loop
     run = True
-    contador_clicks = 0
+    restart = True
     while run:
+        # Reinicia la partida de manera bruta.
+        # Considerar craer metodo a posta
+        if narrador.ComprobarPartida() != 0:
+            # espera 2 segundos
+            rect = (100, 100, 150, 250)
+            pygame.draw.rect(screen, RED, rect)
+            sleep(2)
+            mazo1 = Mazo(1)
+            base1 = Base([300, 300], [0.5, 0.5])
+            jugador1.__init__(base1, mazo1, 0)
+            jugador1.InicialziarImagenes()
+            jugador1.base.InicizializarBase()
+            mazo2 = Mazo(1)
+            base2 = Base([600, 300], [0.5, 0.5])
+            jugador2.__init__(base2, mazo2, 1)
+            jugador2.InicialziarImagenes()
+            jugador2.base.InicizializarBase()
+
+
         clock.tick(30)
         events = pygame.event.get()
         evento = pygame.event.poll()

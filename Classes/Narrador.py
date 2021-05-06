@@ -73,10 +73,15 @@ class Narrador(object):
                                                clamp(self.jugadores[self.turno].Get(objetivo) + cantidad_objetivo))
             # Cantidad negativa. El efecto es para el oponente.
             else:
+                if objetivo == "hp_muralla" and self.jugadores[self.Opuesto()].Get("hp_muralla") == 0:
+                    objetivo = "hp_castillo"
                 self.jugadores[self.Opuesto()].Set(objetivo, clamp(self.jugadores[self.Opuesto()].Get(objetivo) +
                                                                    cantidad_objetivo))
 
         # Quitamos la carta de la mano del jugador activo
+
+        if self.ComprobarPartida() == 1:
+            pass
 
         self.jugadores[self.turno].mano.remove(carta.id)
         self.jugadores[self.turno].CogerUnaCarta()
@@ -121,3 +126,168 @@ class Narrador(object):
                     self.jugadores[self.turno].imagenes["muralla"].get_height():
                 self.JugarTurno(carta, carta.estado)
                 return
+
+    def CalculoIA(self):
+        """
+        La IA escoge la mejor carta
+        """
+        ponderacion = {}
+        for carta in self.jugadores[self.turno].mano:
+            nota = 0
+            # Preservación
+            if self.jugadores[self.turno].hp_muralla < 10:
+                # Urge construir muralla
+                pass
+            elif self.jugadores[self.turno].hp_muralla < 40:
+                # Urge menos construir muralla
+                pass
+            else:
+                # No urge menos construir muralla
+                pass
+            if self.jugadores[self.turno].hp_castillo < 30:
+                # Urge construir muralla
+                pass
+            elif self.jugadores[self.turno].hp_castillo < 60:
+                # Urge menos construir muralla
+                pass
+            else:
+                # No urge menos construir muralla
+                pass
+
+            # Comparación
+
+            # Comparamos nuestra muralla con la enemiga.
+            if diccionario_cartas[carta][1][0] > 0 and diccionario_cartas[carta][1][1] == "hp_muralla":
+                # La carta construye muralla
+                if (self.jugadores[self.turno].hp_muralla - self.jugadores[self.Opuesto()].hp_muralla) > 20:
+                    # Tenemos bastante margen, no corre prisa construir mas muralla
+                    pass
+                elif (self.jugadores[self.turno].hp_muralla - self.jugadores[self.Opuesto()].hp_muralla) > 0:
+                    # Tenemos algo de margen, no corre prisa construir mas muralla
+                    pass
+                elif (self.jugadores[self.turno].hp_muralla - self.jugadores[self.Opuesto()].hp_muralla) > -20:
+                    # Tenemos algo de desventaja, considerar recuperarla
+                    pass
+            elif diccionario_cartas[carta][1][0] < 0 and diccionario_cartas[carta][1][1] == "hp_muralla":
+                # La carta ataca la muralla enemiga
+                if (self.jugadores[self.turno].hp_muralla - self.jugadores[self.Opuesto()].hp_muralla) > 20:
+                    # Tenemos bastante margen, no corre prisa construir mas muralla
+                    pass
+                elif (self.jugadores[self.turno].hp_muralla - self.jugadores[self.Opuesto()].hp_muralla) > 0:
+                    # Tenemos algo de margen, no corre prisa construir mas muralla
+                    pass
+                elif (self.jugadores[self.turno].hp_muralla - self.jugadores[self.Opuesto()].hp_muralla) > -20:
+                    # Tenemos algo de desventaja, considerar recuperarla
+                    pass
+
+            # Comparamos nuestro castillo con el enemigo.
+            if diccionario_cartas[carta][1][0] > 0 and diccionario_cartas[carta][1][1] == "hp_castillo":
+                # La carta construye castillo
+                if (self.jugadores[self.turno].hp_castillo - self.jugadores[self.Opuesto()].hp_castillo) > 30:
+                    # Tenemos bastante margen, no corre prisa construir mas castillo
+                    pass
+                elif (self.jugadores[self.turno].hp_castillo - self.jugadores[self.Opuesto()].hp_castillo) > 0:
+                    # Tenemos algo de margen, no corre prisa construir mas castillo
+                    pass
+                elif (self.jugadores[self.turno].hp_castillo - self.jugadores[self.Opuesto()].hp_castillo) > -10:
+                    # Tenemos algo de desventaja, considerar recuperarla
+                    pass
+            elif diccionario_cartas[carta][1][0] < 0 and diccionario_cartas[carta][1][1] == "hp_castillo":
+                # La carta ataca el castillo enemigo
+                if (self.jugadores[self.turno].hp_castillo - self.jugadores[self.Opuesto()].hp_castillo) > 30:
+                    # Tenemos bastante margen, no corre prisa construir mas castillo
+                    pass
+                elif (self.jugadores[self.turno].hp_castillo - self.jugadores[self.Opuesto()].hp_castillo) > 0:
+                    # Tenemos algo de margen, no corre prisa construir mas castillo
+                    pass
+                elif (self.jugadores[self.turno].hp_castillo - self.jugadores[self.Opuesto()].hp_castillo) > -10:
+                    # Tenemos algo de desventaja, considerar recuperarla
+                    pass
+
+            # Miramos de ir consiguiendo generadores a lo largo de la partida
+            if carta.id == "constructores_amigos":
+                if (self.jugadores[self.turno].constructores - self.jugadores[self.Opuesto()].constructores) < 1:
+                    # Queremos tener por lo menos uno mas que el oponente
+                    pass
+                else:
+                    pass
+            if carta.id == "soldados_amigos":
+                if (self.jugadores[self.turno].soldados - self.jugadores[self.Opuesto()].soldados) < 1:
+                    # Queremos tener por lo menos uno mas que el oponente
+                    pass
+                else:
+                    pass
+            if carta.id == "magos_amigos":
+                if (self.jugadores[self.turno].magos - self.jugadores[self.Opuesto()].magos) < 1:
+                    # Queremos tener por lo menos uno mas que el oponente
+                    pass
+                else:
+                    pass
+
+            # Hostilidad
+
+            # Comprobamos si matamos el enemigo
+            if diccionario_cartas[carta][1][0] < 0 and diccionario_cartas[carta][1][1] == "hp_castillo":
+                if (self.jugadores[self.Opuesto()].hp_castillo - diccionario_cartas[carta][1][0]) < 0:
+                    # Destruimos el castillo enemigo. MVP
+                    pass
+                if (self.jugadores[self.Opuesto()].hp_castillo - diccionario_cartas[carta][1][0]) < 5:
+                    # Practicamente destruimos el castillo enemigo.
+                    pass
+                if (self.jugadores[self.Opuesto()].hp_castillo - diccionario_cartas[carta][1][0]) < 15:
+                    # Casi destruimos el castillo enemigo.
+                    pass
+                else:
+                    # El castillo enemigo no peligra aún.
+                    pass
+
+            # Longevidad
+
+            # Miramos de ir consiguiendo generadores a lo largo de la partida
+            if carta.id == "constructores_amigos":
+                if self.turno_jugados < 5 and self.jugadores[self.turno].constructores < 5:
+                    # Urgen mas cosntructores
+                    pass
+                elif self.turno_jugados < 10 and self.jugadores[self.turno].constructores < 8:
+                    # No urgen tanto los constructores
+                    pass
+                elif self.jugadores[self.turno].constructores < 8:
+                    # Realemente nos dan igual los constructores
+                    pass
+            if carta.id == "soldados_amigos":
+                if self.turno_jugados < 5 and self.jugadores[self.turno].soldados < 5:
+                    # Urgen mas cosntructores
+                    pass
+                elif self.turno_jugados < 10 and self.jugadores[self.turno].soldados < 8:
+                    # No urgen tanto los constructores
+                    pass
+                elif self.jugadores[self.turno].soldados < 8:
+                    # Realemente nos dan igual los constructores
+                    pass
+            if carta.id == "magos_amigos":
+                if self.turno_jugados < 5 and self.jugadores[self.turno].magos < 5:
+                    # Urgen mas cosntructores
+                    pass
+                elif self.turno_jugados < 10 and self.jugadores[self.turno].magos < 8:
+                    # No urgen tanto los constructores
+                    pass
+                elif self.jugadores[self.turno].magos < 8:
+                    # Realemente nos dan igual los constructores
+                    pass
+
+            # Costes/Beneficios
+
+            if (self.jugadores[self.turno].Get(diccionario_cartas[carta][0][1]) - diccionario_cartas[carta][0][0]) < 5:
+                # Esta carta gasta te deja con muy poca cantidad de sus recursos
+                pass
+            elif (self.jugadores[self.turno].Get(diccionario_cartas[carta][0][1]) - diccionario_cartas[carta][0][
+                0]) < 10:
+                # Esta carta gasta te deja con poca cantidad de sus recursos
+                pass
+            elif (self.jugadores[self.turno].Get(diccionario_cartas[carta][0][1]) - diccionario_cartas[carta][0][
+                0]) < 15:
+                # Esta carta gasta te deja con un poquillo de sus recursos
+                pass
+            else:
+                # Los recursos no peligran con estos recursos
+                pass

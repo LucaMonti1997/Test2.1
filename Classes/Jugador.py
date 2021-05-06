@@ -5,7 +5,6 @@ import pygame.font
 from Mazo import *
 from Constantes import *
 from Carta import *
-from Base import *
 
 
 # Clase de jugador a la qual se le asignaran las siguientes funciones:
@@ -76,7 +75,7 @@ class Jugador(object):
 
         self.imagenes = {
             "muralla": pygame.image.load("Assets/NewCards/1.png").convert_alpha(),
-            "espada": pygame.image.load("Assets/NewCards/2.png").convert_alpha(),
+            "espada": pygame.image.load("Assets/NewCards/CartaArquero.png").convert_alpha(),
         }
         self.iconos = {
             "ladrillos": pygame.image.load("Assets/Iconos/Bricks.png").convert_alpha(),
