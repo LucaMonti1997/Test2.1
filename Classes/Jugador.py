@@ -54,7 +54,7 @@ class Jugador(object):
         while len(self.mano) < NUMERO_CARTAS_MANO:
             identificador_carta = self.mazo.cartas_restantes.pop()
             self.mano.append(identificador_carta)
-            carta_n = Carta(identificador_carta, True, (50 + 100 * x, HEIGHT - 200), (1, 1))
+            carta_n = Carta(identificador_carta, True, (50 + (WIDTH-100)/8 * x, HEIGHT - 200), (1, 1))
             self.cartas.append(carta_n)
             x += 1
 
@@ -75,9 +75,8 @@ class Jugador(object):
         """
 
         self.imagenes = {
-            "muralla": pygame.image.load("Assets/Cards/1.png").convert_alpha(),
-            "defensa": pygame.image.load("Assets/Cards/2.png").convert_alpha(),
-            "espada": pygame.image.load("Assets/Cards/3.png").convert_alpha(),
+            "muralla": pygame.image.load("Assets/NewCards/1.png").convert_alpha(),
+            "espada": pygame.image.load("Assets/NewCards/2.png").convert_alpha(),
         }
         self.iconos = {
             "ladrillos": pygame.image.load("Assets/Iconos/Bricks.png").convert_alpha(),
@@ -94,7 +93,7 @@ class Jugador(object):
 
         for key in self.imagenes:
             self.imagenes[key] = pygame.transform.smoothscale(self.imagenes[key], (
-                int(self.imagenes[key].get_width() / 8), int(self.imagenes[key].get_height() / 8)))
+                int(self.imagenes[key].get_width() / 1), int(self.imagenes[key].get_height() / 1)))
         for key in self.iconos:
             ancho = self.iconos[key].get_width()
             nuevo_ancho = int(WIDTH / 25)
