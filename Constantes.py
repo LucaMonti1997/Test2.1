@@ -1,8 +1,8 @@
 import pygame
 
 # Ancho y alto de la ventana de juego
-WIDTH = 900
-HEIGHT = 600
+WIDTH = 1000
+HEIGHT = 800
 
 # Valores RGB de varios colores
 BLACK = (0, 0, 0)
@@ -26,6 +26,7 @@ NUMERO_CARTAS_MANO = 8
 pygame.font.init()
 font = pygame.font.SysFont('Arial', 30)
 font_recursos = pygame.font.SysFont('Arial', 20, True)
+
 
 # Función para limitar un valor entre un minimo y un maximo
 def clamp(numero, minimo=0, maximo=100):

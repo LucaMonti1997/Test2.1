@@ -11,6 +11,7 @@ from Narrador import *
 pygame.font.init()
 # Inizializar pantalla
 
+
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption('alpha')
 mazo1 = Mazo(1)
