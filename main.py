@@ -16,6 +16,8 @@ pygame.font.init()
 
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption('alpha')
+fondo = pygame.image.load("Assets/Castillo/Mapa Fondo.png").convert_alpha()
+fondo = pygame.transform.smoothscale(fondo, (int(fondo.get_width() / 1.7), int(fondo.get_height() / 1.7)))
 
 mazo1 = Mazo(1)
 base1 = Base([300, 300], [0.5, 0.5])
@@ -41,7 +43,8 @@ def mouseHandler(pos):
 
 
 def renderWindow():
-    screen.fill(BLUE)
+    # screen.fill(BLUE)
+    screen.blit(fondo, (0, 0))
 
     jugador1.MostrarBase(screen)
     jugador1.MostrarRecursos(screen)
@@ -81,7 +84,6 @@ def main():
             jugador2.__init__(base2, mazo2, 1)
             jugador2.InicialziarImagenes()
             jugador2.base.InicizializarBase()
-
 
         clock.tick(30)
         events = pygame.event.get()

@@ -59,6 +59,7 @@ font = pygame.font.SysFont('Arial', 30)
 font_recursos = pygame.font.SysFont('Arial', 20, True)
 
 
+
 # Función para limitar un valor entre un minimo y un maximo
 def clamp(numero, minimo=0, maximo=100):
     return max(min(numero, maximo), minimo)

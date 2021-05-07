@@ -31,15 +31,22 @@ class Base(object):
             "torre_central": pygame.image.load("Assets/Castillo/Centro.png").convert_alpha(),
             "torre_izquierda": pygame.image.load("Assets/Castillo/Torre_Izquierda.png").convert_alpha(),
             "torre_derecha": pygame.image.load("Assets/Castillo/Torre_Derecha.png").convert_alpha(),
-            "muralla": pygame.image.load("Assets/Castillo/Muralla.png").convert_alpha()
+            "muralla": pygame.image.load("Assets/Castillo/Muralla.png").convert_alpha(),
+            "base_castillo": pygame.image.load("Assets/Castillo/Base.png").convert_alpha()
         }
 
         self.imagenesbase["muralla"] = pygame.transform.smoothscale(self.imagenesbase["muralla"],
                                                                     (
-                                                                    int(self.imagenesbase["muralla"].get_width() * 2.1),
-                                                                    int(self.imagenesbase[
-                                                                            "muralla"].get_height() * 0.8)))
-
+                                                                        int(self.imagenesbase[
+                                                                                "muralla"].get_width() * 2.1),
+                                                                        int(self.imagenesbase[
+                                                                                "muralla"].get_height() * 0.8)))
+        self.imagenesbase["base_castillo"] = pygame.transform.smoothscale(self.imagenesbase["base_castillo"],
+                                                                    (
+                                                                        int(self.imagenesbase[
+                                                                                "base_castillo"].get_width() * 1.59),
+                                                                        int(self.imagenesbase[
+                                                                                "base_castillo"].get_height() * 1.2)))
         for key in self.imagenesbase:
             self.imagenesbase[key] = pygame.transform.smoothscale(self.imagenesbase[key], (
                 int(self.imagenesbase[key].get_width() * self.dimen[0]),
@@ -74,4 +81,6 @@ class Base(object):
         rect = (self.coord[0] - self.imagenesbase["muralla"].get_width() / 2, self.coord[1], self.imagenesbase[
             "muralla"].get_width(), self.imagenesbase["torre_izquierda"].get_height())
 
-        pygame.draw.rect(pantalla, BLUE, rect)
+        #pygame.draw.rect(pantalla, BLUE, rect)
+        pantalla.blit(self.imagenesbase["base_castillo"],
+                      (self.coord[0] - self.imagenesbase["muralla"].get_width() / 2, self.coord[1]))
