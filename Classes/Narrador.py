@@ -121,9 +121,9 @@ class Narrador(object):
         :param pos: Lista. Coordenadas donde se ha hecho click. [x, y]
         """
         for carta in self.jugadores[self.turno].cartas:
-            if carta.coord[0] < pos[0] < carta.coord[0] + self.jugadores[self.turno].imagenes["muralla"].get_width() \
+            if carta.coord[0] < pos[0] < carta.coord[0] + self.jugadores[self.turno].imagenes["muralla1"].get_width() \
                     and carta.coord[1] < pos[1] < carta.coord[1] + \
-                    self.jugadores[self.turno].imagenes["muralla"].get_height():
+                    self.jugadores[self.turno].imagenes["muralla1"].get_height():
                 self.JugarTurno(carta, carta.estado)
                 return
 
