@@ -11,7 +11,10 @@ class Mazo(object):
                                 "espada3", "muralla1", "muralla2", "muralla3", "arco1", "arco2", "arco3", "espada1",
                                 "espada2", "espada3"]
         self.cartas_restantes = []
-        if tipo == 1:
+        self.tipo = tipo
+
+    def InicializarMazo(self):
+        if self.tipo == 1:
             for item in self.mazo_1_completo:
                 self.cartas_restantes.append(item)
         # self.cartas_restantes = self.mazo_1_completo

@@ -22,32 +22,54 @@ class Jugador(object):
         :param mazo: Objeto Mazo.
         :param identificador: 0 -> Jugador1; 1 -> Jugador2
         """
-        # Castillo x muralla
+        # Vida castillo y muralla
+        self.hp_castillo = ""
+        self.hp_muralla = ""
+        # Generadores de recursos
+        self.constructores = ""
+        self.soldados = ""
+        self.magos = ""
+        # Recursos
+        self.ladrillos = ""
+        self.espadas = ""
+        self.mana = ""
+        # Cartas en mano
+        self.mano = []
+        self.cartas = []
+        # Graficos
+        self.imagenes = {}
+        self.iconos = {}
+
+        self.mazo = mazo
+        self.base = base
+        self.id = identificador
+
+        self.InicializarJugador()
+
+    def InicializarJugador(self):
+        """
+        Asigna valor iniciales a los atributo del jugador
+        """
         self.hp_castillo = 69
         self.hp_muralla = 42
 
-        # Generadores
         self.constructores = 2
         self.soldados = 2
         self.magos = 2
 
-        # Recursos
         self.ladrillos = 5
         self.espadas = 5
         self.mana = 5
 
-        # Crear mazo a partir de la classe Mazo
-        self.mazo = mazo
-        self.mano = []
-        self.cartas = []
+        self.InicialziarImagenes()
+        self.base.InicizializarBase()
+        self.mazo.InicializarMazo()
+        self.InicializarMano()
 
-        self.imagenes = {}
-        self.iconos = {}
-
-        self.base = base
-        self.id = identificador
-
-        # Poblar la mano por primera vez
+    def InicializarMano(self):
+        """
+        Poblar la mano por primera vez
+        """
         random.shuffle(self.mazo.cartas_restantes)
         x = 0
         while len(self.mano) < NUMERO_CARTAS_MANO:
@@ -56,17 +78,6 @@ class Jugador(object):
             carta_n = Carta(identificador_carta, True, (50 + (WIDTH - 100) / 8 * x, HEIGHT - 200), (1, 1))
             self.cartas.append(carta_n)
             x += 1
-
-    def CogerUnaCarta(self):
-        """
-        Coge cartas mientras tenga sitio en la mano
-        """
-        self.mazo.ComprobarMazo()
-        self.mano.append(self.mazo.cartas_restantes.pop())
-        i = 0
-        while i < NUMERO_CARTAS_MANO:
-            self.cartas[i].id = self.mano[i]
-            i += 1
 
     def InicialziarImagenes(self):
         """
@@ -106,6 +117,17 @@ class Jugador(object):
             alto = self.iconos[key].get_height()
             nuevo_alto = int((alto * nuevo_ancho) / ancho)
             self.iconos[key] = pygame.transform.smoothscale(self.iconos[key], (nuevo_ancho, nuevo_alto))
+
+    def CogerUnaCarta(self):
+        """
+        Coge cartas mientras tenga sitio en la mano
+        """
+        self.mazo.ComprobarMazo()
+        self.mano.append(self.mazo.cartas_restantes.pop())
+        i = 0
+        while i < NUMERO_CARTAS_MANO:
+            self.cartas[i].id = self.mano[i]
+            i += 1
 
     def MostrarCartas(self, pantalla):
         """

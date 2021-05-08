@@ -22,14 +22,12 @@ fondo = pygame.transform.smoothscale(fondo, (int(fondo.get_width() / 1.7), int(f
 mazo1 = Mazo(1)
 base1 = Base([300, 300], [0.5, 0.5])
 jugador1 = Jugador(base1, mazo1, 0)
-jugador1.InicialziarImagenes()
-jugador1.base.InicizializarBase()
+jugador1.InicializarJugador()
 
 mazo2 = Mazo(1)
 base2 = Base([600, 300], [0.5, 0.5])
 jugador2 = Jugador(base2, mazo2, 1)
-jugador2.InicialziarImagenes()
-jugador2.base.InicizializarBase()
+jugador2.InicializarJugador()
 
 narrador = Narrador(jugador1, jugador2)
 
@@ -70,20 +68,14 @@ def main():
         # Reinicia la partida de manera bruta.
         # Considerar craer metodo a posta
         if narrador.ComprobarPartida() != 0:
-            # espera 2 segundos
+            # Muestra el mensaje de victoria (aprox.) y espera 2 segundos
             rect = (100, 100, 150, 250)
             pygame.draw.rect(screen, RED, rect)
+            pygame.display.update()
             sleep(2)
-            mazo1 = Mazo(1)
-            base1 = Base([300, 300], [0.5, 0.5])
-            jugador1.__init__(base1, mazo1, 0)
-            jugador1.InicialziarImagenes()
-            jugador1.base.InicizializarBase()
-            mazo2 = Mazo(1)
-            base2 = Base([600, 300], [0.5, 0.5])
-            jugador2.__init__(base2, mazo2, 1)
-            jugador2.InicialziarImagenes()
-            jugador2.base.InicizializarBase()
+            # Reinicia los valores de los jugadores
+            jugador1.InicializarJugador()
+            jugador2.InicializarJugador()
 
         clock.tick(30)
         events = pygame.event.get()

@@ -15,16 +15,13 @@ class Base(object):
         self.coord = coordenadas
         self.dimen = dimensiones
         self.imagenesbase = {}
-        self.offset = {
-            "torre_central": 0,
-            "torre_izquierda": 0,
-            "torre_derecha": 0,
-            "muralla": 0
-        }
+        self.offset = {}
 
     def InicizializarBase(self):
         """
         Precargamos las imagenes en un diccionario y hacemos ajustes a sus dimensiones.
+
+        Ponemos a 0 los offsets.
         """
 
         self.imagenesbase = {
@@ -51,6 +48,13 @@ class Base(object):
             self.imagenesbase[key] = pygame.transform.smoothscale(self.imagenesbase[key], (
                 int(self.imagenesbase[key].get_width() * self.dimen[0]),
                 int(self.imagenesbase[key].get_height() * self.dimen[1])))
+
+        self.offset = {
+            "torre_central": 0,
+            "torre_izquierda": 0,
+            "torre_derecha": 0,
+            "muralla": 0
+        }
 
     def Dibujar(self, pantalla):
         """
