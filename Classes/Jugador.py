@@ -76,6 +76,7 @@ class Jugador(object):
             identificador_carta = self.mazo.cartas_restantes.pop()
             self.mano.append(identificador_carta)
             carta_n = Carta(identificador_carta, True, (50 + (WIDTH - 100) / 8 * x, HEIGHT - 200), (1, 1))
+            self.ComprobarCarta(carta_n)
             self.cartas.append(carta_n)
             x += 1
 
@@ -85,15 +86,24 @@ class Jugador(object):
         """
 
         self.imagenes = {
-            "muralla1": pygame.image.load("Assets/NewCards/Card renders/Muralla1.png").convert_alpha(),
-            "muralla2": pygame.image.load("Assets/NewCards/Card renders/Muralla2.png").convert_alpha(),
-            "muralla3": pygame.image.load("Assets/NewCards/Card renders/Muralla3.png").convert_alpha(),
-            "espada1": pygame.image.load("Assets/NewCards/Card renders/Espada1.png").convert_alpha(),
-            "espada2": pygame.image.load("Assets/NewCards/Card renders/Espada2.png").convert_alpha(),
-            "espada3": pygame.image.load("Assets/NewCards/Card renders/Espada3.png").convert_alpha(),
-            "arco1": pygame.image.load("Assets/NewCards/Card renders/Arco1.png").convert_alpha(),
-            "arco2": pygame.image.load("Assets/NewCards/Card renders/Arco2.png").convert_alpha(),
-            "arco3": pygame.image.load("Assets/NewCards/Card renders/Arco3.png").convert_alpha(),
+            "muralla1": [pygame.image.load("Assets/NewCards/Card renders/Muralla1_a.png").convert_alpha(),
+                         pygame.image.load("Assets/NewCards/Card renders/Muralla1_b.png").convert_alpha()],
+            "muralla2": [pygame.image.load("Assets/NewCards/Card renders/Muralla2_a.png").convert_alpha(),
+                         pygame.image.load("Assets/NewCards/Card renders/Muralla2_b.png").convert_alpha()],
+            "muralla3": [pygame.image.load("Assets/NewCards/Card renders/Muralla3_a.png").convert_alpha(),
+                         pygame.image.load("Assets/NewCards/Card renders/Muralla3_b.png").convert_alpha()],
+            "espada1": [pygame.image.load("Assets/NewCards/Card renders/Espada1_a.png").convert_alpha(),
+                        pygame.image.load("Assets/NewCards/Card renders/Espada1_b.png").convert_alpha()],
+            "espada2": [pygame.image.load("Assets/NewCards/Card renders/Espada2_a.png").convert_alpha(),
+                        pygame.image.load("Assets/NewCards/Card renders/Espada2_b.png").convert_alpha()],
+            "espada3": [pygame.image.load("Assets/NewCards/Card renders/Espada3_a.png").convert_alpha(),
+                        pygame.image.load("Assets/NewCards/Card renders/Espada3_b.png").convert_alpha()],
+            "arco1": [pygame.image.load("Assets/NewCards/Card renders/Arco1_a.png").convert_alpha(),
+                      pygame.image.load("Assets/NewCards/Card renders/Arco1_b.png").convert_alpha()],
+            "arco2": [pygame.image.load("Assets/NewCards/Card renders/Arco2_a.png").convert_alpha(),
+                      pygame.image.load("Assets/NewCards/Card renders/Arco2_b.png").convert_alpha()],
+            "arco3": [pygame.image.load("Assets/NewCards/Card renders/Arco3_a.png").convert_alpha(),
+                      pygame.image.load("Assets/NewCards/Card renders/Arco3_b.png").convert_alpha()]
         }
         self.iconos = {
             "ladrillos": pygame.image.load("Assets/Iconos/Bricks.png").convert_alpha(),
@@ -109,8 +119,9 @@ class Jugador(object):
         # modificamos las imagenes para que quepan en pantalla
 
         for key in self.imagenes:
-            self.imagenes[key] = pygame.transform.smoothscale(self.imagenes[key], (
-                int(self.imagenes[key].get_width() / 1), int(self.imagenes[key].get_height() / 1)))
+            for imagen in self.imagenes[key]:
+                imagen = pygame.transform.smoothscale(imagen,
+                                                      (int(imagen.get_width() / 1), int(imagen.get_height() / 1)))
         for key in self.iconos:
             ancho = self.iconos[key].get_width()
             nuevo_ancho = int(WIDTH / 25)
@@ -127,7 +138,27 @@ class Jugador(object):
         i = 0
         while i < NUMERO_CARTAS_MANO:
             self.cartas[i].id = self.mano[i]
+            self.ComprobarCarta(self.cartas[i])
             i += 1
+
+    def ComprobarCarta(self, carta):
+        """
+        Comprueba si una carta se puede jugar, y modifica su atributo estado.
+
+        :param carta: Objeto Carta. Carta que se comprueba
+        """
+        if self.Get(diccionario_cartas[carta.id][0][1]) >= diccionario_cartas[carta.id][0][0]:
+            carta.estado = True
+        else:
+            carta.estado = False
+
+    def ComprobarTodasCartas(self):
+        """
+        Llama ComprobarCarta para todas las cartas
+        """
+
+        for carta in self.cartas:
+            self.ComprobarCarta(carta)
 
     def MostrarCartas(self, pantalla):
         """

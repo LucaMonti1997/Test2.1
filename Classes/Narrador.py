@@ -31,7 +31,6 @@ class Narrador(object):
             self.turno = 0
         else:
             self.turno = 1
-        self.turno_acabado = True
 
     def CambiarTurno(self):
         """
@@ -61,7 +60,7 @@ class Narrador(object):
             # Vemos cuantos recursos y de que tipo se gastan, y luego los restamos al jugador activo
             recurso = diccionario_cartas[carta.id][0][1]
             cantidad_recurso = diccionario_cartas[carta.id][0][0]
-            self.jugadores[self.turno].Set(recurso, self.jugadores[self.turno].Get(recurso) + cantidad_recurso)
+            self.jugadores[self.turno].Set(recurso, self.jugadores[self.turno].Get(recurso) - cantidad_recurso)
 
             # Vemos el atributo objetivo, y la cantidad a modificar.
             # Según la cantidad afectamos al jugador activo o al oponente
@@ -79,14 +78,11 @@ class Narrador(object):
                                                                    cantidad_objetivo))
 
         # Quitamos la carta de la mano del jugador activo
-
-        if self.ComprobarPartida() == 1:
-            pass
-
         self.jugadores[self.turno].mano.remove(carta.id)
         self.jugadores[self.turno].CogerUnaCarta()
         self.CambiarTurno()
         self.GenerarRecursos()
+        self.jugadores[self.turno].ComprobarTodasCartas()
 
     def ComprobarPartida(self):
         """
@@ -121,9 +117,9 @@ class Narrador(object):
         :param pos: Lista. Coordenadas donde se ha hecho click. [x, y]
         """
         for carta in self.jugadores[self.turno].cartas:
-            if carta.coord[0] < pos[0] < carta.coord[0] + self.jugadores[self.turno].imagenes["muralla1"].get_width() \
+            if carta.coord[0] < pos[0] < carta.coord[0] + self.jugadores[self.turno].imagenes["muralla1"][0].get_width() \
                     and carta.coord[1] < pos[1] < carta.coord[1] + \
-                    self.jugadores[self.turno].imagenes["muralla1"].get_height():
+                    self.jugadores[self.turno].imagenes["muralla1"][0].get_height():
                 self.JugarTurno(carta, carta.estado)
                 return
 

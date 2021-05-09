@@ -23,6 +23,9 @@ class Carta(object):
         Se dibuja la carta en pantalla.
 
         :param pantalla: Objeto pygame.display. Donde se muestran las imagenes
-        :param imagen: Objeto pygame.image. Imagen que se dibujará
+        :param imagen: Lista con Objetos pygame.image. Imagen que se dibujará
         """
-        pantalla.blit(imagen, self.coord)
+        if self.estado:
+            pantalla.blit(imagen[0], self.coord)
+        else:
+            pantalla.blit(imagen[1], self.coord)
