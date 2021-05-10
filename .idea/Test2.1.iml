@@ -5,7 +5,7 @@
       <sourceFolder url="file://$MODULE_DIR$/Assets" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Classes" isTestSource="false" />
     </content>
-    <orderEntry type="jdk" jdkName="Python 3.9 (Environments)" jdkType="Python SDK" />
+    <orderEntry type="jdk" jdkName="Python 3.7 (PRE)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
 </module>
