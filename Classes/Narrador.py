@@ -82,6 +82,7 @@ class Narrador(object):
         self.jugadores[self.turno].CogerUnaCarta()
         self.CambiarTurno()
         self.GenerarRecursos()
+        self.CalculoIA()
         self.jugadores[self.turno].ComprobarTodasCartas()
 
     def ComprobarPartida(self):
@@ -128,8 +129,10 @@ class Narrador(object):
         La IA escoge la mejor carta
         """
         ponderacion = {}
-        for carta in self.jugadores[self.turno].mano:
+        print("Jugador: ", self.turno)
+        for carta in self.jugadores[self.turno].cartas:
             nota = 0
+
             # Preservación
             if self.jugadores[self.turno].hp_muralla < 10:
                 # Urge construir muralla
@@ -153,7 +156,7 @@ class Narrador(object):
             # Comparación
 
             # Comparamos nuestra muralla con la enemiga.
-            if diccionario_cartas[carta][1][0] > 0 and diccionario_cartas[carta][1][1] == "hp_muralla":
+            if diccionario_cartas[carta.id][1][0] > 0 and diccionario_cartas[carta.id][1][1] == "hp_muralla":
                 # La carta construye muralla
                 if (self.jugadores[self.turno].hp_muralla - self.jugadores[self.Opuesto()].hp_muralla) > 20:
                     # Tenemos bastante margen, no corre prisa construir mas muralla
@@ -164,7 +167,7 @@ class Narrador(object):
                 elif (self.jugadores[self.turno].hp_muralla - self.jugadores[self.Opuesto()].hp_muralla) > -20:
                     # Tenemos algo de desventaja, considerar recuperarla
                     pass
-            elif diccionario_cartas[carta][1][0] < 0 and diccionario_cartas[carta][1][1] == "hp_muralla":
+            elif diccionario_cartas[carta.id][1][0] < 0 and diccionario_cartas[carta.id][1][1] == "hp_muralla":
                 # La carta ataca la muralla enemiga
                 if (self.jugadores[self.turno].hp_muralla - self.jugadores[self.Opuesto()].hp_muralla) > 20:
                     # Tenemos bastante margen, no corre prisa construir mas muralla
@@ -177,7 +180,7 @@ class Narrador(object):
                     pass
 
             # Comparamos nuestro castillo con el enemigo.
-            if diccionario_cartas[carta][1][0] > 0 and diccionario_cartas[carta][1][1] == "hp_castillo":
+            if diccionario_cartas[carta.id][1][0] > 0 and diccionario_cartas[carta.id][1][1] == "hp_castillo":
                 # La carta construye castillo
                 if (self.jugadores[self.turno].hp_castillo - self.jugadores[self.Opuesto()].hp_castillo) > 30:
                     # Tenemos bastante margen, no corre prisa construir mas castillo
@@ -188,7 +191,7 @@ class Narrador(object):
                 elif (self.jugadores[self.turno].hp_castillo - self.jugadores[self.Opuesto()].hp_castillo) > -10:
                     # Tenemos algo de desventaja, considerar recuperarla
                     pass
-            elif diccionario_cartas[carta][1][0] < 0 and diccionario_cartas[carta][1][1] == "hp_castillo":
+            elif diccionario_cartas[carta.id][1][0] < 0 and diccionario_cartas[carta.id][1][1] == "hp_castillo":
                 # La carta ataca el castillo enemigo
                 if (self.jugadores[self.turno].hp_castillo - self.jugadores[self.Opuesto()].hp_castillo) > 30:
                     # Tenemos bastante margen, no corre prisa construir mas castillo
@@ -200,90 +203,152 @@ class Narrador(object):
                     # Tenemos algo de desventaja, considerar recuperarla
                     pass
 
-            # Miramos de ir consiguiendo generadores a lo largo de la partida
+            # Miramos de ir tener mas generadores que el oponente
+            # Afecta solo a cartas que manejen generadores. 50% de la nota
             if carta.id == "constructores_amigos":
-                if (self.jugadores[self.turno].constructores - self.jugadores[self.Opuesto()].constructores) < 1:
-                    # Queremos tener por lo menos uno mas que el oponente
-                    pass
+                if (self.jugadores[self.turno].constructores - self.jugadores[self.Opuesto()].constructores) < -1:
+                    # No queremos tener demasiada desventaja
+                    nota += 5
+                elif (self.jugadores[self.turno].constructores - self.jugadores[self.Opuesto()].constructores) < 0:
+                    # No queremos tener desventaja
+                    nota += 3
+                elif (self.jugadores[self.turno].constructores - self.jugadores[self.Opuesto()].constructores) < 1:
+                    # Algo de ventaja siempre está bien
+                    nota += 1
                 else:
-                    pass
+                    # Demasiada ventaja no es una prioridad
+                    nota += 0
             if carta.id == "soldados_amigos":
-                if (self.jugadores[self.turno].soldados - self.jugadores[self.Opuesto()].soldados) < 1:
-                    # Queremos tener por lo menos uno mas que el oponente
-                    pass
+                if (self.jugadores[self.turno].soldados - self.jugadores[self.Opuesto()].soldados) < -1:
+                    # No queremos tener demasiada desventaja
+                    nota += 5
+                elif (self.jugadores[self.turno].soldados - self.jugadores[self.Opuesto()].soldados) < 0:
+                    # No queremos tener desventaja
+                    nota += 3
+                elif (self.jugadores[self.turno].soldados - self.jugadores[self.Opuesto()].soldados) < 1:
+                    # Algo de ventaja siempre está bien
+                    nota += 1
                 else:
-                    pass
+                    # Demasiada ventaja no es una prioridad
+                    nota += 0
             if carta.id == "magos_amigos":
-                if (self.jugadores[self.turno].magos - self.jugadores[self.Opuesto()].magos) < 1:
-                    # Queremos tener por lo menos uno mas que el oponente
-                    pass
+                if (self.jugadores[self.turno].magos - self.jugadores[self.Opuesto()].magos) < -1:
+                    # No queremos tener demasiada desventaja
+                    nota += 5
+                elif (self.jugadores[self.turno].magos - self.jugadores[self.Opuesto()].magos) < 0:
+                    # No queremos tener desventaja
+                    nota += 3
+                elif (self.jugadores[self.turno].magos - self.jugadores[self.Opuesto()].magos) < 1:
+                    # Algo de ventaja siempre está bien
+                    nota += 1
                 else:
-                    pass
+                    # Demasiada ventaja no es una prioridad
+                    nota += 0
 
             # Hostilidad
+            # Afecta a todas las cartas de ataque. 75% de la nota
 
-            # Comprobamos si matamos el enemigo
-            if diccionario_cartas[carta][1][0] < 0 and diccionario_cartas[carta][1][1] == "hp_castillo":
-                if (self.jugadores[self.Opuesto()].hp_castillo - diccionario_cartas[carta][1][0]) < 0:
+            # Comprobamos si matamos el enemigo. 50%
+            if (diccionario_cartas[carta.id][1][0] < 0 and diccionario_cartas[carta.id][1][1] == "hp_castillo") or (
+                    diccionario_cartas[carta.id][1][0] < 0 and diccionario_cartas[carta.id][1][1] == "hp_muralla" and
+                    self.jugadores[self.Opuesto()].Get("hp_muralla") == 0):
+                if (self.jugadores[self.Opuesto()].hp_castillo - diccionario_cartas[carta.id][1][0]) < 0:
                     # Destruimos el castillo enemigo. MVP
-                    pass
-                if (self.jugadores[self.Opuesto()].hp_castillo - diccionario_cartas[carta][1][0]) < 5:
+                    nota += 5
+                elif (self.jugadores[self.Opuesto()].hp_castillo - diccionario_cartas[carta.id][1][0]) < 5:
                     # Practicamente destruimos el castillo enemigo.
-                    pass
-                if (self.jugadores[self.Opuesto()].hp_castillo - diccionario_cartas[carta][1][0]) < 15:
+                    nota += 4
+                elif (self.jugadores[self.Opuesto()].hp_castillo - diccionario_cartas[carta.id][1][0]) < 15:
                     # Casi destruimos el castillo enemigo.
-                    pass
+                    nota += 2.5
+                elif (self.jugadores[self.Opuesto()].hp_castillo - diccionario_cartas[carta.id][1][0]) < 50:
+                    # El castillo enemigo corre poco peligro.
+                    nota += 1
                 else:
-                    # El castillo enemigo no peligra aún.
-                    pass
+                    # El castillo no corre ningún peligro.
+                    nota += 0
+
+            # Priorizamos las cartas que hacen mas daño. 25%
+            if diccionario_cartas[carta.id][1][0] < 0 and (diccionario_cartas[carta.id][1][1] == "hp_castillo"
+                                                           or diccionario_cartas[carta.id][1][1] == "hp_muralla"):
+                if diccionario_cartas[carta.id][1][0] >= -2:
+                    # Hace poco daño
+                    nota += 0
+                elif diccionario_cartas[carta.id][1][0] >= -4:
+                    # Hace algo de daño
+                    nota += 0.5
+                elif diccionario_cartas[carta.id][1][0] >= -15:
+                    # Hace bastante daño
+                    nota += 1.5
+                else:
+                    # Hace muchisimo daño
+                    nota = 2.5
+
+            # Quizas añadir un control para intentar mantener la muralla enemiga en valores no excesivos
 
             # Longevidad
 
             # Miramos de ir consiguiendo generadores a lo largo de la partida
+            # Afecta solo a cartas que manejen generadores. 25% de la nota
             if carta.id == "constructores_amigos":
                 if self.turno_jugados < 5 and self.jugadores[self.turno].constructores < 5:
-                    # Urgen mas cosntructores
-                    pass
+                    # Urgen mas generadores
+                    nota += 2.5
                 elif self.turno_jugados < 10 and self.jugadores[self.turno].constructores < 8:
-                    # No urgen tanto los constructores
-                    pass
+                    # No urgen tanto los generadores
+                    nota += 1
                 elif self.jugadores[self.turno].constructores < 8:
-                    # Realemente nos dan igual los constructores
-                    pass
+                    # Realemente nos dan igual los generadores
+                    nota += 0.5
+                else:
+                    nota += 0
             if carta.id == "soldados_amigos":
                 if self.turno_jugados < 5 and self.jugadores[self.turno].soldados < 5:
-                    # Urgen mas cosntructores
-                    pass
+                    # Urgen mas generadores
+                    nota += 2.5
                 elif self.turno_jugados < 10 and self.jugadores[self.turno].soldados < 8:
-                    # No urgen tanto los constructores
-                    pass
+                    # No urgen tanto los generadores
+                    nota += 1
                 elif self.jugadores[self.turno].soldados < 8:
-                    # Realemente nos dan igual los constructores
-                    pass
+                    # Realemente nos dan igual los generadores
+                    nota += 0.5
+                else:
+                    nota += 0
             if carta.id == "magos_amigos":
                 if self.turno_jugados < 5 and self.jugadores[self.turno].magos < 5:
-                    # Urgen mas cosntructores
-                    pass
+                    # Urgen mas generadores
+                    nota += 2.5
                 elif self.turno_jugados < 10 and self.jugadores[self.turno].magos < 8:
-                    # No urgen tanto los constructores
-                    pass
+                    # No urgen tanto los generadores
+                    nota += 1
                 elif self.jugadores[self.turno].magos < 8:
-                    # Realemente nos dan igual los constructores
-                    pass
+                    # Realemente nos dan igual los generadores
+                    nota += 0.5
+                else:
+                    nota += 0
 
             # Costes/Beneficios
-
-            if (self.jugadores[self.turno].Get(diccionario_cartas[carta][0][1]) - diccionario_cartas[carta][0][0]) < 5:
+            # Afecta a todas las cartas. 25% de la nota
+            if (self.jugadores[self.turno].Get(diccionario_cartas[carta.id][0][1]) - diccionario_cartas[carta.id][0][
+                0]) < 5:
                 # Esta carta gasta te deja con muy poca cantidad de sus recursos
-                pass
-            elif (self.jugadores[self.turno].Get(diccionario_cartas[carta][0][1]) - diccionario_cartas[carta][0][
+                nota += clamp(((self.jugadores[self.turno].Get(diccionario_cartas[carta.id][0][1]) -
+                                diccionario_cartas[carta.id][0][0]) / 4), 0, 100) * 1
+            elif (self.jugadores[self.turno].Get(diccionario_cartas[carta.id][0][1]) - diccionario_cartas[carta.id][0][
                 0]) < 10:
                 # Esta carta gasta te deja con poca cantidad de sus recursos
-                pass
-            elif (self.jugadores[self.turno].Get(diccionario_cartas[carta][0][1]) - diccionario_cartas[carta][0][
+                nota += clamp(
+                    (self.jugadores[self.turno].Get(diccionario_cartas[carta.id][0][1]) -
+                     diccionario_cartas[carta.id][0][
+                         0] / 9)) * 1
+            elif (self.jugadores[self.turno].Get(diccionario_cartas[carta.id][0][1]) - diccionario_cartas[carta.id][0][
                 0]) < 15:
                 # Esta carta gasta te deja con un poquillo de sus recursos
-                pass
+                nota += clamp(
+                    (self.jugadores[self.turno].Get(diccionario_cartas[carta.id][0][1]) -
+                     diccionario_cartas[carta.id][0][
+                         0] / 14)) * 2
             else:
                 # Los recursos no peligran con estos recursos
-                pass
+                nota += 2.5
+            print("Carta: ", carta.id, " Nota: ", nota)
