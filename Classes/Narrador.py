@@ -338,16 +338,14 @@ class Narrador(object):
                 0]) < 10:
                 # Esta carta gasta te deja con poca cantidad de sus recursos
                 nota += clamp(
-                    (self.jugadores[self.turno].Get(diccionario_cartas[carta.id][0][1]) -
-                     diccionario_cartas[carta.id][0][
-                         0] / 9)) * 1
+                    ((self.jugadores[self.turno].Get(diccionario_cartas[carta.id][0][1]) -
+                      diccionario_cartas[carta.id][0][0]) / 9)) * 1
             elif (self.jugadores[self.turno].Get(diccionario_cartas[carta.id][0][1]) - diccionario_cartas[carta.id][0][
                 0]) < 15:
                 # Esta carta gasta te deja con un poquillo de sus recursos
-                nota += clamp(
-                    (self.jugadores[self.turno].Get(diccionario_cartas[carta.id][0][1]) -
-                     diccionario_cartas[carta.id][0][
-                         0] / 14)) * 2
+                nota += clamp((
+                        (self.jugadores[self.turno].Get(diccionario_cartas[carta.id][0][1]) -
+                         diccionario_cartas[carta.id][0][0]) / 14)) * 2
             else:
                 # Los recursos no peligran con estos recursos
                 nota += 2.5
