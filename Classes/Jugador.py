@@ -98,6 +98,12 @@ class Jugador(object):
                           pygame.image.load("Assets/NewCards/Card renders/Castillo2_b.png").convert_alpha()],
             "castillo3": [pygame.image.load("Assets/NewCards/Card renders/Castillo3_a.png").convert_alpha(),
                           pygame.image.load("Assets/NewCards/Card renders/Castillo3_b.png").convert_alpha()],
+            "constructores_amigos": [
+                pygame.image.load("Assets/NewCards/Card renders/ConstructoresAmigos_a.png").convert_alpha(),
+                pygame.image.load("Assets/NewCards/Card renders/ConstructoresAmigos_b.png").convert_alpha()],
+            "constructores_enemigos": [
+                pygame.image.load("Assets/NewCards/Card renders/ConstructoresEnemigos_a.png").convert_alpha(),
+                pygame.image.load("Assets/NewCards/Card renders/ConstructoresEnemigos_b.png").convert_alpha()],
 
             "espada1": [pygame.image.load("Assets/NewCards/Card renders/Espada1_a.png").convert_alpha(),
                         pygame.image.load("Assets/NewCards/Card renders/Espada1_b.png").convert_alpha()],
@@ -111,6 +117,12 @@ class Jugador(object):
                       pygame.image.load("Assets/NewCards/Card renders/Arco2_b.png").convert_alpha()],
             "arco3": [pygame.image.load("Assets/NewCards/Card renders/Arco3_a.png").convert_alpha(),
                       pygame.image.load("Assets/NewCards/Card renders/Arco3_b.png").convert_alpha()],
+            "soldados_amigos": [
+                pygame.image.load("Assets/NewCards/Card renders/SoldadosAmigos_a.png").convert_alpha(),
+                pygame.image.load("Assets/NewCards/Card renders/SoldadosAmigos_b.png").convert_alpha()],
+            "soldados_enemigos": [
+                pygame.image.load("Assets/NewCards/Card renders/SoldadosEnemigos_a.png").convert_alpha(),
+                pygame.image.load("Assets/NewCards/Card renders/SoldadosEnemigos_a.png").convert_alpha()],
 
             "magia1": [pygame.image.load("Assets/NewCards/Card renders/Magia1_a.png").convert_alpha(),
                        pygame.image.load("Assets/NewCards/Card renders/Magia1_b.png").convert_alpha()],
@@ -133,6 +145,12 @@ class Jugador(object):
             "conjurar_mana": [
                 pygame.image.load("Assets/NewCards/Card renders/ConjurarMana_a.png").convert_alpha(),
                 pygame.image.load("Assets/NewCards/Card renders/ConjurarMana_b.png").convert_alpha()],
+            "magos_amigos": [
+                pygame.image.load("Assets/NewCards/Card renders/MagosAmigos_a.png").convert_alpha(),
+                pygame.image.load("Assets/NewCards/Card renders/MagosAmigos_b.png").convert_alpha()],
+            "magos_enemigos": [
+                pygame.image.load("Assets/NewCards/Card renders/MagosEnemigos_a.png").convert_alpha(),
+                pygame.image.load("Assets/NewCards/Card renders/MagosEnemigos_b.png").convert_alpha()],
 
             "recurso_constructores": [
                 pygame.image.load("Assets/NewCards/Card renders/Recursos/Constructores_a.png").convert_alpha(),
@@ -255,12 +273,12 @@ class Jugador(object):
                                                                 (HEIGHT / 20) + alto * gap * 2])
         espesor = font_recursos.size(str(self.magos))
         pantalla.blit(texto_magos, [(((WIDTH / 25) + ancho / 4) * abs(self.id - 1) +
-                                             (WIDTH - (WIDTH / 25) - (ancho / 4)) * self.id) - espesor[0] / 2,
-                                            (HEIGHT / 20) + alto / 5 + alto * gap * 2])
+                                     (WIDTH - (WIDTH / 25) - (ancho / 4)) * self.id) - espesor[0] / 2,
+                                    (HEIGHT / 20) + alto / 5 + alto * gap * 2])
         espesor = font_recursos.size(str(self.mana))
         pantalla.blit(texto_mana, [(((WIDTH / 25) + ancho * 3 / 4) * abs(self.id - 1) +
-                                         (WIDTH - (WIDTH / 25) - (ancho * 3 / 4)) * self.id) - espesor[0] / 2,
-                                        (HEIGHT / 20) + alto / 5 + alto * gap * 2])
+                                    (WIDTH - (WIDTH / 25) - (ancho * 3 / 4)) * self.id) - espesor[0] / 2,
+                                   (HEIGHT / 20) + alto / 5 + alto * gap * 2])
 
     def MostrarBase(self, pantalla):
         """
