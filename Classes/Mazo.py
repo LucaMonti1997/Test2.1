@@ -1,3 +1,4 @@
+from Constantes import diccionario_mazos
 class Mazo(object):
 
     def __init__(self, tipo):
@@ -7,27 +8,18 @@ class Mazo(object):
 
         :param tipo: Numero. Tipo de mazo. Distintos mazos estan compuesto por diferentes combinaciones de cartas.
         """
-        self.mazo_1_completo = ["muralla1", "muralla2", "muralla3", "castillo1", "castillo2", "castillo3",
-                                "constructores_amigos", "constructores_enemigos", "arco1",
-                                "arco2", "arco3", "espada1", "espada2", "espada3", "soldados_amigos",
-                                "soldados_enemigos", "magia1", "magia2", "magia3",
-                                "regenerar1", "regenerar2", "regenerar3", "conjurar_ladrillos", "conjurar_espadas",
-                                "conjurar_mana", "magos_amigos", "magos_enemigos"]
         self.cartas_restantes = []
         self.tipo = tipo
 
     def InicializarMazo(self):
-        if self.tipo == 1:
-            for item in self.mazo_1_completo:
-                self.cartas_restantes.append(item)
-        # self.cartas_restantes = self.mazo_1_completo
+        """
+        Inicializa el mazo
+        """
+        self.cartas_restantes = diccionario_mazos[self.tipo].copy()
 
     def ComprobarMazo(self):
         """
         Comprueba si hay cartas restantes en el mazo. En caso negativo, accede a la copia completa para recargarlas.
         """
         if len(self.cartas_restantes) == 0:
-            # Vamos item a item del mazo original porque si no al "asignar" el mazo original, al hacer pops también se
-            # modificaba el mazo original
-            for item in self.mazo_1_completo:
-                self.cartas_restantes.append(item)
+            self.cartas_restantes = diccionario_mazos[self.tipo].copy()

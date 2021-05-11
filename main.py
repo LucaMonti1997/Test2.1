@@ -22,12 +22,10 @@ fondo = pygame.transform.smoothscale(fondo, (int(fondo.get_width() / 1.7), int(f
 mazo1 = Mazo(1)
 base1 = Base([300, 300], [0.5, 0.5])
 jugador1 = Jugador(base1, mazo1, 0)
-jugador1.InicializarJugador()
 
 mazo2 = Mazo(1)
 base2 = Base([600, 300], [0.5, 0.5])
 jugador2 = Jugador(base2, mazo2, 1)
-jugador2.InicializarJugador()
 
 narrador = Narrador(jugador1, jugador2)
 
@@ -76,6 +74,7 @@ def main():
             pygame.draw.rect(screen, RED, rect)
             pygame.display.update()
             sleep(2)
+            pygame.event.clear()
             # Reinicia los valores de los jugadores
             jugador1.InicializarJugador()
             jugador2.InicializarJugador()

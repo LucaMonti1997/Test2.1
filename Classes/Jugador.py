@@ -34,7 +34,6 @@ class Jugador(object):
         self.espadas = 0
         self.mana = 0
         # Cartas en mano
-        self.mano = []
         self.cartas = []
         # Graficos
         self.imagenes = {}
@@ -70,15 +69,16 @@ class Jugador(object):
         """
         Poblar la mano por primera vez
         """
+        self.cartas = []
         random.shuffle(self.mazo.cartas_restantes)
         x = 0
-        while len(self.mano) < NUMERO_CARTAS_MANO:
+        while len(self.cartas) < NUMERO_CARTAS_MANO:
             identificador_carta = self.mazo.cartas_restantes.pop()
-            self.mano.append(identificador_carta)
-            carta_n = Carta(identificador_carta, True, (50 + (WIDTH - 100) / 8 * x, HEIGHT - 200), (1, 1))
-            self.ComprobarCarta(carta_n)
+            carta_n = Carta( identificador_carta, True, (50 + (WIDTH - 100) / 8 * x, HEIGHT - 200),
+                             (self.imagenes["muralla1"][0].get_width(), self.imagenes["muralla1"][0].get_height()))
             self.cartas.append(carta_n)
             x += 1
+        self.ComprobarTodasCartas()
 
     def InicialziarImagenes(self):
         """
@@ -181,17 +181,22 @@ class Jugador(object):
             nuevo_alto = int((alto * nuevo_ancho) / ancho)
             self.iconos[key] = pygame.transform.smoothscale(self.iconos[key], (nuevo_ancho, nuevo_alto))
 
-    def CogerUnaCarta(self):
+    def CogerCartas(self):
         """
         Coge cartas mientras tenga sitio en la mano
         """
         self.mazo.ComprobarMazo()
-        self.mano.append(self.mazo.cartas_restantes.pop())
-        i = 0
-        while i < NUMERO_CARTAS_MANO:
-            self.cartas[i].id = self.mano[i]
-            self.ComprobarCarta(self.cartas[i])
-            i += 1
+        for carta in self.cartas:
+            if carta.id == "null":
+                carta.id = self.mazo.cartas_restantes.pop()
+
+        # self.mazo.ComprobarMazo()
+        # self.mano.append(self.mazo.cartas_restantes.pop())
+        # i = 0
+        # while i < NUMERO_CARTAS_MANO:
+        #     self.cartas[i].id = self.mano[i]
+        #     self.ComprobarCarta(self.cartas[i])
+        #     i += 1
 
     def ComprobarCarta(self, carta):
         """
@@ -260,12 +265,12 @@ class Jugador(object):
                                                                    (HEIGHT / 20) + alto * gap])
         espesor = font_recursos.size(str(self.soldados))
         pantalla.blit(texto_soldados, [(((WIDTH / 25) + ancho / 4) * abs(self.id - 1) +
-                                             (WIDTH - (WIDTH / 25) - (ancho / 4)) * self.id) - espesor[0] / 2,
-                                            (HEIGHT / 20) + alto / 5 + alto * gap * 1])
+                                        (WIDTH - (WIDTH / 25) - (ancho / 4)) * self.id) - espesor[0] / 2,
+                                       (HEIGHT / 20) + alto / 5 + alto * gap * 1])
         espesor = font_recursos.size(str(self.espadas))
         pantalla.blit(texto_espadas, [(((WIDTH / 25) + ancho * 3 / 4) * abs(self.id - 1) +
-                                         (WIDTH - (WIDTH / 25) - (ancho * 3 / 4)) * self.id) - espesor[0] / 2,
-                                        (HEIGHT / 20) + alto / 5 + alto * gap * 1])
+                                       (WIDTH - (WIDTH / 25) - (ancho * 3 / 4)) * self.id) - espesor[0] / 2,
+                                      (HEIGHT / 20) + alto / 5 + alto * gap * 1])
 
         # Magos
         pantalla.blit(self.imagenes["recurso_magia"][self.id], [(WIDTH / 25) * abs(self.id - 1) +

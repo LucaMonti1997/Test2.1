@@ -1,8 +1,8 @@
 import pygame
 
 # Ancho y alto de la ventana de juego
-WIDTH = 1200
-HEIGHT = 700
+WIDTH = 1000
+HEIGHT = 600
 
 # Valores RGB de varios colores
 BLACK = (0, 0, 0)
@@ -50,6 +50,15 @@ diccionario_cartas = {
 
 }
 
+# Contiene distintos mazos que se pueden jugar
+diccionario_mazos = {
+    1: ["muralla1", "muralla2", "muralla3", "castillo1", "castillo2", "castillo3",
+        "constructores_amigos", "constructores_enemigos", "arco1",
+        "arco2", "arco3", "espada1", "espada2", "espada3", "soldados_amigos",
+        "soldados_enemigos", "magia1", "magia2", "magia3",
+        "regenerar1", "regenerar2", "regenerar3", "conjurar_ladrillos", "conjurar_espadas",
+        "conjurar_mana", "magos_amigos", "magos_enemigos"]
+}
 # Numero de cartas que se tienen en mano a la vez
 NUMERO_CARTAS_MANO = 8
 
@@ -57,7 +66,6 @@ NUMERO_CARTAS_MANO = 8
 pygame.font.init()
 font = pygame.font.SysFont('Arial', 30)
 font_recursos = pygame.font.SysFont('Cambria', 20, True)
-
 
 
 # Función para limitar un valor entre un minimo y un maximo

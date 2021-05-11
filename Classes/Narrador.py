@@ -79,9 +79,8 @@ class Narrador(object):
                                                                    cantidad_objetivo))
 
         # Quitamos la carta de la mano del jugador activo
-
-        self.jugadores[self.turno].mano.remove(carta.id)
-        self.jugadores[self.turno].CogerUnaCarta()
+        carta.id = "null"
+        self.jugadores[self.turno].CogerCartas()
         self.turnos_jugados += 1
         self.CambiarTurno()
         self.GenerarRecursos()
@@ -122,10 +121,9 @@ class Narrador(object):
         """
 
         for carta in self.jugadores[self.turno].cartas:
-            if carta.coord[0] < pos[0] < carta.coord[0] + self.jugadores[self.turno].imagenes["muralla1"][0].get_width() \
-                    and carta.coord[1] < pos[1] < carta.coord[1] + \
-                    self.jugadores[self.turno].imagenes["muralla1"][0].get_height():
-                self.JugarTurno(carta, jugar * carta.estado)
+            if carta.MouseOver(pos):
+                if jugar == carta.estado:
+                    self.JugarTurno(carta, carta.estado)
                 return
 
     def CalculoIA(self):
