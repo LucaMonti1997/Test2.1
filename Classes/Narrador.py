@@ -15,6 +15,7 @@ class Narrador(object):
         :param jugador2: Objeto Jugador. Jugador 2, tipicamente la IA
         """
         self.turno = 0
+        self.turnos_jugados = 0
         self.jugadores = [jugador1, jugador2]
 
     def Opuesto(self):
@@ -80,9 +81,10 @@ class Narrador(object):
         # Quitamos la carta de la mano del jugador activo
         self.jugadores[self.turno].mano.remove(carta.id)
         self.jugadores[self.turno].CogerUnaCarta()
+        self.turnos_jugados += 1
         self.CambiarTurno()
         self.GenerarRecursos()
-        self.CalculoIA()
+        # self.CalculoIA()
         self.jugadores[self.turno].ComprobarTodasCartas()
 
     def ComprobarPartida(self):

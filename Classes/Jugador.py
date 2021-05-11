@@ -122,7 +122,7 @@ class Jugador(object):
                 pygame.image.load("Assets/NewCards/Card renders/SoldadosAmigos_b.png").convert_alpha()],
             "soldados_enemigos": [
                 pygame.image.load("Assets/NewCards/Card renders/SoldadosEnemigos_a.png").convert_alpha(),
-                pygame.image.load("Assets/NewCards/Card renders/SoldadosEnemigos_a.png").convert_alpha()],
+                pygame.image.load("Assets/NewCards/Card renders/SoldadosEnemigos_b.png").convert_alpha()],
 
             "magia1": [pygame.image.load("Assets/NewCards/Card renders/Magia1_a.png").convert_alpha(),
                        pygame.image.load("Assets/NewCards/Card renders/Magia1_b.png").convert_alpha()],
