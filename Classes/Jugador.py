@@ -259,11 +259,11 @@ class Jugador(object):
                                                                    (WIDTH - (WIDTH / 25) - ancho) * self.id,
                                                                    (HEIGHT / 20) + alto * gap])
         espesor = font_recursos.size(str(self.soldados))
-        pantalla.blit(texto_constructores, [(((WIDTH / 25) + ancho / 4) * abs(self.id - 1) +
+        pantalla.blit(texto_soldados, [(((WIDTH / 25) + ancho / 4) * abs(self.id - 1) +
                                              (WIDTH - (WIDTH / 25) - (ancho / 4)) * self.id) - espesor[0] / 2,
                                             (HEIGHT / 20) + alto / 5 + alto * gap * 1])
         espesor = font_recursos.size(str(self.espadas))
-        pantalla.blit(texto_ladrillos, [(((WIDTH / 25) + ancho * 3 / 4) * abs(self.id - 1) +
+        pantalla.blit(texto_espadas, [(((WIDTH / 25) + ancho * 3 / 4) * abs(self.id - 1) +
                                          (WIDTH - (WIDTH / 25) - (ancho * 3 / 4)) * self.id) - espesor[0] / 2,
                                         (HEIGHT / 20) + alto / 5 + alto * gap * 1])
 

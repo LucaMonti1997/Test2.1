@@ -36,8 +36,11 @@ narrador = Narrador(jugador1, jugador2)
 # slider = Slider(screen, 100, 100, 200, 40, min=0, max=100, step=1)
 
 
-def mouseHandler(pos):
-    narrador.DetectarClickCarta(pos)
+def mouseHandler(pos, state):
+    if state == 1:
+        narrador.DetectarClickCarta(pos, True)
+    elif state == 3:
+        narrador.DetectarClickCarta(pos, False)
 
 
 def renderWindow():
@@ -85,7 +88,7 @@ def main():
                 run = False
             if event.type == pygame.MOUSEBUTTONDOWN:
                 # print(pygame.mouse.get_pressed())
-                mouseHandler(pygame.mouse.get_pos())
+                mouseHandler(pygame.mouse.get_pos(), event.button)
         # slider.listen(events)
         #
         # jugador1.hp_castillo = (slider.getValue())

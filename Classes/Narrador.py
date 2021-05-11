@@ -79,6 +79,7 @@ class Narrador(object):
                                                                    cantidad_objetivo))
 
         # Quitamos la carta de la mano del jugador activo
+
         self.jugadores[self.turno].mano.remove(carta.id)
         self.jugadores[self.turno].CogerUnaCarta()
         self.turnos_jugados += 1
@@ -112,18 +113,19 @@ class Narrador(object):
         else:
             return 0
 
-    # No discrimina entre click izquierdo o derecho
-    def DetectarClickCarta(self, pos):
+    def DetectarClickCarta(self, pos, jugar):
         """
         Detecta cual carta ha sido clickeada, y actua en consecuencia
 
         :param pos: Lista. Coordenadas donde se ha hecho click. [x, y]
+        :param jugar: Boolean. Jugar o descartar la carta
         """
+
         for carta in self.jugadores[self.turno].cartas:
             if carta.coord[0] < pos[0] < carta.coord[0] + self.jugadores[self.turno].imagenes["muralla1"][0].get_width() \
                     and carta.coord[1] < pos[1] < carta.coord[1] + \
                     self.jugadores[self.turno].imagenes["muralla1"][0].get_height():
-                self.JugarTurno(carta, carta.estado)
+                self.JugarTurno(carta, jugar * carta.estado)
                 return
 
     def CalculoIA(self):

@@ -1,8 +1,8 @@
 import pygame
 
 # Ancho y alto de la ventana de juego
-WIDTH = 1000
-HEIGHT = 600
+WIDTH = 1200
+HEIGHT = 700
 
 # Valores RGB de varios colores
 BLACK = (0, 0, 0)
