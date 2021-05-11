@@ -39,9 +39,9 @@ diccionario_cartas = {
     "magia1": [[9, "mana"], [-2, "hp_muralla"]],
     "magia2": [[18, "mana"], [-4, "hp_muralla"]],
     "magia3": [[40, "mana"], [-15, "hp_muralla"]],
-    "regenar1": [[8, "mana"], [5, "hp_muralla"]],
-    "regenar2": [[16, "mana"], [10, "hp_muralla"]],
-    "regenar3": [[24, "mana"], [15, "hp_castillo"]],
+    "regenerar1": [[8, "mana"], [5, "hp_muralla"]],
+    "regenerar2": [[16, "mana"], [10, "hp_muralla"]],
+    "regenerar3": [[24, "mana"], [15, "hp_castillo"]],
     "conjurar_ladrillos": [[3, "mana"], [5, "ladrillos"]],
     "conjurar_espadas": [[3, "mana"], [5, "espadas"]],
     "conjurar_mana": [[3, "mana"], [5, "mana"]],
@@ -56,7 +56,7 @@ NUMERO_CARTAS_MANO = 8
 # Fonts usados en el juego
 pygame.font.init()
 font = pygame.font.SysFont('Arial', 30)
-font_recursos = pygame.font.SysFont('Arial', 20, True)
+font_recursos = pygame.font.SysFont('Cambria', 20, True)
 
 
 

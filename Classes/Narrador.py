@@ -129,7 +129,7 @@ class Narrador(object):
         La IA escoge la mejor carta
         """
         ponderacion = {}
-        print("Jugador: ", self.turno)
+        # print("Jugador: ", self.turno)
         for carta in self.jugadores[self.turno].cartas:
             nota = 0
 
@@ -349,4 +349,4 @@ class Narrador(object):
             else:
                 # Los recursos no peligran con estos recursos
                 nota += 2.5
-            print("Carta: ", carta.id, " Nota: ", nota)
+            # print("Carta: ", carta.id, " Nota: ", nota)
