@@ -7,9 +7,10 @@ class Mazo(object):
 
         :param tipo: Numero. Tipo de mazo. Distintos mazos estan compuesto por diferentes combinaciones de cartas.
         """
-        self.mazo_1_completo = ["muralla1", "muralla2", "muralla3", "arco1", "arco2", "arco3", "espada1", "espada2",
-                                "espada3", "muralla1", "muralla2", "muralla3", "arco1", "arco2", "arco3", "espada1",
-                                "espada2", "espada3"]
+        self.mazo_1_completo = ["muralla1", "muralla2", "muralla3", "castillo1", "castillo2", "castillo3", "arco1",
+                                "arco2", "arco3", "espada1", "espada2", "espada3", "magia1", "magia2", "magia3",
+                                "regenerar1", "regenerar2", "regenerar3", "conjurar_ladrillos", "conjurar_espadas",
+                                "conjurar_mana"]
         self.cartas_restantes = []
         self.tipo = tipo
 

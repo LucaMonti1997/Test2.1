@@ -8,7 +8,7 @@ from Carta import *
 
 
 # Clase de jugador a la qual se le asignaran las siguientes funciones:
-#   Generar controlar los recursos de las instancias de los jugafores
+#   Generar controlar los recursos de las instancias de los jugadores
 #   controlar las cartas asignadas a los jugadores
 
 
@@ -23,16 +23,16 @@ class Jugador(object):
         :param identificador: 0 -> Jugador1; 1 -> Jugador2
         """
         # Vida castillo y muralla
-        self.hp_castillo = ""
-        self.hp_muralla = ""
+        self.hp_castillo = 0
+        self.hp_muralla = 0
         # Generadores de recursos
-        self.constructores = ""
-        self.soldados = ""
-        self.magos = ""
+        self.constructores = 0
+        self.soldados = 0
+        self.magos = 0
         # Recursos
-        self.ladrillos = ""
-        self.espadas = ""
-        self.mana = ""
+        self.ladrillos = 0
+        self.espadas = 0
+        self.mana = 0
         # Cartas en mano
         self.mano = []
         self.cartas = []
@@ -92,6 +92,13 @@ class Jugador(object):
                          pygame.image.load("Assets/NewCards/Card renders/Muralla2_b.png").convert_alpha()],
             "muralla3": [pygame.image.load("Assets/NewCards/Card renders/Muralla3_a.png").convert_alpha(),
                          pygame.image.load("Assets/NewCards/Card renders/Muralla3_b.png").convert_alpha()],
+            "castillo1": [pygame.image.load("Assets/NewCards/Card renders/Castillo1_a.png").convert_alpha(),
+                          pygame.image.load("Assets/NewCards/Card renders/Castillo1_b.png").convert_alpha()],
+            "castillo2": [pygame.image.load("Assets/NewCards/Card renders/Castillo2_a.png").convert_alpha(),
+                          pygame.image.load("Assets/NewCards/Card renders/Castillo2_b.png").convert_alpha()],
+            "castillo3": [pygame.image.load("Assets/NewCards/Card renders/Castillo3_a.png").convert_alpha(),
+                          pygame.image.load("Assets/NewCards/Card renders/Castillo3_b.png").convert_alpha()],
+
             "espada1": [pygame.image.load("Assets/NewCards/Card renders/Espada1_a.png").convert_alpha(),
                         pygame.image.load("Assets/NewCards/Card renders/Espada1_b.png").convert_alpha()],
             "espada2": [pygame.image.load("Assets/NewCards/Card renders/Espada2_a.png").convert_alpha(),
@@ -103,15 +110,42 @@ class Jugador(object):
             "arco2": [pygame.image.load("Assets/NewCards/Card renders/Arco2_a.png").convert_alpha(),
                       pygame.image.load("Assets/NewCards/Card renders/Arco2_b.png").convert_alpha()],
             "arco3": [pygame.image.load("Assets/NewCards/Card renders/Arco3_a.png").convert_alpha(),
-                      pygame.image.load("Assets/NewCards/Card renders/Arco3_b.png").convert_alpha()]
+                      pygame.image.load("Assets/NewCards/Card renders/Arco3_b.png").convert_alpha()],
+
+            "magia1": [pygame.image.load("Assets/NewCards/Card renders/Magia1_a.png").convert_alpha(),
+                       pygame.image.load("Assets/NewCards/Card renders/Magia1_b.png").convert_alpha()],
+            "magia2": [pygame.image.load("Assets/NewCards/Card renders/Magia2_a.png").convert_alpha(),
+                       pygame.image.load("Assets/NewCards/Card renders/Magia2_b.png").convert_alpha()],
+            "magia3": [pygame.image.load("Assets/NewCards/Card renders/Magia3_a.png").convert_alpha(),
+                       pygame.image.load("Assets/NewCards/Card renders/Magia3_b.png").convert_alpha()],
+            "regenerar1": [pygame.image.load("Assets/NewCards/Card renders/Regenerar1_a.png").convert_alpha(),
+                           pygame.image.load("Assets/NewCards/Card renders/Regenerar1_b.png").convert_alpha()],
+            "regenerar2": [pygame.image.load("Assets/NewCards/Card renders/Regenerar2_a.png").convert_alpha(),
+                           pygame.image.load("Assets/NewCards/Card renders/Regenerar2_b.png").convert_alpha()],
+            "regenerar3": [pygame.image.load("Assets/NewCards/Card renders/Regenerar3_a.png").convert_alpha(),
+                           pygame.image.load("Assets/NewCards/Card renders/Regenerar3_b.png").convert_alpha()],
+            "conjurar_ladrillos": [
+                pygame.image.load("Assets/NewCards/Card renders/ConjurarLadrillos_a.png").convert_alpha(),
+                pygame.image.load("Assets/NewCards/Card renders/ConjurarLadrillos_b.png").convert_alpha()],
+            "conjurar_espadas": [
+                pygame.image.load("Assets/NewCards/Card renders/ConjurarEspadas_a.png").convert_alpha(),
+                pygame.image.load("Assets/NewCards/Card renders/ConjurarEspadas_b.png").convert_alpha()],
+            "conjurar_mana": [
+                pygame.image.load("Assets/NewCards/Card renders/ConjurarMana_a.png").convert_alpha(),
+                pygame.image.load("Assets/NewCards/Card renders/ConjurarMana_b.png").convert_alpha()],
+
+            "recurso_constructores": [
+                pygame.image.load("Assets/NewCards/Card renders/Recursos/Constructores_a.png").convert_alpha(),
+                pygame.image.load("Assets/NewCards/Card renders/Recursos/Constructores_b.png").convert_alpha()],
+            "recurso_soldados": [
+                pygame.image.load("Assets/NewCards/Card renders/Recursos/Soldados_a.png").convert_alpha(),
+                pygame.image.load("Assets/NewCards/Card renders/Recursos/Soldados_b.png").convert_alpha()],
+            "recurso_magia": [
+                pygame.image.load("Assets/NewCards/Card renders/Recursos/Magia_a.png").convert_alpha(),
+                pygame.image.load("Assets/NewCards/Card renders/Recursos/Magia_b.png").convert_alpha()]
         }
         self.iconos = {
-            "ladrillos": pygame.image.load("Assets/Iconos/Bricks.png").convert_alpha(),
-            "constructores": pygame.image.load("Assets/Iconos/Builders.png").convert_alpha(),
-            "espadas": pygame.image.load("Assets/Iconos/Weapons.png").convert_alpha(),
-            "soldados": pygame.image.load("Assets/Iconos/Soldiers.png").convert_alpha(),
-            "mana": pygame.image.load("Assets/Iconos/Crystals.png").convert_alpha(),
-            "magos": pygame.image.load("Assets/Iconos/Magic.png").convert_alpha(),
+
             "escudo": pygame.image.load("Assets/Iconos/escudo.png").convert_alpha(),
             "corazon": pygame.image.load("Assets/Iconos/Corazon.png").convert_alpha(),
         }
@@ -178,18 +212,9 @@ class Jugador(object):
         :param pantalla: Objeto pygame.display. Donde se muestran las imagenes
         """
         # Ancho y alto base de los rectangulos
-        ancho = WIDTH / 10
-        alto = ancho
+        ancho = self.imagenes["recurso_magia"][0].get_width()
+        alto = self.imagenes["recurso_magia"][0].get_height()
         gap = 1.2
-        recuadro_ladrillos = ((WIDTH / 25) * abs((self.id - 1)) + (WIDTH - (WIDTH / 25) - ancho) * self.id,
-                              HEIGHT / 20, ancho, alto)
-        recuadro_espadas = ((WIDTH / 25) * abs((self.id - 1)) + (WIDTH - (WIDTH / 25) - ancho) * self.id,
-                            (HEIGHT / 20) + alto * gap, ancho, alto)
-        recuadro_mana = ((WIDTH / 25) * abs((self.id - 1)) + (WIDTH - (WIDTH / 25) - ancho) * self.id,
-                         (HEIGHT / 20) + alto * gap * 2, ancho, alto)
-        pygame.draw.rect(pantalla, RED, recuadro_ladrillos)
-        pygame.draw.rect(pantalla, GREEN, recuadro_espadas)
-        pygame.draw.rect(pantalla, YELLOW, recuadro_mana)
 
         texto_constructores = Constantes.font_recursos.render(str(self.constructores), False, (0, 0, 0))
         texto_ladrillos = Constantes.font_recursos.render(str(self.ladrillos), False, (0, 0, 0))
@@ -198,64 +223,44 @@ class Jugador(object):
         texto_magos = Constantes.font_recursos.render(str(self.magos), False, (0, 0, 0))
         texto_mana = Constantes.font_recursos.render(str(self.mana), False, (0, 0, 0))
 
-        # Costructores
-        pantalla.blit(texto_constructores,
-                      [((WIDTH / 25) + ancho * 3 / 15) * abs((self.id - 1)) +
-                       (WIDTH - (WIDTH / 25) - ancho + ancho * 3 / 15) * self.id, (HEIGHT / 20) + (alto * 2 / 15)])
-        pantalla.blit(self.iconos["constructores"], [
-            ((WIDTH / 25) + ancho * 13 / 15 - self.iconos["constructores"].get_width()) * abs((self.id - 1)) +
-            (WIDTH - (WIDTH / 25) - ancho + ancho * 13 / 15 - self.iconos["constructores"].get_width()) * self.id,
-            (HEIGHT / 20) + (alto * 1 / 15)])
+        # Costructores y ladrillos
+        pantalla.blit(self.imagenes["recurso_constructores"][self.id], [(WIDTH / 25) * abs(self.id - 1) +
+                                                                        (WIDTH - (WIDTH / 25) - ancho) * self.id,
+                                                                        (HEIGHT / 20) + alto * gap * 0])
+        espesor = font_recursos.size(str(self.constructores))
+        pantalla.blit(texto_constructores, [(((WIDTH / 25) + ancho / 4) * abs(self.id - 1) +
+                                             (WIDTH - (WIDTH / 25) - (ancho / 4)) * self.id) - espesor[0] / 2,
+                                            (HEIGHT / 20) + alto / 5 + alto * gap * 0])
+        espesor = font_recursos.size(str(self.ladrillos))
+        pantalla.blit(texto_ladrillos, [(((WIDTH / 25) + ancho * 3 / 4) * abs(self.id - 1) +
+                                         (WIDTH - (WIDTH / 25) - (ancho * 3 / 4)) * self.id) - espesor[0] / 2,
+                                        (HEIGHT / 20) + alto / 5 + alto * gap * 0])
 
-        # Ladrillos
-        pantalla.blit(texto_ladrillos,
-                      [((WIDTH / 25) + ancho * 3 / 15) * abs((self.id - 1)) +
-                       (WIDTH - (WIDTH / 25) - ancho + ancho * 3 / 15) * self.id,
-                       (HEIGHT / 20) + (alto * 2 / 15) + (alto / 2)])
-        pantalla.blit(self.iconos["ladrillos"], [
-            ((WIDTH / 25) + ancho * 13 / 15 - self.iconos["ladrillos"].get_width()) * abs((self.id - 1)) +
-            (WIDTH - (WIDTH / 25) - ancho + ancho * 13 / 15 - self.iconos["ladrillos"].get_width()) * self.id,
-            (HEIGHT / 20) + (alto * 1 / 15) + (alto / 2)])
-
-        # Soldados
-        pantalla.blit(texto_soldados,
-                      [((WIDTH / 25) + ancho * 3 / 15) * abs((self.id - 1)) +
-                       (WIDTH - (WIDTH / 25) - ancho + ancho * 3 / 15) * self.id,
-                       (HEIGHT / 20) + (alto * 2 / 15) + alto * gap])
-        pantalla.blit(self.iconos["soldados"], [
-            ((WIDTH / 25) + ancho * 13 / 15 - self.iconos["soldados"].get_width()) * abs((self.id - 1)) +
-            (WIDTH - (WIDTH / 25) - ancho + ancho * 13 / 15 - self.iconos["soldados"].get_width()) * self.id,
-            (HEIGHT / 20) + (alto * 1 / 15) + (alto * gap)])
-
-        # Espadas
-        pantalla.blit(texto_espadas,
-                      [((WIDTH / 25) + ancho * 3 / 15) * abs((self.id - 1)) +
-                       (WIDTH - (WIDTH / 25) - ancho + ancho * 3 / 15) * self.id,
-                       (HEIGHT / 20) + (alto * 2 / 15) + (alto / 2) + (alto * gap)])
-        pantalla.blit(self.iconos["espadas"], [
-            ((WIDTH / 25) + ancho * 13 / 15 - self.iconos["espadas"].get_width()) * abs((self.id - 1)) +
-            (WIDTH - (WIDTH / 25) - ancho + ancho * 13 / 15 - self.iconos["espadas"].get_width()) * self.id,
-            (HEIGHT / 20) + (alto * 1 / 15) + (alto / 2) + (alto * gap)])
+        # Soldados y espadas
+        pantalla.blit(self.imagenes["recurso_soldados"][self.id], [(WIDTH / 25) * abs(self.id - 1) +
+                                                                   (WIDTH - (WIDTH / 25) - ancho) * self.id,
+                                                                   (HEIGHT / 20) + alto * gap])
+        espesor = font_recursos.size(str(self.soldados))
+        pantalla.blit(texto_constructores, [(((WIDTH / 25) + ancho / 4) * abs(self.id - 1) +
+                                             (WIDTH - (WIDTH / 25) - (ancho / 4)) * self.id) - espesor[0] / 2,
+                                            (HEIGHT / 20) + alto / 5 + alto * gap * 1])
+        espesor = font_recursos.size(str(self.espadas))
+        pantalla.blit(texto_ladrillos, [(((WIDTH / 25) + ancho * 3 / 4) * abs(self.id - 1) +
+                                         (WIDTH - (WIDTH / 25) - (ancho * 3 / 4)) * self.id) - espesor[0] / 2,
+                                        (HEIGHT / 20) + alto / 5 + alto * gap * 1])
 
         # Magos
-        pantalla.blit(texto_magos,
-                      [((WIDTH / 25) + ancho * 3 / 15) * abs((self.id - 1)) +
-                       (WIDTH - (WIDTH / 25) - ancho + ancho * 3 / 15) * self.id,
-                       (HEIGHT / 20) + (alto * 2 / 15) + alto * gap * 2])
-        pantalla.blit(self.iconos["magos"], [
-            ((WIDTH / 25) + ancho * 13 / 15 - self.iconos["magos"].get_width()) * abs((self.id - 1)) +
-            (WIDTH - (WIDTH / 25) - ancho + ancho * 13 / 15 - self.iconos["magos"].get_width()) * self.id,
-            (HEIGHT / 20) + (alto * 1 / 15) + (alto * gap * 2)])
-
-        # Mana
-        pantalla.blit(texto_mana,
-                      [((WIDTH / 25) + ancho * 3 / 15) * abs((self.id - 1)) +
-                       (WIDTH - (WIDTH / 25) - ancho + ancho * 3 / 15) * self.id,
-                       (HEIGHT / 20) + (alto * 2 / 15) + (alto / 2) + (alto * gap * 2)])
-        pantalla.blit(self.iconos["mana"], [
-            ((WIDTH / 25) + ancho * 13 / 15 - self.iconos["mana"].get_width()) * abs((self.id - 1)) +
-            (WIDTH - (WIDTH / 25) - ancho + ancho * 13 / 15 - self.iconos["mana"].get_width()) * self.id,
-            (HEIGHT / 20) + (alto * 1 / 15) + (alto / 2) + (alto * gap * 2)])
+        pantalla.blit(self.imagenes["recurso_magia"][self.id], [(WIDTH / 25) * abs(self.id - 1) +
+                                                                (WIDTH - (WIDTH / 25) - ancho) * self.id,
+                                                                (HEIGHT / 20) + alto * gap * 2])
+        espesor = font_recursos.size(str(self.magos))
+        pantalla.blit(texto_magos, [(((WIDTH / 25) + ancho / 4) * abs(self.id - 1) +
+                                             (WIDTH - (WIDTH / 25) - (ancho / 4)) * self.id) - espesor[0] / 2,
+                                            (HEIGHT / 20) + alto / 5 + alto * gap * 2])
+        espesor = font_recursos.size(str(self.mana))
+        pantalla.blit(texto_mana, [(((WIDTH / 25) + ancho * 3 / 4) * abs(self.id - 1) +
+                                         (WIDTH - (WIDTH / 25) - (ancho * 3 / 4)) * self.id) - espesor[0] / 2,
+                                        (HEIGHT / 20) + alto / 5 + alto * gap * 2])
 
     def MostrarBase(self, pantalla):
         """
