@@ -1,6 +1,7 @@
 import random
 
 import pygame.font
+import json
 
 import Constantes
 from Carta import *
@@ -86,88 +87,19 @@ class Jugador(object):
         """
 
         # Crear archivos para cargar
-        self.imagenes = {
-            "muralla1": [pygame.image.load("Assets/NewCards/Card renders/Muralla1_a.png").convert_alpha(),
-                         pygame.image.load("Assets/NewCards/Card renders/Muralla1_b.png").convert_alpha()],
-            "muralla2": [pygame.image.load("Assets/NewCards/Card renders/Muralla2_a.png").convert_alpha(),
-                         pygame.image.load("Assets/NewCards/Card renders/Muralla2_b.png").convert_alpha()],
-            "muralla3": [pygame.image.load("Assets/NewCards/Card renders/Muralla3_a.png").convert_alpha(),
-                         pygame.image.load("Assets/NewCards/Card renders/Muralla3_b.png").convert_alpha()],
-            "castillo1": [pygame.image.load("Assets/NewCards/Card renders/Castillo1_a.png").convert_alpha(),
-                          pygame.image.load("Assets/NewCards/Card renders/Castillo1_b.png").convert_alpha()],
-            "castillo2": [pygame.image.load("Assets/NewCards/Card renders/Castillo2_a.png").convert_alpha(),
-                          pygame.image.load("Assets/NewCards/Card renders/Castillo2_b.png").convert_alpha()],
-            "castillo3": [pygame.image.load("Assets/NewCards/Card renders/Castillo3_a.png").convert_alpha(),
-                          pygame.image.load("Assets/NewCards/Card renders/Castillo3_b.png").convert_alpha()],
-            "constructores_amigos": [
-                pygame.image.load("Assets/NewCards/Card renders/ConstructoresAmigos_a.png").convert_alpha(),
-                pygame.image.load("Assets/NewCards/Card renders/ConstructoresAmigos_b.png").convert_alpha()],
-            "constructores_enemigos": [
-                pygame.image.load("Assets/NewCards/Card renders/ConstructoresEnemigos_a.png").convert_alpha(),
-                pygame.image.load("Assets/NewCards/Card renders/ConstructoresEnemigos_b.png").convert_alpha()],
+        with open('imagenes.json') as json_file:
+            imagenes = json.load(json_file)
 
-            "espada1": [pygame.image.load("Assets/NewCards/Card renders/Espada1_a.png").convert_alpha(),
-                        pygame.image.load("Assets/NewCards/Card renders/Espada1_b.png").convert_alpha()],
-            "espada2": [pygame.image.load("Assets/NewCards/Card renders/Espada2_a.png").convert_alpha(),
-                        pygame.image.load("Assets/NewCards/Card renders/Espada2_b.png").convert_alpha()],
-            "espada3": [pygame.image.load("Assets/NewCards/Card renders/Espada3_a.png").convert_alpha(),
-                        pygame.image.load("Assets/NewCards/Card renders/Espada3_b.png").convert_alpha()],
-            "arco1": [pygame.image.load("Assets/NewCards/Card renders/Arco1_a.png").convert_alpha(),
-                      pygame.image.load("Assets/NewCards/Card renders/Arco1_b.png").convert_alpha()],
-            "arco2": [pygame.image.load("Assets/NewCards/Card renders/Arco2_a.png").convert_alpha(),
-                      pygame.image.load("Assets/NewCards/Card renders/Arco2_b.png").convert_alpha()],
-            "arco3": [pygame.image.load("Assets/NewCards/Card renders/Arco3_a.png").convert_alpha(),
-                      pygame.image.load("Assets/NewCards/Card renders/Arco3_b.png").convert_alpha()],
-            "soldados_amigos": [
-                pygame.image.load("Assets/NewCards/Card renders/SoldadosAmigos_a.png").convert_alpha(),
-                pygame.image.load("Assets/NewCards/Card renders/SoldadosAmigos_b.png").convert_alpha()],
-            "soldados_enemigos": [
-                pygame.image.load("Assets/NewCards/Card renders/SoldadosEnemigos_a.png").convert_alpha(),
-                pygame.image.load("Assets/NewCards/Card renders/SoldadosEnemigos_b.png").convert_alpha()],
+            for imagen in imagenes:
+                self.imagenes[imagen] = [
+                    pygame.image.load(imagenes[imagen][0]).convert_alpha(),
+                    pygame.image.load(imagenes[imagen][1]).convert_alpha()]
 
-            "magia1": [pygame.image.load("Assets/NewCards/Card renders/Magia1_a.png").convert_alpha(),
-                       pygame.image.load("Assets/NewCards/Card renders/Magia1_b.png").convert_alpha()],
-            "magia2": [pygame.image.load("Assets/NewCards/Card renders/Magia2_a.png").convert_alpha(),
-                       pygame.image.load("Assets/NewCards/Card renders/Magia2_b.png").convert_alpha()],
-            "magia3": [pygame.image.load("Assets/NewCards/Card renders/Magia3_a.png").convert_alpha(),
-                       pygame.image.load("Assets/NewCards/Card renders/Magia3_b.png").convert_alpha()],
-            "regenerar1": [pygame.image.load("Assets/NewCards/Card renders/Regenerar1_a.png").convert_alpha(),
-                           pygame.image.load("Assets/NewCards/Card renders/Regenerar1_b.png").convert_alpha()],
-            "regenerar2": [pygame.image.load("Assets/NewCards/Card renders/Regenerar2_a.png").convert_alpha(),
-                           pygame.image.load("Assets/NewCards/Card renders/Regenerar2_b.png").convert_alpha()],
-            "regenerar3": [pygame.image.load("Assets/NewCards/Card renders/Regenerar3_a.png").convert_alpha(),
-                           pygame.image.load("Assets/NewCards/Card renders/Regenerar3_b.png").convert_alpha()],
-            "conjurar_ladrillos": [
-                pygame.image.load("Assets/NewCards/Card renders/ConjurarLadrillos_a.png").convert_alpha(),
-                pygame.image.load("Assets/NewCards/Card renders/ConjurarLadrillos_b.png").convert_alpha()],
-            "conjurar_espadas": [
-                pygame.image.load("Assets/NewCards/Card renders/ConjurarEspadas_a.png").convert_alpha(),
-                pygame.image.load("Assets/NewCards/Card renders/ConjurarEspadas_b.png").convert_alpha()],
-            "conjurar_mana": [
-                pygame.image.load("Assets/NewCards/Card renders/ConjurarMana_a.png").convert_alpha(),
-                pygame.image.load("Assets/NewCards/Card renders/ConjurarMana_b.png").convert_alpha()],
-            "magos_amigos": [
-                pygame.image.load("Assets/NewCards/Card renders/MagosAmigos_a.png").convert_alpha(),
-                pygame.image.load("Assets/NewCards/Card renders/MagosAmigos_b.png").convert_alpha()],
-            "magos_enemigos": [
-                pygame.image.load("Assets/NewCards/Card renders/MagosEnemigos_a.png").convert_alpha(),
-                pygame.image.load("Assets/NewCards/Card renders/MagosEnemigos_b.png").convert_alpha()],
+        with open('iconos.json') as json_file_iconos:
+            iconos = json.load(json_file_iconos)
 
-            "constructores": [
-                pygame.image.load("Assets/NewCards/Card renders/Recursos/Constructores_a.png").convert_alpha(),
-                pygame.image.load("Assets/NewCards/Card renders/Recursos/Constructores_b.png").convert_alpha()],
-            "soldados": [
-                pygame.image.load("Assets/NewCards/Card renders/Recursos/Soldados_a.png").convert_alpha(),
-                pygame.image.load("Assets/NewCards/Card renders/Recursos/Soldados_b.png").convert_alpha()],
-            "magos": [
-                pygame.image.load("Assets/NewCards/Card renders/Recursos/Magia_a.png").convert_alpha(),
-                pygame.image.load("Assets/NewCards/Card renders/Recursos/Magia_b.png").convert_alpha()]
-        }
-        self.iconos = {
-
-            "escudo": pygame.image.load("Assets/Iconos/escudo.png").convert_alpha(),
-            "corazon": pygame.image.load("Assets/Iconos/Corazon.png").convert_alpha(),
-        }
+            for icono in iconos:
+                self.iconos[icono] = pygame.image.load(iconos[icono]).convert_alpha()
 
         # modificamos las imagenes para que quepan en pantalla
 
