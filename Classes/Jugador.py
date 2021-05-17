@@ -153,13 +153,13 @@ class Jugador(object):
                 pygame.image.load("Assets/NewCards/Card renders/MagosEnemigos_a.png").convert_alpha(),
                 pygame.image.load("Assets/NewCards/Card renders/MagosEnemigos_b.png").convert_alpha()],
 
-            "recurso_constructores": [
+            "constructores": [
                 pygame.image.load("Assets/NewCards/Card renders/Recursos/Constructores_a.png").convert_alpha(),
                 pygame.image.load("Assets/NewCards/Card renders/Recursos/Constructores_b.png").convert_alpha()],
-            "recurso_soldados": [
+            "soldados": [
                 pygame.image.load("Assets/NewCards/Card renders/Recursos/Soldados_a.png").convert_alpha(),
                 pygame.image.load("Assets/NewCards/Card renders/Recursos/Soldados_b.png").convert_alpha()],
-            "recurso_magia": [
+            "magos": [
                 pygame.image.load("Assets/NewCards/Card renders/Recursos/Magia_a.png").convert_alpha(),
                 pygame.image.load("Assets/NewCards/Card renders/Recursos/Magia_b.png").convert_alpha()]
         }
@@ -237,79 +237,40 @@ class Jugador(object):
         :param pantalla: Objeto pygame.display. Donde se muestran las imagenes
         """
         # Ancho y alto base de los rectangulos
-        ancho = self.imagenes["recurso_magia"][0].get_width()
-        alto = self.imagenes["recurso_magia"][0].get_height()
+        ancho = self.imagenes["magos"][0].get_width()
+        alto = self.imagenes["magos"][0].get_height()
         gap = 1.2
 
-        texto_constructores = Constantes.font_recursos.render(str(self.constructores), False, (0, 0, 0))
-        texto_ladrillos = Constantes.font_recursos.render(str(self.ladrillos), False, (0, 0, 0))
-        texto_soldados = Constantes.font_recursos.render(str(self.soldados), False, (0, 0, 0))
-        texto_espadas = Constantes.font_recursos.render(str(self.espadas), False, (0, 0, 0))
-        texto_magos = Constantes.font_recursos.render(str(self.magos), False, (0, 0, 0))
-        texto_mana = Constantes.font_recursos.render(str(self.mana), False, (0, 0, 0))
+        self.DistribuirGraficamente(pantalla, "constructores", 1, 0, ancho, alto, gap, "Recurso")
+        self.DistribuirGraficamente(pantalla, "ladrillos", 3, 0, ancho, alto, gap, "Generador")
+        self.DistribuirGraficamente(pantalla, "soldados", 1, 1, ancho, alto, gap, "Recurso")
+        self.DistribuirGraficamente(pantalla, "espadas", 3, 1, ancho, alto, gap, "Generador")
+        self.DistribuirGraficamente(pantalla, "magos", 1, 2, ancho, alto, gap, "Recurso")
+        self.DistribuirGraficamente(pantalla, "mana", 3, 2, ancho, alto, gap, "Generador")
 
-        # Costructores y ladrillos
-        pantalla.blit(self.imagenes["recurso_constructores"][self.id], [(WIDTH / 25) * abs(self.id - 1) +
-                                                                        (WIDTH - (WIDTH / 25) - ancho) * self.id,
-                                                                        (HEIGHT / 20) + alto * gap * 0])
-        espesor = font_recursos.size(str(self.constructores))
-        pantalla.blit(texto_constructores, [(((WIDTH / 25) + ancho / 4) * abs(self.id - 1) +
-                                             (WIDTH - (WIDTH / 25) - (ancho / 4)) * self.id) - espesor[0] / 2,
-                                            (HEIGHT / 20) + alto / 5 + alto * gap * 0])
-        espesor = font_recursos.size(str(self.ladrillos))
-        pantalla.blit(texto_ladrillos, [(((WIDTH / 25) + ancho * 3 / 4) * abs(self.id - 1) +
-                                         (WIDTH - (WIDTH / 25) - (ancho * 3 / 4)) * self.id) - espesor[0] / 2,
-                                        (HEIGHT / 20) + alto / 5 + alto * gap * 0])
-
-        # Soldados y espadas
-        pantalla.blit(self.imagenes["recurso_soldados"][self.id], [(WIDTH / 25) * abs(self.id - 1) +
-                                                                   (WIDTH - (WIDTH / 25) - ancho) * self.id,
-                                                                   (HEIGHT / 20) + alto * gap])
-        espesor = font_recursos.size(str(self.soldados))
-        pantalla.blit(texto_soldados, [(((WIDTH / 25) + ancho / 4) * abs(self.id - 1) +
-                                        (WIDTH - (WIDTH / 25) - (ancho / 4)) * self.id) - espesor[0] / 2,
-                                       (HEIGHT / 20) + alto / 5 + alto * gap * 1])
-        espesor = font_recursos.size(str(self.espadas))
-        pantalla.blit(texto_espadas, [(((WIDTH / 25) + ancho * 3 / 4) * abs(self.id - 1) +
-                                       (WIDTH - (WIDTH / 25) - (ancho * 3 / 4)) * self.id) - espesor[0] / 2,
-                                      (HEIGHT / 20) + alto / 5 + alto * gap * 1])
-
-        # Magos
-        pantalla.blit(self.imagenes["recurso_magia"][self.id], [(WIDTH / 25) * abs(self.id - 1) +
-                                                                (WIDTH - (WIDTH / 25) - ancho) * self.id,
-                                                                (HEIGHT / 20) + alto * gap * 2])
-        espesor = font_recursos.size(str(self.magos))
-        pantalla.blit(texto_magos, [(((WIDTH / 25) + ancho / 4) * abs(self.id - 1) +
-                                     (WIDTH - (WIDTH / 25) - (ancho / 4)) * self.id) - espesor[0] / 2,
-                                    (HEIGHT / 20) + alto / 5 + alto * gap * 2])
-        espesor = font_recursos.size(str(self.mana))
-        pantalla.blit(texto_mana, [(((WIDTH / 25) + ancho * 3 / 4) * abs(self.id - 1) +
-                                    (WIDTH - (WIDTH / 25) - (ancho * 3 / 4)) * self.id) - espesor[0] / 2,
-                                   (HEIGHT / 20) + alto / 5 + alto * gap * 2])
-
-    def DistribuirGraficamente(self, pantalla, identidad, mult, ancho, alto, gap):
+    def DistribuirGraficamente(self, pantalla, identidad, mult_hor, mult_ver, ancho, alto, gap, tipo="Recurso"):
         """
         Distribuye los elementos en pantalla.
 
         :param pantalla: Objeto pygame.display. Donde se muestran las imagenes.
         :param identidad: String. Identificador del tipo de elemento que estamos graficando.
-        :param mult: Int. Altura
-        :param ancho:
-        :param alto:
-        :param gap:
-        :return:
+        :param mult_hor: Int. Desplazamiento horizontal. [1 o 3]
+        :param mult_ver: Int Numero de veces que hay que sumar la altura.[0,1,2]
+        :param ancho: Numero. Ancho base de una imagen.
+        :param alto: Numero. Alto base de una imagen.
+        :param gap: Float. Proporción de distancia vertical entre imagenes.
+        :param tipo: String. Indica si tenemos que mostrar una imagen con el mismo nombre de identidad o no.
         """
-        # pantalla.blit(self.imagenes[identidad][self.id], [(WIDTH / 25) * abs(self.id - 1) +
-        #                                                   (WIDTH - (WIDTH / 25) - ancho) * self.id,
-        #                                                   (HEIGHT / 20) + alto * gap * mult])
-        # espesor = font_recursos.size(str(self.constructores))
-        # pantalla.blit(texto_constructores, [(((WIDTH / 25) + ancho / 4) * abs(self.id - 1) +
-        #                                      (WIDTH - (WIDTH / 25) - (ancho / 4)) * self.id) - espesor[0] / 2,
-        #                                     (HEIGHT / 20) + alto / 5 + alto * gap * 0])
-        # espesor = font_recursos.size(str(self.ladrillos))
-        # pantalla.blit(texto_ladrillos, [(((WIDTH / 25) + ancho * 3 / 4) * abs(self.id - 1) +
-        #                                  (WIDTH - (WIDTH / 25) - (ancho * 3 / 4)) * self.id) - espesor[0] / 2,
-        #                                 (HEIGHT / 20) + alto / 5 + alto * gap * 0])
+        texto = Constantes.font_recursos.render(str(self.Get(identidad)), False, (0, 0, 0))
+        espesor = font_recursos.size(str(self.Get(identidad)))
+        if tipo == "Recurso":
+            pantalla.blit(self.imagenes[identidad][self.id], [(WIDTH / 25) * abs(self.id - 1) +
+                                                              (WIDTH - (WIDTH / 25) - ancho) * self.id,
+                                                              (HEIGHT / 20) + alto * gap * mult_ver])
+
+        pantalla.blit(texto, [(((WIDTH / 25) + ancho * mult_hor / 4) * abs(self.id - 1) +
+                               (WIDTH - (WIDTH / 25) - (ancho * mult_hor / 4)) * self.id) - espesor[0] / 2,
+                              (HEIGHT / 20) + alto / 5 + alto * gap * mult_ver])
 
     def MostrarBase(self, pantalla):
         """
