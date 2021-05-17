@@ -1,4 +1,6 @@
 from Constantes import diccionario_mazos
+
+
 class Mazo(object):
 
     def __init__(self, tipo):
@@ -23,3 +25,7 @@ class Mazo(object):
         """
         if len(self.cartas_restantes) == 0:
             self.cartas_restantes = diccionario_mazos[self.tipo].copy()
+
+
+if __name__ == '__main__':
+    pass

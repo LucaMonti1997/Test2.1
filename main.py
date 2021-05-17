@@ -1,10 +1,5 @@
-import pygame
-import os
 from time import sleep
-from pygame_widgets import Slider, TextBox
-import random
-from Constantes import *
-from Carta import *
+
 from Base import *
 from Jugador import *
 from Mazo import *

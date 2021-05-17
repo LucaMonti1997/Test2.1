@@ -1,10 +1,10 @@
 import random
-import Constantes
+
 import pygame.font
 
-from Mazo import *
-from Constantes import *
+import Constantes
 from Carta import *
+from Constantes import *
 
 
 # Clase de jugador a la qual se le asignaran las siguientes funciones:
@@ -49,8 +49,8 @@ class Jugador(object):
         """
         Asigna valor iniciales a los atributo del jugador
         """
-        self.hp_castillo = 69
-        self.hp_muralla = 42
+        self.hp_castillo = 50
+        self.hp_muralla = 35
 
         self.constructores = 2
         self.soldados = 2
@@ -74,8 +74,8 @@ class Jugador(object):
         x = 0
         while len(self.cartas) < NUMERO_CARTAS_MANO:
             identificador_carta = self.mazo.cartas_restantes.pop()
-            carta_n = Carta( identificador_carta, True, (50 + (WIDTH - 100) / 8 * x, HEIGHT - 200),
-                             (self.imagenes["muralla1"][0].get_width(), self.imagenes["muralla1"][0].get_height()))
+            carta_n = Carta(identificador_carta, True, (50 + (WIDTH - 100) / 8 * x, HEIGHT - 200),
+                            (self.imagenes["muralla1"][0].get_width(), self.imagenes["muralla1"][0].get_height()))
             self.cartas.append(carta_n)
             x += 1
         self.ComprobarTodasCartas()
@@ -85,6 +85,7 @@ class Jugador(object):
         Precargamos las imagenes en un diccionario y hacemos ajustes a sus dimensiones.
         """
 
+        # Crear archivos para cargar
         self.imagenes = {
             "muralla1": [pygame.image.load("Assets/NewCards/Card renders/Muralla1_a.png").convert_alpha(),
                          pygame.image.load("Assets/NewCards/Card renders/Muralla1_b.png").convert_alpha()],
@@ -174,6 +175,7 @@ class Jugador(object):
             for imagen in self.imagenes[key]:
                 imagen = pygame.transform.smoothscale(imagen,
                                                       (int(imagen.get_width() / 1), int(imagen.get_height() / 1)))
+
         for key in self.iconos:
             ancho = self.iconos[key].get_width()
             nuevo_ancho = int(WIDTH / 25)
@@ -285,6 +287,30 @@ class Jugador(object):
                                     (WIDTH - (WIDTH / 25) - (ancho * 3 / 4)) * self.id) - espesor[0] / 2,
                                    (HEIGHT / 20) + alto / 5 + alto * gap * 2])
 
+    def DistribuirGraficamente(self, pantalla, identidad, mult, ancho, alto, gap):
+        """
+        Distribuye los elementos en pantalla.
+
+        :param pantalla: Objeto pygame.display. Donde se muestran las imagenes.
+        :param identidad: String. Identificador del tipo de elemento que estamos graficando.
+        :param mult: Int. Altura
+        :param ancho:
+        :param alto:
+        :param gap:
+        :return:
+        """
+        # pantalla.blit(self.imagenes[identidad][self.id], [(WIDTH / 25) * abs(self.id - 1) +
+        #                                                   (WIDTH - (WIDTH / 25) - ancho) * self.id,
+        #                                                   (HEIGHT / 20) + alto * gap * mult])
+        # espesor = font_recursos.size(str(self.constructores))
+        # pantalla.blit(texto_constructores, [(((WIDTH / 25) + ancho / 4) * abs(self.id - 1) +
+        #                                      (WIDTH - (WIDTH / 25) - (ancho / 4)) * self.id) - espesor[0] / 2,
+        #                                     (HEIGHT / 20) + alto / 5 + alto * gap * 0])
+        # espesor = font_recursos.size(str(self.ladrillos))
+        # pantalla.blit(texto_ladrillos, [(((WIDTH / 25) + ancho * 3 / 4) * abs(self.id - 1) +
+        #                                  (WIDTH - (WIDTH / 25) - (ancho * 3 / 4)) * self.id) - espesor[0] / 2,
+        #                                 (HEIGHT / 20) + alto / 5 + alto * gap * 0])
+
     def MostrarBase(self, pantalla):
         """
         Primero se calculan los offsets de los atributos de base, luego se llama a base.Dibujar para que se muestre
@@ -323,3 +349,7 @@ class Jugador(object):
 
     def Get(self, attr):
         return getattr(self, attr)
+
+
+if __name__ == '__main__':
+    pass

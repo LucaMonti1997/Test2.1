@@ -1,6 +1,3 @@
-import pygame
-
-
 class Carta(object):
 
     def __init__(self, identificador, estado, coordenadas, dimensiones):
