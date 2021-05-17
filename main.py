@@ -5,10 +5,14 @@ from Jugador import *
 from Mazo import *
 from Narrador import *
 
+import pygame
+
+pygame.init()
+
+# Inicializamos fonts
 pygame.font.init()
+
 # Inizializar pantalla
-
-
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption('alpha')
 fondo = pygame.image.load("Assets/Castillo/Mapa Fondo.png").convert_alpha()
@@ -36,30 +40,40 @@ def mouseHandler(pos, state):
         narrador.DetectarClickCarta(pos, False)
 
 
-def renderWindow():
-    # screen.fill(BLUE)
-    screen.blit(fondo, (0, 0))
+def renderWindow(game_focus="juego"):
+    """
+    Actualiza la pantalla
 
-    jugador1.MostrarBase(screen)
-    jugador1.MostrarRecursos(screen)
-    jugador2.MostrarBase(screen)
-    jugador2.MostrarRecursos(screen)
-    if narrador.turno == 0:
-        jugador1.MostrarCartas(screen)
-    else:
-        jugador2.MostrarCartas(screen)
-    # slider.draw()
-    texto_turno = font.render("Turno jugador: " + str(narrador.turno), False, (0, 0, 0))
-    screen.blit(texto_turno, [(WIDTH / 2) - 100, 25])
+    :param game_focus: String. Indica quien tiene el focus. Será lo que se actualize en pantalla.
+    """
+    if game_focus == "juego":
+        screen.blit(fondo, (0, 0))
+
+        jugador1.MostrarBase(screen)
+        jugador1.MostrarRecursos(screen)
+        jugador2.MostrarBase(screen)
+        jugador2.MostrarRecursos(screen)
+        if narrador.turno == 0:
+            jugador1.MostrarCartas(screen)
+        else:
+            jugador2.MostrarCartas(screen)
+        # slider.draw()
+        texto_turno = font.render("Turno jugador: " + str(narrador.turno), False, (0, 0, 0))
+        screen.blit(texto_turno, [(WIDTH / 2) - 100, 25])
+    elif game_focus == "menu":
+        screen.blit(fondo, (0, 0))
+
     pygame.display.update()
 
 
-def main():
+def PlayGame():
+    """
+    Bucle de juego. Aquí es donde estaremos mientras esté ejecutandose el juego normalmente.
+    """
     clock = pygame.time.Clock()
-
-    # main loop
     run = True
-    restart = True
+
+    narrador.IniciarPartida()
     while run:
         # Reinicia la partida de manera bruta.
         # Considerar craer metodo a posta
@@ -76,17 +90,50 @@ def main():
 
         clock.tick(30)
         events = pygame.event.get()
-        evento = pygame.event.poll()
         for event in events:
             if event.type == pygame.QUIT:
                 run = False
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    # Menu
+                    print("entramos menú")
+                    Menu()
             if event.type == pygame.MOUSEBUTTONDOWN:
-                # print(pygame.mouse.get_pressed())
                 mouseHandler(pygame.mouse.get_pos(), event.button)
-        # slider.listen(events)
-        #
-        # jugador1.hp_castillo = (slider.getValue())
-        renderWindow()
+
+        renderWindow("juego")
+
+
+def Menu():
+    """
+    Menú. Se pueden seleccionar cosas y tal.
+    """
+    clock = pygame.time.Clock()
+    run = True
+
+    while run:
+
+        clock.tick(30)
+        events = pygame.event.get()
+        for event in events:
+            if event.type == pygame.QUIT:
+                run = False
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    # Salimos del menú
+                    run = False
+                    print("salir menú")
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                mouseHandler(pygame.mouse.get_pos(), event.button)
+
+        renderWindow("menu")
+
+
+def main():
+    clock = pygame.time.Clock()
+
+    # main loop
+    PlayGame()
     pygame.quit()
 
 
