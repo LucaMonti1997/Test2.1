@@ -6,6 +6,7 @@ from Mazo import *
 from Narrador import *
 
 import pygame
+from pygame_widgets import *
 
 pygame.init()
 
@@ -28,9 +29,10 @@ jugador2 = Jugador(base2, mazo2, 1)
 
 narrador = Narrador(jugador1, jugador2)
 
-
 # Debugeado
 # slider = Slider(screen, 100, 100, 200, 40, min=0, max=100, step=1)
+button = Button(screen, 100, 100, 300, 150, text='Hello', fontSize=50, margin=20, inactiveColour=(255, 0, 0),
+                pressedColour=(0, 255, 0), radius=20, onClick=lambda: print('Click'))
 
 
 def mouseHandler(pos, state):
@@ -62,6 +64,7 @@ def renderWindow(game_focus="juego"):
         screen.blit(texto_turno, [(WIDTH / 2) - 100, 25])
     elif game_focus == "menu":
         screen.blit(fondo, (0, 0))
+        button.draw()
 
     pygame.display.update()
 
@@ -125,6 +128,8 @@ def Menu():
                     print("salir menú")
             if event.type == pygame.MOUSEBUTTONDOWN:
                 mouseHandler(pygame.mouse.get_pos(), event.button)
+
+        button.listen(events)
 
         renderWindow("menu")
 
