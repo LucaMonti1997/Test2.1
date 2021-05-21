@@ -26,10 +26,11 @@ ventana_menu_opciones = Ventana(screen, "menu_opciones", [300, HEIGHT * 6 / 8])
 ventana_juego = Ventana(screen, "juego")
 ventana_final_partida = Ventana(screen, "final_partida")
 
-ventana_menu_principal.InicializarInterfaz()
 ventana_menu_principal.InicializarImagenes()
-ventana_menu_opciones.InicializarInterfaz()
+ventana_menu_principal.InicializarInterfaz()
 ventana_menu_opciones.InicializarImagenes()
+ventana_menu_opciones.InicializarInterfaz()
+
 
 # Declaramos jugadores
 mazo1 = Mazo(1)

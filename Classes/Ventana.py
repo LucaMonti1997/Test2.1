@@ -4,18 +4,20 @@ from Boton import *
 
 
 class Ventana:
-    def __init__(self, pantalla, identificador, dimen=None):
+    def __init__(self, pantalla, identificador, dimensiones=None):
         """
         Ventana que se muestran en pantalla. Puede ser el menu principal, el ventana_juego en si, opciones, etc.
 
         :param pantalla: Objeto pygame.display. Donde se mostrará la ventana.
         :param identificador: String. Identifica que ventana es.
-        :param dimen: Lista. Dimensiones de la ventana. Por defecto coincide con el display. [ancho, alto]
+        :param dimensiones: Lista. Dimensiones de la ventana. Por defecto coincide con el display. [ancho, alto]
         """
         self.pantalla = pantalla
         self.id = identificador
-        if dimen is None:
+        if dimensiones is None:
             self.dimen = [WIDTH, HEIGHT]
+        else:
+            self.dimen = dimensiones
 
         # El atributo .activa decide si la ventana será dibujada cuando se llame renderWindow.
         # El atributo .focus decide si se puede interectuar con la ventana.
@@ -31,19 +33,33 @@ class Ventana:
 
     def InicializarInterfaz(self):
         self.botones = []
-        x = 0
+        i = 0
+
+        ancho = self.dimen[0]
+        alto = self.dimen[1]
+        ancho_b = self.imagenes["jugar"].get_width()
+        alto_b = self.imagenes["jugar"].get_height()
+        x = (WIDTH - ancho) / 2
+        y = (HEIGHT - alto) / 2
+
         if self.id == "menu_principal":
             self.lista_botones = ["jugar", "opciones", "salir"]
             while len(self.botones) < 3:
-                boton_n = Boton([WIDTH / 2, 50 + (HEIGHT - 100) / 4 * x], [WIDTH / 6, HEIGHT / 8], self.lista_botones[x])
+                boton_n = Boton([(ancho / 2) + x - ancho_b / 2,
+                                 y - (alto_b / 2) + (alto / 5) + ((alto - (alto * 2 / 5)) / 2) * i],
+                                [ancho / 6, alto / 8],
+                                self.lista_botones[i])
                 self.botones.append(boton_n)
-                x += 1
+                i += 1
         elif self.id == "menu_opciones":
             self.lista_botones = ["cargar", "guardar"]
             while len(self.botones) < 2:
-                boton_n = Boton([WIDTH / 2, 50 + (HEIGHT - 100) / 4 * x], [WIDTH / 6, HEIGHT / 8], self.lista_botones[x])
+                boton_n = Boton([(ancho / 2) + x - ancho_b / 2,
+                                 y - (alto_b / 2) + (alto / 5) + ((alto - (alto * 2 / 5)) / 1) * i],
+                                [ancho / 6, alto / 8],
+                                self.lista_botones[i])
                 self.botones.append(boton_n)
-                x += 1
+                i += 1
 
     def InicializarImagenes(self):
         self.imagenes = {
@@ -52,11 +68,10 @@ class Ventana:
             "salir": pygame.image.load("Assets/NewCards/Button renders/Salir.png").convert_alpha(),
             "cargar": pygame.image.load("Assets/NewCards/Button renders/Cargar.png").convert_alpha(),
             "guardar": pygame.image.load("Assets/NewCards/Button renders/Guardar.png").convert_alpha()
-
         }
 
         for key in self.imagenes:
-            imagen = pygame.transform.smoothscale(self.imagenes[key], (int(WIDTH / 6), int(HEIGHT / 8)))
+            imagen = pygame.transform.smoothscale(self.imagenes[key], (int(self.dimen[0] / 6), int(self.dimen[1] / 8)))
 
     def MostrarBotones(self):
         x = 0
