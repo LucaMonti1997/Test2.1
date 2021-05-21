@@ -69,9 +69,15 @@ class Jugador(object):
     def InicializarMano(self):
         """
         Poblar la mano por primera vez
+
+        restaurar es un parametro que indica si estamos restaruando una partida previamiente guardada
+        0 : indica que no
+        1 : indica que si
         """
         self.cartas = []
+
         random.shuffle(self.mazo.cartas_restantes)
+
         x = 0
         while len(self.cartas) < NUMERO_CARTAS_MANO:
             identificador_carta = self.mazo.cartas_restantes.pop()
@@ -80,6 +86,8 @@ class Jugador(object):
             self.cartas.append(carta_n)
             x += 1
         self.ComprobarTodasCartas()
+
+        # recordar que todas las imagenes tienen la misma dimension.
 
     def InicialziarImagenes(self):
         """
@@ -242,6 +250,58 @@ class Jugador(object):
 
     def Get(self, attr):
         return getattr(self, attr)
+
+    def Guardar_Cartas(self):
+        lista_cartas_out_mano = []
+        lista_recursos_out = []
+        lista_recursos_out.extend(
+            [self.hp_castillo, self.hp_muralla, self.constructores, self.soldados, self.magos, self.ladrillos,
+             self.espadas, self.mana])
+
+        i = 0
+        while i < 8:
+            lista_cartas_out_mano.append(self.cartas[i].id)
+            i += 1
+
+        lista_cartas_out_mazo = self.mazo.cartas_restantes.copy()
+
+        combined_lists2 = [lista_cartas_out_mano, lista_cartas_out_mazo, lista_recursos_out]
+
+        filename = "cartas" + str(self.id) + ".json"
+
+        with open(filename, 'w') as outfile:
+            json.dump(combined_lists2, outfile)
+
+    def Retraer_Cartas_Guardadas(self):
+
+        filename = "cartas" + str(self.id) + ".json"
+
+        with open(filename) as json_file:
+            lista_cartas_in = json.load(json_file)
+
+        lista_cartas_in_mano = lista_cartas_in[0].copy()
+
+        lista_cartas_in_mazo = lista_cartas_in[1].copy()
+
+        self.Set("hp_castillo", lista_cartas_in[2][0])
+        self.Set("hp_muralla", lista_cartas_in[2][1])
+
+        self.Set("constructores", lista_cartas_in[2][2])
+        self.Set("soldados", lista_cartas_in[2][3])
+        self.Set("magos", lista_cartas_in[2][4])
+
+        self.Set("ladrillos", lista_cartas_in[2][5])
+        self.Set("espadas", lista_cartas_in[2][6])
+        self.Set("mana", lista_cartas_in[2][7])
+
+        x = 0
+        for carta in self.cartas:
+            carta.id = lista_cartas_in_mano[x]
+            x += 1
+
+        self.mazo.cartas_restantes = lista_cartas_in_mazo.copy()
+
+        self.ComprobarTodasCartas()
 
 
 if __name__ == '__main__':
