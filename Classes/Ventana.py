@@ -26,22 +26,33 @@ class Ventana:
         self.focus = False
 
         self.imagenes = {}
-        self.botones = []
+        self.lista_botones = []  # Lista con los botones que está ventana posé
+        self.botones = []  # Objetos Boton
 
     def InicializarInterfaz(self):
         self.botones = []
         x = 0
         if self.id == "menu_principal":
+            self.lista_botones = ["jugar", "opciones", "salir"]
             while len(self.botones) < 3:
-                boton_n = Boton([WIDTH / 2, 50 + (HEIGHT - 100) / 4 * x], [WIDTH / 6, HEIGHT / 8], x)
+                boton_n = Boton([WIDTH / 2, 50 + (HEIGHT - 100) / 4 * x], [WIDTH / 6, HEIGHT / 8], self.lista_botones[x])
+                self.botones.append(boton_n)
+                x += 1
+        elif self.id == "menu_opciones":
+            self.lista_botones = ["cargar", "guardar"]
+            while len(self.botones) < 2:
+                boton_n = Boton([WIDTH / 2, 50 + (HEIGHT - 100) / 4 * x], [WIDTH / 6, HEIGHT / 8], self.lista_botones[x])
                 self.botones.append(boton_n)
                 x += 1
 
     def InicializarImagenes(self):
         self.imagenes = {
-            0: pygame.image.load("Assets/NewCards/Button renders/Jugar.png").convert_alpha(),
-            1: pygame.image.load("Assets/NewCards/Button renders/Opciones.png").convert_alpha(),
-            2: pygame.image.load("Assets/NewCards/Button renders/Salir.png").convert_alpha()
+            "jugar": pygame.image.load("Assets/NewCards/Button renders/Jugar.png").convert_alpha(),
+            "opciones": pygame.image.load("Assets/NewCards/Button renders/Opciones.png").convert_alpha(),
+            "salir": pygame.image.load("Assets/NewCards/Button renders/Salir.png").convert_alpha(),
+            "cargar": pygame.image.load("Assets/NewCards/Button renders/Cargar.png").convert_alpha(),
+            "guardar": pygame.image.load("Assets/NewCards/Button renders/Guardar.png").convert_alpha()
+
         }
 
         for key in self.imagenes:
@@ -50,7 +61,7 @@ class Ventana:
     def MostrarBotones(self):
         x = 0
         for boton in self.botones:
-            boton.Dibujar(self.pantalla, self.imagenes[x])
+            boton.Dibujar(self.pantalla, self.imagenes[self.lista_botones[x]])
             x += 1
 
     def DetectarBoton(self, pos):

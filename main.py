@@ -22,12 +22,14 @@ fondo = pygame.transform.smoothscale(fondo, (int(fondo.get_width() / 1.7), int(f
 
 # Declaramos ventanas
 ventana_menu_principal = Ventana(screen, "menu_principal")
-ventana_menu_opciones = Ventana(screen, "menu_opciones")
+ventana_menu_opciones = Ventana(screen, "menu_opciones", [300, HEIGHT * 6 / 8])
 ventana_juego = Ventana(screen, "juego")
 ventana_final_partida = Ventana(screen, "final_partida")
 
 ventana_menu_principal.InicializarInterfaz()
 ventana_menu_principal.InicializarImagenes()
+ventana_menu_opciones.InicializarInterfaz()
+ventana_menu_opciones.InicializarImagenes()
 
 # Declaramos jugadores
 mazo1 = Mazo(1)
@@ -62,12 +64,12 @@ def mouseHandler(pos, state):
 
     # En la ventana del menu principal, el primer boton es jugar, el ultimo es salir
     elif ventana_menu_principal.focus and state == 1:
-        if ventana_menu_principal.DetectarBoton(pos) == 0:
+        if ventana_menu_principal.DetectarBoton(pos) == "jugar":
             ventana_menu_principal.Desactivar()
             jugador1.InicializarJugador()
             jugador2.InicializarJugador()
             ventana_juego.Activar()
-        elif ventana_menu_principal.DetectarBoton(pos) == 2:
+        elif ventana_menu_principal.DetectarBoton(pos) == "salir":
             pass
             # e = pygame.event.Event(pygame.QUIT)
             # e.type = "QUIT"
@@ -109,6 +111,7 @@ def renderWindow():
         if ventana_menu_opciones.activa:
             rect = ((WIDTH / 2) - 150, HEIGHT / 8, 300, HEIGHT * 6 / 8)
             pygame.draw.rect(screen, BLACK, rect)
+            ventana_menu_opciones.MostrarBotones()
 
         if ventana_final_partida.activa:
             rect = (100, 100, 150, 250)

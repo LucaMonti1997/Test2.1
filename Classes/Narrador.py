@@ -58,10 +58,8 @@ class Narrador(object):
         :param carta: Objeto Carta. Carta jugada
         :param jugar: Boolean. Jugamos o no la carta? False es descartar
         """
-        # Quitamos la carta de la mano del jugador activo
-        # TODO: mostrar mas claramente la carta quitada y la nueva carta que la remplaza
-        carta.id = "null"
-        self.jugadores[self.turno].CogerCartas()
+
+
 
         # Si jugabamos la carta, llevamos a cabo sus efectos
         if jugar:
@@ -85,6 +83,10 @@ class Narrador(object):
                 self.jugadores[self.Opuesto()].Set(objetivo, clamp(self.jugadores[self.Opuesto()].Get(objetivo) +
                                                                    cantidad_objetivo))
         sleep(1)
+        # Quitamos la carta de la mano del jugador activo
+        # TODO: mostrar mas claramente la carta quitada y la nueva carta que la remplaza
+        carta.id = "null"
+        self.jugadores[self.turno].CogerCartas()
         # Comprobamos si la partida ha acabado
         if not self.ComprobarPartida():
             self.turnos_jugados += 1
