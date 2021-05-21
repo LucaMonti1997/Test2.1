@@ -1,5 +1,9 @@
 import pygame
 
+# Definimos eventos custom
+fin_partida = pygame.USEREVENT + 1
+fin_aplicacion = pygame.USEREVENT + 2
+
 # Ancho y alto de la ventana de ventana_juego
 WIDTH = 1000
 HEIGHT = 600

@@ -71,10 +71,7 @@ def mouseHandler(pos, state):
             ventana_juego.Activar()
         elif ventana_menu_principal.DetectarBoton(pos) == "salir":
             pass
-            # e = pygame.event.Event(pygame.QUIT)
-            # e.type = "QUIT"
-            # pygame.event.post(e)
-            # pygame.quit()
+            pygame.event.post(pygame.event.Event(fin_aplicacion))
 
     # En la ventana de fin de partida, el click medio avanza al menu principal. TODO cambiar esto
     elif ventana_final_partida.focus and state == 2:
@@ -135,7 +132,7 @@ def main():
         for e in pygame.event.get():
 
             # Clickear la X cierra todas las ventanas y la aplicación
-            if e.type == pygame.QUIT:
+            if e.type == pygame.QUIT or e.type == fin_aplicacion:
                 run = False
                 ventana_final_partida.Desactivar()
                 ventana_juego.Desactivar()

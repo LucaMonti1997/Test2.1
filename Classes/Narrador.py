@@ -4,7 +4,7 @@ import pygame.event
 
 from Constantes import *
 
-fin_partida = pygame.USEREVENT + 1
+
 
 
 class Narrador(object):
