@@ -1,5 +1,5 @@
 import random
-
+from time import sleep
 import pygame.font
 import json
 
@@ -130,15 +130,13 @@ class Jugador(object):
         self.mazo.ComprobarMazo()
         for carta in self.cartas:
             if carta.id == "null":
+                # Primero cambiamos el id a una imagen vacia/negra o lo que sea para luego hacerla parpadear
+                carta.id = "no_card"
+                sleep(0.3)
+                carta.id = "no_card"
+                sleep(0.3)
                 carta.id = self.mazo.cartas_restantes.pop()
-
-        # self.mazo.ComprobarMazo()
-        # self.mano.append(self.mazo.cartas_restantes.pop())
-        # i = 0
-        # while i < NUMERO_CARTAS_MANO:
-        #     self.cartas[i].id = self.mano[i]
-        #     self.ComprobarCarta(self.cartas[i])
-        #     i += 1
+                sleep(0.5)
 
     def ComprobarCarta(self, carta):
         """

@@ -1,6 +1,6 @@
 import pygame
 
-# Ancho y alto de la ventana de juego
+# Ancho y alto de la ventana de ventana_juego
 WIDTH = 1000
 HEIGHT = 600
 
@@ -12,7 +12,7 @@ RED = (255, 0, 0)
 BLUE = (0, 0, 255)
 YELLOW = (255, 255, 0)
 
-# Contiene el diccionario completo de las cartas del juego
+# Contiene el diccionario completo de las cartas del ventana_juego
 diccionario_cartas = {
     # Carta que usan ladrillos
     "muralla1": [[5, "ladrillos"], [5, "hp_muralla"]],
@@ -62,7 +62,7 @@ diccionario_mazos = {
 # Numero de cartas que se tienen en mano a la vez
 NUMERO_CARTAS_MANO = 8
 
-# Fonts usados en el juego
+# Fonts usados en el ventana_juego
 pygame.font.init()
 font = pygame.font.SysFont('Arial', 30)
 font_recursos = pygame.font.SysFont('Cambria', 20, True)
