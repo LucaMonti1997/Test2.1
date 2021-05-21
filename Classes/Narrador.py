@@ -1,6 +1,10 @@
 import random
 
+import pygame.event
+
 from Constantes import *
+
+fin_partida = pygame.USEREVENT + 1
 
 
 class Narrador(object):
@@ -54,7 +58,12 @@ class Narrador(object):
         :param carta: Objeto Carta. Carta jugada
         :param jugar: Boolean. Jugamos o no la carta? False es descartar
         """
+        # Quitamos la carta de la mano del jugador activo
+        # TODO: mostrar mas claramente la carta quitada y la nueva carta que la remplaza
+        carta.id = "null"
+        self.jugadores[self.turno].CogerCartas()
 
+        # Si jugabamos la carta, llevamos a cabo sus efectos
         if jugar:
             # Vemos cuantos recursos y de que tipo se gastan, y luego los restamos al jugador activo
             recurso = diccionario_cartas[carta.id][0][1]
@@ -76,14 +85,13 @@ class Narrador(object):
                 self.jugadores[self.Opuesto()].Set(objetivo, clamp(self.jugadores[self.Opuesto()].Get(objetivo) +
                                                                    cantidad_objetivo))
 
-        # Quitamos la carta de la mano del jugador activo
-        carta.id = "null"
-        self.jugadores[self.turno].CogerCartas()
-        self.turnos_jugados += 1
-        self.CambiarTurno()
-        self.GenerarRecursos()
-        # self.CalculoIA()
-        self.jugadores[self.turno].ComprobarTodasCartas()
+        # Comprobamos si la partida ha acabado
+        if not self.ComprobarPartida():
+            self.turnos_jugados += 1
+            self.CambiarTurno()
+            self.GenerarRecursos()
+            # self.CalculoIA()
+            self.jugadores[self.turno].ComprobarTodasCartas()
 
     def ComprobarPartida(self):
         """
@@ -91,22 +99,21 @@ class Narrador(object):
 
         0 -> Partida no acabada
 
-        1 -> Jugador1.hp_castillo <= 0
-
-        2 -> Jugador1.hp_castillo >= 100
-
-        3 -> Jugador2.hp_castillo <= 0
-
-        4 -> Jugador2.hp_castillo >= 100
+        1 -> Partida acabada
         """
-        if self.jugadores[0].hp_castillo <= 0:
+        if self.jugadores[0].hp_castillo <= 0 or self.jugadores[0].hp_castillo >= 100 or \
+                self.jugadores[1].hp_castillo <= 0 or self.jugadores[1].hp_castillo >= 100:
+            pygame.event.post(pygame.event.Event(fin_partida))
             return 1
-        elif self.jugadores[0].hp_castillo >= 100:
-            return 2
-        elif self.jugadores[1].hp_castillo <= 0:
-            return 3
-        elif self.jugadores[1].hp_castillo >= 100:
-            return 4
+        # elif self.jugadores[0].hp_castillo >= 100:
+        #     pygame.event.Event(fin_partida)
+        #     return 1
+        # elif self.jugadores[1].hp_castillo <= 0:
+        #     pygame.event.Event(fin_partida)
+        #     return 1
+        # elif self.jugadores[1].hp_castillo >= 100:
+        #     pygame.event.Event(fin_partida)
+        #     return 1
         else:
             return 0
 

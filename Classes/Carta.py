@@ -4,7 +4,6 @@ class Carta(object):
         """
         Almcena las propriedades y ubicación de la carta.
 
-        :param posicion: Int. Posición dentro de la mano del jugador.
         :param identificador: String. Texto que representa el tipo de carta.
         :param estado: Boolean. Indica si la carta es jugable o no.
         :param coordenadas: Lista. Punto central de referencia de la base. [x, y]
