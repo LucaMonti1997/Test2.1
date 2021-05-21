@@ -47,7 +47,7 @@ class Ventana:
             while len(self.botones) < 3:
                 boton_n = Boton([(ancho / 2) + x - ancho_b / 2,
                                  y - (alto_b / 2) + (alto / 5) + ((alto - (alto * 2 / 5)) / 2) * i],
-                                [ancho / 6, alto / 8],
+                                [ancho_b, alto_b],
                                 self.lista_botones[i])
                 self.botones.append(boton_n)
                 i += 1
@@ -56,7 +56,7 @@ class Ventana:
             while len(self.botones) < 2:
                 boton_n = Boton([(ancho / 2) + x - ancho_b / 2,
                                  y - (alto_b / 2) + (alto / 5) + ((alto - (alto * 2 / 5)) / 1) * i],
-                                [ancho / 6, alto / 8],
+                                [ancho_b, alto_b],
                                 self.lista_botones[i])
                 self.botones.append(boton_n)
                 i += 1
@@ -71,7 +71,7 @@ class Ventana:
         }
 
         for key in self.imagenes:
-            imagen = pygame.transform.smoothscale(self.imagenes[key], (int(self.dimen[0] / 6), int(self.dimen[1] / 8)))
+            self.imagenes[key] = pygame.transform.smoothscale(self.imagenes[key], (int(self.dimen[0] / 2), int(self.dimen[1] / 3)))
 
     def MostrarBotones(self):
         x = 0

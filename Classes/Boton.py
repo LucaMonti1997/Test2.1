@@ -1,4 +1,5 @@
 import pygame
+from Constantes import *
 
 
 class Boton(object):
@@ -23,6 +24,8 @@ class Boton(object):
         :param imagen: Imagen que se dibujará
         """
         pantalla.blit(imagen, self.coord)
+        # rect = (self.coord[0], self.coord[1], self.dimen[0], self.dimen[1])
+        # pygame.draw.rect(pantalla, RED, rect)
 
     def MouseOver(self, pos):
         """
@@ -30,8 +33,8 @@ class Boton(object):
 
         :param pos: Posición a comprobar
         """
-        if self.coord[0] < pos[0] < self.coord[0] + self.dimen[0] * 2 and \
-                self.coord[1] < pos[1] < self.coord[1] + self.dimen[1] * 2:
+        if self.coord[0] < pos[0] < self.coord[0] + self.dimen[0] and \
+                self.coord[1] < pos[1] < self.coord[1] + self.dimen[1]:
             return True
         else:
             return False

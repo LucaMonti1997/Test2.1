@@ -81,6 +81,7 @@ def mouseHandler(pos, state):
         ventana_menu_principal.Activar()
 
     elif ventana_menu_opciones.focus and state == 1:
+
         if ventana_menu_opciones.DetectarBoton(pos) == "cargar":
             jugador1.Retraer_Cartas_Guardadas()
             jugador2.Retraer_Cartas_Guardadas()

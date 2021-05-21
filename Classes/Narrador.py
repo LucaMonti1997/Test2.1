@@ -5,8 +5,6 @@ import pygame.event
 from Constantes import *
 
 
-
-
 class Narrador(object):
     def __init__(self, jugador1, jugador2):
         """
@@ -58,8 +56,6 @@ class Narrador(object):
         :param carta: Objeto Carta. Carta jugada
         :param jugar: Boolean. Jugamos o no la carta? False es descartar
         """
-
-
 
         # Si jugabamos la carta, llevamos a cabo sus efectos
         if jugar:
