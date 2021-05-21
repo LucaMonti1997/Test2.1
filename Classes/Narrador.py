@@ -1,5 +1,5 @@
 import random
-
+from time import sleep
 import pygame.event
 
 from Constantes import *
@@ -84,7 +84,7 @@ class Narrador(object):
                     objetivo = "hp_castillo"
                 self.jugadores[self.Opuesto()].Set(objetivo, clamp(self.jugadores[self.Opuesto()].Get(objetivo) +
                                                                    cantidad_objetivo))
-
+        sleep(1)
         # Comprobamos si la partida ha acabado
         if not self.ComprobarPartida():
             self.turnos_jugados += 1
