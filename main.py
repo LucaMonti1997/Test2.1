@@ -34,11 +34,11 @@ ventana_menu_opciones.InicializarInterfaz()
 
 # Declaramos jugadores
 mazo1 = Mazo(1)
-base1 = Base([300, 300], [0.5, 0.5])
+base1 = Base([WIDTH*3/10, 300], [0.5, 0.5])
 jugador1 = Jugador(base1, mazo1, 0)
 
 mazo2 = Mazo(1)
-base2 = Base([600, 300], [0.5, 0.5])
+base2 = Base([WIDTH*7/10, 300], [0.5, 0.5])
 jugador2 = Jugador(base2, mazo2, 1)
 
 narrador = Narrador(jugador1, jugador2)
@@ -89,6 +89,9 @@ def mouseHandler(pos, state):
         elif ventana_menu_opciones.DetectarBoton(pos) == "guardar":
             jugador1.Guardar_Cartas()
             jugador2.Guardar_Cartas()
+
+        ventana_menu_opciones.Desactivar()
+        ventana_juego.GainFocus()
 
 
 def renderWindow():
