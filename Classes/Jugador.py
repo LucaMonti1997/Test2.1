@@ -1,11 +1,14 @@
+import json
 import random
 from time import sleep
+
 import pygame.font
-import json
 
 import Constantes
+from Base import *
 from Carta import *
 from Constantes import *
+from Mazo import *
 
 
 # Clase de jugador a la qual se le asignaran las siguientes funciones:
@@ -15,12 +18,10 @@ from Constantes import *
 
 class Jugador(object):
 
-    def __init__(self, base, mazo, identificador):
+    def __init__(self, identificador):
         """
         Almacena toda la información del jugador, y gestiona varias de sus interacciones.
 
-        :param base: Objeto Base.
-        :param mazo: Objeto Mazo.
         :param identificador: 0 -> Jugador1; 1 -> Jugador2
         """
         # Vida castillo y muralla
@@ -40,8 +41,8 @@ class Jugador(object):
         self.imagenes = {}
         self.iconos = {}
 
-        self.mazo = mazo
-        self.base = base
+        self.mazo = Mazo(1)
+        self.base = Base([WIDTH*(3+4*identificador)/10, 300], [0.5, 0.5])
         self.id = identificador
 
         self.InicializarJugador()
@@ -132,11 +133,11 @@ class Jugador(object):
             if carta.id == "null":
                 # Primero cambiamos el id a una imagen vacia/negra o lo que sea para luego hacerla parpadear
                 carta.id = "no_card"
-                sleep(0.3)
+                sleep(0.1)
                 carta.id = "no_card"
-                sleep(0.3)
+                sleep(0.1)
                 carta.id = self.mazo.cartas_restantes.pop()
-                sleep(0.5)
+                sleep(0.2)
 
     def ComprobarCarta(self, carta):
         """
@@ -250,6 +251,7 @@ class Jugador(object):
         return getattr(self, attr)
 
     def Guardar_Cartas(self):
+        # TODO feedback de cargar o guardar las partidas
         lista_cartas_out_mano = []
         lista_recursos_out = []
         lista_recursos_out.extend(

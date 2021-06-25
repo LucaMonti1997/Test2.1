@@ -1,6 +1,5 @@
-import pygame
-from Constantes import *
 from Boton import *
+from Constantes import *
 
 
 class Ventana:
@@ -71,7 +70,8 @@ class Ventana:
         }
 
         for key in self.imagenes:
-            self.imagenes[key] = pygame.transform.smoothscale(self.imagenes[key], (int(self.dimen[0] / 2), int(self.dimen[1] / 3)))
+            self.imagenes[key] = pygame.transform.smoothscale(self.imagenes[key],
+                                                              (int(self.dimen[0] / 2), int(self.dimen[1] / 3)))
 
     def MostrarBotones(self):
         x = 0

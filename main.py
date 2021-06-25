@@ -1,13 +1,9 @@
 import threading
 
-from Base import *
-from Jugador import *
-from Mazo import *
+import pygame
+
 from Narrador import *
 from Ventana import *
-
-import pygame
-from pygame_widgets import *
 
 pygame.init()
 
@@ -16,7 +12,7 @@ pygame.font.init()
 
 # Inizializar pantalla
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
-pygame.display.set_caption('beta')
+pygame.display.set_caption('public release')
 fondo = pygame.image.load("Assets/Castillo/Mapa Fondo.png").convert_alpha()
 fondo = pygame.transform.smoothscale(fondo, (int(fondo.get_width() / 1.7), int(fondo.get_height() / 1.7)))
 
@@ -31,21 +27,8 @@ ventana_menu_principal.InicializarInterfaz()
 ventana_menu_opciones.InicializarImagenes()
 ventana_menu_opciones.InicializarInterfaz()
 
-
-# Declaramos jugadores
-mazo1 = Mazo(1)
-base1 = Base([WIDTH*3/10, 300], [0.5, 0.5])
-jugador1 = Jugador(base1, mazo1, 0)
-
-mazo2 = Mazo(1)
-base2 = Base([WIDTH*7/10, 300], [0.5, 0.5])
-jugador2 = Jugador(base2, mazo2, 1)
-
-narrador = Narrador(jugador1, jugador2)
-
-
-# Debugeado
-# slider = Slider(screen, 100, 100, 200, 40, min=0, max=100, step=1)
+# Declaramos el narrador
+narrador = Narrador()
 
 
 def mouseHandler(pos, state):
@@ -67,8 +50,8 @@ def mouseHandler(pos, state):
     elif ventana_menu_principal.focus and state == 1:
         if ventana_menu_principal.DetectarBoton(pos) == "jugar":
             ventana_menu_principal.Desactivar()
-            jugador1.InicializarJugador()
-            jugador2.InicializarJugador()
+            narrador.jugadores[0].InicializarJugador()
+            narrador.jugadores[1].InicializarJugador()
             ventana_juego.Activar()
         elif ventana_menu_principal.DetectarBoton(pos) == "salir":
             pass
@@ -83,12 +66,12 @@ def mouseHandler(pos, state):
     elif ventana_menu_opciones.focus and state == 1:
 
         if ventana_menu_opciones.DetectarBoton(pos) == "cargar":
-            jugador1.Retraer_Cartas_Guardadas()
-            jugador2.Retraer_Cartas_Guardadas()
+            narrador.jugadores[0].Retraer_Cartas_Guardadas()
+            narrador.jugadores[1].Retraer_Cartas_Guardadas()
 
         elif ventana_menu_opciones.DetectarBoton(pos) == "guardar":
-            jugador1.Guardar_Cartas()
-            jugador2.Guardar_Cartas()
+            narrador.jugadores[0].Guardar_Cartas()
+            narrador.jugadores[1].Guardar_Cartas()
 
         ventana_menu_opciones.Desactivar()
         ventana_juego.GainFocus()
@@ -108,14 +91,14 @@ def renderWindow():
         if ventana_juego.activa:
             screen.blit(fondo, (0, 0))
 
-            jugador1.MostrarBase(screen)
-            jugador1.MostrarRecursos(screen)
-            jugador2.MostrarBase(screen)
-            jugador2.MostrarRecursos(screen)
+            narrador.jugadores[0].MostrarBase(screen)
+            narrador.jugadores[0].MostrarRecursos(screen)
+            narrador.jugadores[1].MostrarBase(screen)
+            narrador.jugadores[1].MostrarRecursos(screen)
             if narrador.turno == 0:
-                jugador1.MostrarCartas(screen)
+                narrador.jugadores[0].MostrarCartas(screen)
             else:
-                jugador2.MostrarCartas(screen)
+                narrador.jugadores[1].MostrarCartas(screen)
             texto_turno = font.render("Turno jugador: " + str(narrador.turno), False, (0, 0, 0))
             screen.blit(texto_turno, [(WIDTH / 2) - 100, 25])
 

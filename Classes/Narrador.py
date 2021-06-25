@@ -1,22 +1,18 @@
-import random
-from time import sleep
 import pygame.event
 
-from Constantes import *
+from Jugador import *
 
 
 class Narrador(object):
-    def __init__(self, jugador1, jugador2):
+    def __init__(self):
         """
         Se encarga de "dirigir" la partida. Reparte las cartas, gestiona los turnos, generación de recursos, eventos
         aleatorios, etc.
 
-        :param jugador1: Objeto Jugador. Jugador 1, tipicamente el unico humano
-        :param jugador2: Objeto Jugador. Jugador 2, tipicamente la IA
         """
         self.turno = 0
         self.turnos_jugados = 0
-        self.jugadores = [jugador1, jugador2]
+        self.jugadores = [Jugador(0), Jugador(1)]
 
     def Opuesto(self):
         """
@@ -78,9 +74,8 @@ class Narrador(object):
                     objetivo = "hp_castillo"
                 self.jugadores[self.Opuesto()].Set(objetivo, clamp(self.jugadores[self.Opuesto()].Get(objetivo) +
                                                                    cantidad_objetivo))
-        sleep(1)
+        sleep(0.1)
         # Quitamos la carta de la mano del jugador activo
-        # TODO: mostrar mas claramente la carta quitada y la nueva carta que la remplaza
         carta.id = "null"
         self.jugadores[self.turno].CogerCartas()
         # Comprobamos si la partida ha acabado

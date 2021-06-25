@@ -1,7 +1,3 @@
-import pygame
-from Constantes import *
-
-
 class Boton(object):
     def __init__(self, coord, dimen, identificador):
         """
